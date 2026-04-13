@@ -1,0 +1,79 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Fishing Forecast — Home Assistant REST Sensors
+# Add this to your configuration.yaml (or include via !include)
+#
+# Prerequisites:
+#   - FishingApp server running: python run_forecast.py server
+#   - Server accessible from HA at http://<server-ip>:5055
+#
+# Replace FISHING_SERVER_IP with the IP of the machine running the server.
+# ─────────────────────────────────────────────────────────────────────────────
+
+rest:
+  - resource: http://FISHING_SERVER_IP:5055/api/forecast/today
+    scan_interval: 3600  # refresh every hour
+    sensor:
+      - name: "Fishing Inshore Score"
+        value_template: "{{ value_json.inshore_score }}"
+        unit_of_measurement: "/10"
+        icon: mdi:fish
+        json_attributes:
+          - best_species
+          - best_window
+          - key_factor
+          - wind_speed
+          - wind_dir
+          - water_temp
+          - wave_height
+          - pressure
+          - pressure_trend
+          - warnings
+          - area
+          - generated_at
+
+      - name: "Fishing Nearshore Score"
+        value_template: "{{ value_json.nearshore_score }}"
+        unit_of_measurement: "/10"
+        icon: mdi:waves
+
+      - name: "Fishing Offshore Score"
+        value_template: "{{ value_json.offshore_score }}"
+        unit_of_measurement: "/10"
+        icon: mdi:ferry
+        json_attributes:
+          - wave_height
+          - wind_speed
+
+      - name: "Fishing Best Species"
+        value_template: "{{ value_json.best_species }}"
+        icon: mdi:fishbowl
+
+  - resource: http://FISHING_SERVER_IP:5055/api/forecast/week
+    scan_interval: 7200  # refresh every 2 hours
+    sensor:
+      - name: "Fishing Best Inshore Day"
+        value_template: "{{ value_json.best_inshore_day }}"
+        icon: mdi:calendar-star
+
+      - name: "Fishing Best Offshore Day"
+        value_template: "{{ value_json.best_offshore_day }}"
+        icon: mdi:calendar-star
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Optional: Automation to force refresh at 5 AM daily
+# Add to automations.yaml
+# ─────────────────────────────────────────────────────────────────────────────
+#
+# - alias: "Refresh Fishing Forecast"
+#   trigger:
+#     - platform: time
+#       at: "05:00:00"
+#   action:
+#     - service: rest_command.refresh_fishing_forecast
+#
+# Then add to configuration.yaml:
+#
+# rest_command:
+#   refresh_fishing_forecast:
+#     url: http://FISHING_SERVER_IP:5055/api/refresh
+#     method: POST

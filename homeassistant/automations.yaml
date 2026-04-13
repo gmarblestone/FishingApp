@@ -1,0 +1,52 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Fishing Forecast — Home Assistant Automations
+# Add to automations.yaml or include via !include
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Daily forecast refresh at 5 AM
+- alias: "Refresh Fishing Forecast Daily"
+  id: fishing_forecast_refresh
+  trigger:
+    - platform: time
+      at: "05:00:00"
+  action:
+    - service: rest_command.refresh_fishing_forecast
+
+# Notify when a great fishing day is coming (score 8+)
+- alias: "Notify Great Fishing Day"
+  id: fishing_great_day_notify
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.fishing_inshore_score
+      above: 7
+  condition:
+    - condition: template
+      value_template: "{{ now().hour == 5 }}"  # Only at morning refresh
+  action:
+    - service: notify.mobile_app  # Change to your notify service
+      data:
+        title: "🎣 Great Fishing Day!"
+        message: >-
+          Inshore score: {{ states('sensor.fishing_inshore_score') }}/10
+          — {{ state_attr('sensor.fishing_inshore_score', 'best_species') }}
+          — {{ state_attr('sensor.fishing_inshore_score', 'key_factor') }}
+          Best window: {{ state_attr('sensor.fishing_inshore_score', 'best_window') }}
+
+# Notify when offshore conditions are excellent (score 8+ and low waves)
+- alias: "Notify Great Offshore Day"
+  id: fishing_offshore_notify
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.fishing_offshore_score
+      above: 7
+  condition:
+    - condition: template
+      value_template: "{{ now().hour == 5 }}"
+  action:
+    - service: notify.mobile_app  # Change to your notify service
+      data:
+        title: "🚤 Great Offshore Day!"
+        message: >-
+          Offshore score: {{ states('sensor.fishing_offshore_score') }}/10
+          — Waves: {{ state_attr('sensor.fishing_offshore_score', 'wave_height') }}
+          — Wind: {{ state_attr('sensor.fishing_offshore_score', 'wind_speed') }} mph

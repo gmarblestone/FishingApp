@@ -1,0 +1,143 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Fishing Forecast — Home Assistant Dashboard
+# Works with AppDaemon sensors (no REST server needed)
+#
+# 1. Add the panel_iframe to configuration.yaml
+# 2. Add the Lovelace card via raw config editor
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ── Panel Iframe (add to configuration.yaml) ────────────────────────────────
+# This makes the full HTML report available as a sidebar item in HA.
+#
+# panel_iframe:
+#   fishing_forecast:
+#     title: "Fishing Forecast"
+#     icon: mdi:fish
+#     url: "/local/fishing_forecast.html"
+
+# ── Lovelace Dashboard Card ─────────────────────────────────────────────────
+
+type: vertical-stack
+cards:
+  # ── Header ──
+  - type: markdown
+    content: |
+      ## 🎣 Fishing Forecast
+      *{{ state_attr('sensor.fishing_inshore_score', 'area') }}
+      — Updated {{ state_attr('sensor.fishing_inshore_score', 'generated_at') }}*
+
+  # ── Today's scores ──
+  - type: horizontal-stack
+    cards:
+      - type: gauge
+        entity: sensor.fishing_inshore_score
+        name: Inshore
+        min: 0
+        max: 10
+        severity:
+          green: 7
+          yellow: 5
+          red: 0
+        needle: true
+
+      - type: gauge
+        entity: sensor.fishing_nearshore_score
+        name: Nearshore
+        min: 0
+        max: 10
+        severity:
+          green: 7
+          yellow: 5
+          red: 0
+        needle: true
+
+      - type: gauge
+        entity: sensor.fishing_offshore_score
+        name: Offshore
+        min: 0
+        max: 10
+        severity:
+          green: 7
+          yellow: 5
+          red: 0
+        needle: true
+
+  # ── Today's conditions ──
+  - type: entities
+    title: Today's Conditions
+    entities:
+      - entity: sensor.fishing_species
+        name: Target Species
+
+      - entity: sensor.fishing_location
+        name: Where to Fish
+
+      - entity: sensor.fishing_best_window
+        name: Best Window
+
+      - entity: sensor.fishing_water_temp
+        name: Water Temp
+
+      - entity: sensor.fishing_wind
+        name: Wind
+
+      - entity: sensor.fishing_waves
+        name: Wave Height
+
+      - entity: sensor.fishing_pressure
+        name: Pressure
+
+  # ── Offshore status ──
+  - type: horizontal-stack
+    cards:
+      - type: entity
+        entity: sensor.fishing_offshore_score
+        name: Offshore Status
+        attribute: status
+        icon: mdi:ferry
+
+  # ── Best days this week ──
+  - type: entities
+    title: This Week — Best Days
+    entities:
+      - entity: sensor.fishing_best_inshore_day
+        name: Best Inshore Day
+
+      - entity: sensor.fishing_best_offshore_day
+        name: Best Offshore Day
+
+  # ── Full report link ──
+  - type: markdown
+    content: |
+      ### 📊 Full Report
+      [Open detailed forecast with charts →](/local/fishing_forecast.html)
+
+  # ── Manual refresh button ──
+  - type: button
+    name: Refresh Forecast
+    icon: mdi:refresh
+    tap_action:
+      action: fire-dom-event
+      browser_mod:
+        service: appdaemon.fire_event
+        data:
+          event_type: fishing_forecast_refresh
+    # Alternative if browser_mod not installed:
+    # Use an automation with this trigger:
+    #   trigger:
+    #     - platform: event
+    #       event_type: fishing_forecast_refresh
+
+  # ── Warnings ──
+  - type: conditional
+    conditions:
+      - condition: numeric_state
+        entity: sensor.fishing_warnings
+        above: 0
+    card:
+      type: markdown
+      content: |
+        ### ⚠️ Warnings
+        {% for w in state_attr('sensor.fishing_warnings', 'warnings') %}
+        - {{ w }}
+        {% endfor %}

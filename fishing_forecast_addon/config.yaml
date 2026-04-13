@@ -1,0 +1,36 @@
+name: Fishing Forecast
+version: "1.0.0"
+slug: fishing_forecast
+description: >-
+  Scores upcoming fishing days 1-10 for inshore, nearshore, and offshore
+  using live NOAA, NDBC, and NWS data. Recommends species, time windows,
+  and locations. Writes HTML report to /config/www/ and sets HA sensors.
+url: https://github.com/grantma/FishingApp
+arch:
+  - amd64
+  - aarch64
+  - armv7
+startup: services
+boot: auto
+init: false
+homeassistant_api: true
+hassio_api: false
+host_network: false
+
+map:
+  - config:rw
+
+ingress: true
+ingress_port: 5055
+panel_title: Fishing Forecast
+panel_icon: mdi:fish
+
+options:
+  area: matagorda
+  refresh_hours: "5,12"
+  report_path: /config/www/fishing_forecast.html
+
+schema:
+  area: list(matagorda|galveston|freeport|port_oconnor|port_aransas|corpus_christi|south_padre|rockport)
+  refresh_hours: str
+  report_path: str

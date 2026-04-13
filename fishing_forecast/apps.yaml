@@ -1,0 +1,22 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# AppDaemon app config for Fishing Forecast
+#
+# Copy the entire fishing_forecast/ directory into your AppDaemon apps dir.
+# Check AppDaemon log for: "Using /config/apps as app_dir"
+# Common paths: /config/apps/ or /config/appdaemon/apps/
+# ─────────────────────────────────────────────────────────────────────────────
+
+fishing_forecast:
+  module: fishing_app
+  class: FishingForecastApp
+
+  # Area key — must match a key in config.py AREAS dict
+  area: matagorda
+
+  # Where to write the HTML report (HA www/ folder makes it browsable)
+  report_path: /config/www/fishing_forecast.html
+
+  # Times to auto-refresh (24h format). Add/remove as needed.
+  refresh_times:
+    - "05:00:00"
+    - "12:00:00"
