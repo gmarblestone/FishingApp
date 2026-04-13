@@ -239,3 +239,5 @@ set HA_TOKEN=<token> && python run_forecast.py push  # Push sensors via HA REST 
 ```
 
 See `integrations/ha_server.py` and `integrations/ha_webhook.py`. These files are kept for reference but are **not needed** with the add-on deployment.
+#   F i s h i n g A p p  
+ 
