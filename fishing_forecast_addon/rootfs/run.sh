@@ -23,6 +23,9 @@ bashio::log.info "Report path: ${REPORT_PATH}"
 
 # Ensure www directory exists
 mkdir -p "$(dirname "${REPORT_PATH}")"
+mkdir -p /app/www
+
+INGRESS_PORT="${INGRESS_PORT:-5055}"
 
 # ── Helper: run forecast and push sensors ────────────────────────────────────
 
@@ -92,6 +95,16 @@ is_refresh_hour() {
 
 run_forecast || bashio::log.warning "Initial forecast failed — will retry at next refresh"
 
+# Copy report to web-servable directory
+cp "${REPORT_PATH}" /app/www/index.html 2>/dev/null || true
+
+# ── Start web server for ingress UI ──────────────────────────────────────────
+
+bashio::log.info "Starting web server on port ${INGRESS_PORT}"
+cd /app/www
+python3 -m http.server "${INGRESS_PORT}" --bind 0.0.0.0 &
+WEB_PID=$!
+
 # ── Main loop: check every 30 minutes, run on refresh hours ──────────────────
 
 last_run_hour=""
@@ -101,6 +114,8 @@ while true; do
 
     if is_refresh_hour && [ "${current_hour}" != "${last_run_hour}" ]; then
         run_forecast && last_run_hour="${current_hour}" || bashio::log.warning "Scheduled forecast failed"
+        # Update the served report
+        cp "${REPORT_PATH}" /app/www/index.html 2>/dev/null || true
     fi
 
     sleep 1800  # Check every 30 minutes
