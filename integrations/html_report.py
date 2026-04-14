@@ -280,6 +280,7 @@ def generate_html_string(forecast) -> str:
         <div>
           <h2>{day_name} {badges}</h2>
           <span class="day-factor">{d.key_factor}</span>
+          <div class="print-summary">🐟 {d.best_species} &middot; 📍 {d.location_rec} &middot; ⏰ {d.best_window} &middot; 💨 {d.conditions.wind.speed_mph:.0f}mph {d.conditions.wind.direction} &middot; 🌊 {d.conditions.buoy.wave_height_ft:.1f}ft</div>
         </div>
         <div class="day-scores-mini">
           <span class="score-pill" style="background:{_score_color(d.inshore_score)}">IN {d.inshore_score}</span>
@@ -483,6 +484,7 @@ def generate_html_string(forecast) -> str:
   .alert-item {{ font-size:12px; color:#991b1b; }}
   .data-gaps {{ font-size:11px; color:#94a3b8; margin-top:8px; }}
   .no-data {{ font-size:12px; color:#94a3b8; text-align:center; padding:20px; }}
+  .print-summary {{ display:none; }}
   .footer {{ text-align:center; font-size:11px; color:#94a3b8; margin-top:24px; padding-top:12px; border-top:1px solid #e2e8f0; }}
 
   /* ── Dark Mode ── */
@@ -537,15 +539,29 @@ def generate_html_string(forecast) -> str:
   }}
 
   @media print {{
-    body {{ background:white; font-size:11px; }}
-    .no-print {{ display:none !important; }}
+    /* ── iPhone-sized minimal PDF: ~390px portrait ── */
+    @page {{ size:90mm 190mm; margin:4mm; }}
+    * {{ -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; color-adjust:exact !important; }}
+    body {{ background:white; font-size:10px; color:#1e293b; }}
+    .no-print,.top-bar,.gauge-row,.callout,.best-days,.week-table,.footer,.chevron {{ display:none !important; }}
     .container {{ padding:0; max-width:100%; }}
-    .day-body {{ display:block !important; }}
-    .day-section {{ break-inside:avoid; box-shadow:none; border:1px solid #e2e8f0; }}
-    .gauge-item,.col-card,.best-day-card,.callout,.rec-box,.datum {{ box-shadow:none; }}
-    .week-table {{ box-shadow:none; border:1px solid #e2e8f0; }}
-    .header {{ break-after:avoid; }}
-    .chevron {{ display:none; }}
+    .header {{ padding:10px 14px; margin-bottom:8px; border-radius:8px; }}
+    .header h1 {{ font-size:16px; }}
+    .header .area {{ font-size:11px; }}
+    .header .subtitle {{ font-size:9px; }}
+
+    .day-section {{ border-radius:8px; margin-bottom:6px; box-shadow:none; border:1px solid #e2e8f0; break-inside:avoid; page-break-inside:avoid; }}
+    .day-today {{ border:1.5px solid #0ea5e9; }}
+    .day-header {{ padding:8px 10px; }}
+    .day-header h2 {{ font-size:12px; }}
+    .day-factor {{ font-size:9px; }}
+    .day-scores-mini {{ gap:4px; }}
+    .score-pill {{ font-size:10px; padding:1px 5px; min-width:30px; }}
+    .badge {{ font-size:8px; padding:1px 5px; }}
+
+    /* Hide expanded body — show only header cards */
+    .day-body {{ display:none !important; }}
+    .print-summary {{ display:block; font-size:9px; color:#475569; margin-top:2px; line-height:1.4; }}
   }}
 </style>
 </head>
