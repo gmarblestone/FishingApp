@@ -419,7 +419,7 @@ def generate_html_string(forecast) -> str:
 <html lang="en" class="">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
 <title>Fishing Forecast — {forecast.area}</title>
 <script>
   // Auto-detect system dark mode on load, before paint
