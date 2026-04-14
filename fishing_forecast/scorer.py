@@ -4,7 +4,14 @@ Recommends best species based on conditions.
 """
 
 import logging
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
+
+# US Central Time (CDT = UTC-5, CST = UTC-6) — use CDT for spring/summer
+try:
+    import zoneinfo
+    CENTRAL = zoneinfo.ZoneInfo("America/Chicago")
+except Exception:
+    CENTRAL = timezone(timedelta(hours=-5))
 
 try:
     from fishing_forecast.config import (
@@ -389,7 +396,7 @@ def generate_forecast(area_key: str = "matagorda", num_days: int = 7) -> Forecas
 
     return ForecastResult(
         area=area.get("name", area_key),
-        generated_at=datetime.now().isoformat(timespec="minutes"),
+        generated_at=datetime.now(tz=CENTRAL).isoformat(timespec="minutes"),
         days=days,
         best_inshore_day=best_inshore.date.isoformat() if best_inshore else None,
         best_offshore_day=best_offshore.date.isoformat() if best_offshore else None,

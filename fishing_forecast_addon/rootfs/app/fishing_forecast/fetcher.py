@@ -4,9 +4,16 @@ All sources are free, no API keys required (except NWS needs a User-Agent).
 """
 
 import logging
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta, timezone
 
 import requests
+
+# US Central Time
+try:
+    import zoneinfo
+    CENTRAL = zoneinfo.ZoneInfo("America/Chicago")
+except Exception:
+    CENTRAL = timezone(timedelta(hours=-5))
 
 try:
     from fishing_forecast.config import (
@@ -206,7 +213,7 @@ def fetch_all_conditions(
         logger.error("Unknown area: %s", area_key)
         return []
 
-    today = date.today()
+    today = datetime.now(tz=CENTRAL).date()
     end = today + timedelta(days=num_days - 1)
 
     # Tides — use first station

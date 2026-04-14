@@ -1,7 +1,9 @@
 ARG BUILD_FROM
 FROM ${BUILD_FROM}
 
-RUN apk add --no-cache python3 py3-pip py3-requests nginx jq
+RUN apk add --no-cache python3 py3-pip py3-requests nginx jq tzdata
+
+ENV TZ=America/Chicago
 
 COPY rootfs/run.sh /run.sh
 COPY rootfs/app /app
