@@ -140,6 +140,7 @@ sys.path.insert(0, '.')
 try:
     from fishing_forecast.scorer import generate_forecast
     from integrations.html_report import generate_html_string
+    from integrations.image_report import generate_image
     print('Fetching data...')
     forecast = generate_forecast('${AREA}')
     print('Scoring complete — ' + str(len(forecast.days)) + ' days')
@@ -148,7 +149,11 @@ try:
         f.write(html)
     with open('/app/www/index.html', 'w') as f:
         f.write(html)
-    print('Report written')
+    print('HTML report written')
+    # Generate JPG for sharing/printing
+    jpg_path = '${REPORT_PATH}'.replace('.html', '.jpg')
+    generate_image(forecast, jpg_path)
+    print('JPG written to ' + jpg_path)
 except Exception as e:
     print('ERROR: ' + str(e))
     traceback.print_exc()

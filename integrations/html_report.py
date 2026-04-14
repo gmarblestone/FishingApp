@@ -704,7 +704,7 @@ def generate_html_string(forecast) -> str:
 
   {day_sections}
 
-  <div class="footer">Fishing Forecast v1.2.2 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
+  <div class="footer">Fishing Forecast v1.2.3 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
 </div>
 
 <script>

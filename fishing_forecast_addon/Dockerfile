@@ -1,7 +1,7 @@
 ARG BUILD_FROM
 FROM ${BUILD_FROM}
 
-RUN apk add --no-cache python3 py3-pip py3-requests nginx jq tzdata
+RUN apk add --no-cache python3 py3-pip py3-requests py3-pillow nginx jq tzdata font-dejavu
 
 ENV TZ=America/Chicago
 
