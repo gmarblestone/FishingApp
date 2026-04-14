@@ -243,10 +243,12 @@ def fetch_all_conditions(
         rain_chance = 0
         air_high = 0.0
         air_low = 0.0
+        has_weather = False
         for p in nws_periods:
             p_start = p.get("startTime", "")
             if day_str in p_start:
                 if p.get("isDaytime", True):
+                    has_weather = True
                     wind = _parse_wind_from_nws(p)
                     air_high = float(p.get("temperature", 0))
                     short = p.get("shortForecast", "").lower()
@@ -281,6 +283,7 @@ def fetch_all_conditions(
                 rain_chance_pct=rain_chance,
                 air_temp_high_f=air_high,
                 air_temp_low_f=air_low,
+                has_weather=has_weather,
             )
         )
 

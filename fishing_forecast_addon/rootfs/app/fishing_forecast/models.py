@@ -54,6 +54,7 @@ class DayConditions:
     rain_chance_pct: int = 0
     air_temp_high_f: float = 0.0
     air_temp_low_f: float = 0.0
+    has_weather: bool = True  # False for extended days beyond NWS range
 
 
 @dataclass

@@ -376,6 +376,8 @@ def score_day(conditions: DayConditions) -> DayForecast:
         warnings.append(f"Rough seas: {conditions.buoy.wave_height_ft} ft")
 
     data_gaps = []
+    if not conditions.has_weather:
+        data_gaps.append("Extended forecast — wind/weather estimated from current conditions")
     if conditions.buoy.water_temp_f == 0:
         data_gaps.append("Water temperature unavailable")
     if not conditions.tide.high_times and not conditions.tide.low_times:
@@ -403,11 +405,29 @@ def score_day(conditions: DayConditions) -> DayForecast:
 
 
 def generate_forecast(area_key: str = "matagorda", num_days: int = 7) -> ForecastResult:
-    """Generate a complete forecast for the given area."""
+    """Generate a complete forecast for the given area.
+    
+    If no day in the initial window scores >= 6 inshore, extends up to 14 days
+    to find a decent fishing day. Days beyond NWS coverage (7) have limited
+    weather data and are marked accordingly.
+    """
+    GOOD_THRESHOLD = 6
+    MAX_EXTEND = 14
+
     area = AREAS.get(area_key, {})
     conditions_list = fetch_all_conditions(area_key, num_days)
-
     days = [score_day(c) for c in conditions_list]
+
+    # If no good day found, extend the search
+    best_so_far = max((d.inshore_score for d in days), default=0)
+    if best_so_far < GOOD_THRESHOLD and num_days < MAX_EXTEND:
+        extra_days = MAX_EXTEND - num_days
+        logger.info("No good day in %d-day window (best=%d), extending to %d days",
+                     num_days, best_so_far, MAX_EXTEND)
+        extended = fetch_all_conditions(area_key, MAX_EXTEND)
+        # Only add the new days (skip ones we already have)
+        for c in extended[num_days:]:
+            days.append(score_day(c))
 
     best_inshore = max(days, key=lambda d: d.inshore_score) if days else None
     best_offshore = max(days, key=lambda d: d.offshore_score) if days else None

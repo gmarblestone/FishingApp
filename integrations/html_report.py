@@ -331,6 +331,8 @@ def generate_html_string(forecast) -> str:
         badges = ""
         if is_today:
             badges += '<span class="badge badge-today">TODAY</span>'
+        if not d.conditions.has_weather:
+            badges += ' <span class="badge badge-extended">EXTENDED</span>'
         if d.date == best_inshore.date:
             badges += ' <span class="badge badge-inshore">★ Best Inshore</span>'
         if d.date == best_offshore.date:
@@ -515,6 +517,7 @@ def generate_html_string(forecast) -> str:
   .badge-inshore {{ background:#dcfce7; color:#166534; }}
   .badge-offshore {{ background:#dbeafe; color:#1e40af; }}
   .badge-today {{ background:#fef3c7; color:#92400e; }}
+  .badge-extended {{ background:#e0e7ff; color:#3730a3; }}
   .day-section {{ background:white; border-radius:14px; margin-bottom:14px; box-shadow:0 1px 3px rgba(0,0,0,0.06); overflow:hidden; }}
   .day-today {{ border:2px solid #0ea5e9; }}
   .day-header {{ display:flex; justify-content:space-between; align-items:center; padding:14px 20px; cursor:pointer; transition:background .15s; }}
@@ -588,6 +591,7 @@ def generate_html_string(forecast) -> str:
   .dark .badge-inshore {{ background:#064e3b; color:#6ee7b7; }}
   .dark .badge-offshore {{ background:#1e3a5f; color:#93c5fd; }}
   .dark .badge-today {{ background:#78350f; color:#fcd34d; }}
+  .dark .badge-extended {{ background:#312e81; color:#a5b4fc; }}
   .dark .footer {{ border-top-color:#334155; }}
 
   .dark .svg-muted {{ fill:#94a3b8; }}
@@ -647,7 +651,7 @@ def generate_html_string(forecast) -> str:
   <div class="header">
     <h1>🎣 Fishing Forecast</h1>
     <div class="area">{forecast.area}</div>
-    <div class="subtitle">Generated {forecast.generated_at} &middot; {_fmtdate(days[0].date)} – {_fmtdate(days[-1].date)}/{days[-1].date.year}</div>
+    <div class="subtitle">Generated {forecast.generated_at} &middot; {_fmtdate(days[0].date)} – {_fmtdate(days[-1].date)}/{days[-1].date.year}{' &middot; Extended search (no great days in 7-day window)' if len(days) > 7 else ''}</div>
   </div>
 
   <div class="top-bar no-print">
@@ -696,7 +700,7 @@ def generate_html_string(forecast) -> str:
 
   {day_sections}
 
-  <div class="footer">Fishing Forecast v1.1.9 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
+  <div class="footer">Fishing Forecast v1.2.0 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
 </div>
 
 <script>
