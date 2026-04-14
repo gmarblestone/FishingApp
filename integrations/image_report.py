@@ -223,9 +223,112 @@ def generate_image_string(forecast) -> Image.Image:
 
     # ── Footer ───────────────────────────────────────────────────────────────
     footer_y = CARD_H - 50
-    draw.text((40, footer_y), f"Fishing Forecast v1.2.3 | NOAA / NDBC / NWS | {forecast.generated_at}", fill="#64748b", font=f_tiny)
+    draw.text((40, footer_y), f"Fishing Forecast v1.2.4 | NOAA / NDBC / NWS | {forecast.generated_at}", fill="#64748b", font=f_tiny)
 
     return img
+
+
+def _draw_day_detail(draw, d, y, fonts, card_w, is_today=False):
+    """Draw a detailed day card. Returns new y position."""
+    f_section, f_med, f_body, f_small, f_tiny = fonts
+
+    day_label = f"{'TODAY — ' if is_today else ''}{d.date.strftime('%A')}, {_fmtdate(d.date)}"
+    draw.rounded_rectangle([30, y, card_w - 30, y + 520], radius=16, fill=CARD_BG)
+
+    # Day header
+    draw.text((60, y + 14), day_label, fill=LIGHT_BLUE if is_today else WHITE, font=f_section)
+
+    # Score pills
+    scores = [
+        ("Inshore", d.inshore_score),
+        ("Nearshore", d.nearshore_score),
+        ("Offshore", d.offshore_score),
+    ]
+    for i, (label, score) in enumerate(scores):
+        sx = 60 + i * 310
+        draw.rounded_rectangle([sx, y + 55, sx + 280, y + 115], radius=12, fill=_score_color(score))
+        draw.text((sx + 14, y + 62), f"{score}/10", fill="#0f172a", font=f_med)
+        draw.text((sx + 130, y + 70), label, fill="#0f172a", font=f_small)
+
+    # Details grid
+    details = [
+        ("Target Species", d.best_species),
+        ("Where to Fish", d.location_rec),
+        ("Best Window", d.best_window),
+        ("Avoid", d.worst_window),
+        ("Wind", f"{d.conditions.wind.speed_mph:.0f} mph {d.conditions.wind.direction}"),
+        ("Waves", f"{d.conditions.buoy.wave_height_ft:.1f} ft @ {d.conditions.buoy.wave_period_sec:.0f}s"),
+        ("Water Temp", f"{d.conditions.buoy.water_temp_f:.1f}°F"),
+        ("Air High/Low", f"{d.conditions.air_temp_high_f:.0f}°F / {d.conditions.air_temp_low_f:.0f}°F"),
+        ("Cloud / Rain", f"{d.conditions.cloud_cover_pct}% / {d.conditions.rain_chance_pct}%"),
+        ("Pressure", f"{d.conditions.buoy.pressure_mb:.1f} mb ({d.conditions.pressure_trend})"),
+    ]
+    dy = y + 130
+    col_w = (card_w - 120) // 2
+    for i, (label, value) in enumerate(details):
+        col = i % 2
+        row = i // 2
+        dx = 60 + col * col_w
+        ry = dy + row * 48
+        draw.text((dx, ry), label, fill=MUTED, font=f_tiny)
+        draw.text((dx, ry + 20), value, fill=WHITE, font=f_small)
+
+    # Tides
+    tide_y = dy + 5 * 48 + 10
+    if d.conditions.tide.high_times or d.conditions.tide.low_times:
+        tides = "Tides: H " + ", ".join(_fmt12(t) for t in d.conditions.tide.high_times)
+        tides += "  |  L " + ", ".join(_fmt12(t) for t in d.conditions.tide.low_times)
+        draw.text((60, tide_y), tides, fill=MUTED, font=f_small)
+
+    # Key factor
+    draw.text((60, tide_y + 30), f"Key: {d.key_factor}", fill=MUTED, font=f_tiny)
+
+    # Warnings
+    if d.warnings:
+        draw.text((60, tide_y + 55), "⚠ " + " | ".join(d.warnings), fill=RED, font=f_tiny)
+
+    return y + 540
+
+
+def generate_detail_image(forecast, day_indices, title, output_path):
+    """Generate a detailed day report image for specific day indices."""
+    days = forecast.days
+    if not days:
+        return ""
+
+    num = len(day_indices)
+    card_h = 220 + num * 560 + 60  # header + days + footer
+    img = Image.new("RGB", (CARD_W, card_h), BG)
+    draw = ImageDraw.Draw(img)
+
+    f_title = _load_font_bold(48)
+    f_area = _load_font(30)
+    f_section = _load_font_bold(28)
+    f_med = _load_font_bold(32)
+    f_body = _load_font(26)
+    f_small = _load_font(22)
+    f_tiny = _load_font(18)
+    fonts = (f_section, f_med, f_body, f_small, f_tiny)
+
+    # Header
+    draw.rectangle([0, 0, CARD_W, 160], fill=HEADER_BG)
+    draw.text((40, 30), title, fill=WHITE, font=f_title)
+    draw.text((40, 90), forecast.area, fill=MUTED, font=f_area)
+    draw.text((40, 125), f"Generated {forecast.generated_at}", fill=MUTED, font=f_tiny)
+    y = 180
+
+    # Day detail cards
+    for idx in day_indices:
+        if idx < len(days):
+            y = _draw_day_detail(draw, days[idx], y, fonts, CARD_W, is_today=(idx == 0))
+
+    # Footer
+    draw.text((40, y + 10), f"Fishing Forecast v1.2.4 | NOAA / NDBC / NWS | {forecast.generated_at}", fill="#64748b", font=f_tiny)
+
+    Path(output_path).parent.mkdir(parents=True, exist_ok=True)
+    img.save(output_path, "JPEG", quality=90)
+    logger.info("Detail JPG written to %s", output_path)
+    return output_path
 
 
 def generate_image(forecast, output_path: str = "/config/www/fishing_forecast.jpg") -> str:

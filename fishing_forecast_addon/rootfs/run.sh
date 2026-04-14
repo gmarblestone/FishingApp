@@ -135,12 +135,12 @@ trap shutdown INT TERM
 run_forecast() {
     log "Running forecast for ${AREA}..."
     cd /app && python3 -c "
-import sys, traceback
+import sys, traceback, os
 sys.path.insert(0, '.')
 try:
     from fishing_forecast.scorer import generate_forecast
     from integrations.html_report import generate_html_string
-    from integrations.image_report import generate_image
+    from integrations.image_report import generate_image, generate_detail_image
     print('Fetching data...')
     forecast = generate_forecast('${AREA}')
     print('Scoring complete — ' + str(len(forecast.days)) + ' days')
@@ -150,10 +150,22 @@ try:
     with open('/app/www/index.html', 'w') as f:
         f.write(html)
     print('HTML report written')
-    # Generate JPG for sharing/printing
-    jpg_path = '${REPORT_PATH}'.replace('.html', '.jpg')
-    generate_image(forecast, jpg_path)
-    print('JPG written to ' + jpg_path)
+    # Generate JPG images
+    base = os.path.dirname('${REPORT_PATH}')
+    # 7-day overview
+    generate_image(forecast, os.path.join(base, 'fishing_forecast.jpg'))
+    print('7-day JPG written')
+    # Today detail
+    generate_detail_image(forecast, [0], 'Today\\'s Fishing Report', os.path.join(base, 'fishingreport_today.jpg'))
+    print('Today JPG written')
+    # Tomorrow detail
+    if len(forecast.days) > 1:
+        generate_detail_image(forecast, [1], 'Tomorrow\\'s Fishing Report', os.path.join(base, 'fishingreport_tomorrow.jpg'))
+        print('Tomorrow JPG written')
+    # 3-day detail
+    indices = list(range(min(3, len(forecast.days))))
+    generate_detail_image(forecast, indices, '3-Day Fishing Report', os.path.join(base, 'fishingreport_threeday.jpg'))
+    print('3-day JPG written')
 except Exception as e:
     print('ERROR: ' + str(e))
     traceback.print_exc()
