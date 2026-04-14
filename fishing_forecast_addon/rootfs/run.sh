@@ -10,6 +10,16 @@ log "Fishing Forecast Add-on starting"
 log "PID $$, user $(whoami)"
 log "============================================"
 
+# ── Debug: check for supervisor token in various locations ───────────────────
+log "ENV SUPERVISOR_TOKEN length: ${#SUPERVISOR_TOKEN}"
+if [ -f /run/s6/container_environment/SUPERVISOR_TOKEN ]; then
+  S6_TOKEN=$(cat /run/s6/container_environment/SUPERVISOR_TOKEN)
+  log "s6 file token length: ${#S6_TOKEN}"
+  export SUPERVISOR_TOKEN="${S6_TOKEN}"
+fi
+# List env vars related to supervisor (redacted)
+env | grep -i 'supervi\|hassio\|token' | sed 's/=.*/=<redacted>/' | while read -r line; do log "  env: $line"; done
+
 # ── Read add-on options ──────────────────────────────────────────────────────
 
 OPTIONS="/data/options.json"
@@ -33,6 +43,12 @@ PORT="${INGRESS_PORT:-5055}"
 log "Ingress port: ${PORT}"
 
 HA_TOKEN="${SUPERVISOR_TOKEN:-}"
+if [ -n "$HA_TOKEN" ]; then
+  log "SUPERVISOR_TOKEN set (${#HA_TOKEN} chars)"
+else
+  warn "SUPERVISOR_TOKEN is EMPTY — sensor push will fail (401)"
+  warn "Ensure homeassistant_api: true in config.yaml"
+fi
 
 mkdir -p "$(dirname "${REPORT_PATH}")" 2>/dev/null || true
 mkdir -p /app/www /run/nginx
@@ -149,11 +165,16 @@ except Exception as e:
     cd /app && python3 -c "
 import sys, traceback, os
 sys.path.insert(0, '.')
+token = os.environ.get('SUPERVISOR_TOKEN', '')
+print('Token length: ' + str(len(token)))
+if not token:
+    print('SUPERVISOR_TOKEN is empty - skipping sensor push')
+    sys.exit(0)
 try:
     from fishing_forecast.scorer import generate_forecast
     forecast = generate_forecast('${AREA}')
     from push_sensors import push_sensors
-    push_sensors(forecast.to_dict(), 'http://supervisor/core/api', os.environ.get('SUPERVISOR_TOKEN', ''))
+    push_sensors(forecast.to_dict(), 'http://supervisor/core/api', token)
 except Exception as e:
     print('Sensor push error: ' + str(e))
     traceback.print_exc()
