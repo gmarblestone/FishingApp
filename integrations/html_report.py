@@ -484,6 +484,8 @@ def generate_html_string(forecast) -> str:
   body {{ font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:#f0f4f8; color:#1e293b; line-height:1.5; }}
   .container {{ max-width:1200px; margin:0 auto; padding:20px; }}
   .header {{ background:linear-gradient(135deg,#0c4a6e,#0284c7); color:white; padding:28px 32px; border-radius:16px; margin-bottom:20px; }}
+  .header-row {{ display:flex; align-items:center; gap:18px; }}
+  .header-logo {{ flex-shrink:0; }}
   .header h1 {{ font-size:26px; }}
   .header .area {{ font-size:15px; opacity:0.9; }}
   .header .subtitle {{ font-size:12px; opacity:0.7; margin-top:2px; }}
@@ -653,9 +655,28 @@ def generate_html_string(forecast) -> str:
 <body>
 <div class="container">
   <div class="header">
-    <h1>🎣 Fishing Forecast</h1>
-    <div class="area">{forecast.area}</div>
-    <div class="subtitle">Generated {forecast.generated_at} &middot; {_fmtdate(days[0].date)} – {_fmtdate(days[-1].date)}/{days[-1].date.year}{' &middot; Extended search (no great days in 7-day window)' if len(days) > 7 else ''}</div>
+    <div class="header-row">
+      <div class="header-logo">
+        <svg width="72" height="72" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="46" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="3"/>
+          <!-- Top hook (gold) — shank from top, curves right then hooks left toward center -->
+          <path d="M50 8 L50 32 Q50 44 60 44 Q72 44 72 34 Q72 24 62 24 Q54 24 54 32" fill="none" stroke="#fbbf24" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="54" cy="32" r="3" fill="#fbbf24"/>
+          <!-- Eye of top hook -->
+          <circle cx="50" cy="8" r="4" fill="none" stroke="#fbbf24" stroke-width="2.5"/>
+          <!-- Bottom hook (sky blue) — shank from bottom, curves left then hooks right toward center -->
+          <path d="M50 92 L50 68 Q50 56 40 56 Q28 56 28 66 Q28 76 38 76 Q46 76 46 68" fill="none" stroke="#38bdf8" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="46" cy="68" r="3" fill="#38bdf8"/>
+          <!-- Eye of bottom hook -->
+          <circle cx="50" cy="92" r="4" fill="none" stroke="#38bdf8" stroke-width="2.5"/>
+        </svg>
+      </div>
+      <div>
+        <h1>Grant's Fishing Forecast</h1>
+        <div class="area">{forecast.area}</div>
+        <div class="subtitle">Generated {forecast.generated_at} &middot; {_fmtdate(days[0].date)} – {_fmtdate(days[-1].date)}/{days[-1].date.year}{' &middot; Extended search (no great days in 7-day window)' if len(days) > 7 else ''}</div>
+      </div>
+    </div>
   </div>
 
   <div class="top-bar no-print">
@@ -704,7 +725,7 @@ def generate_html_string(forecast) -> str:
 
   {day_sections}
 
-  <div class="footer">Fishing Forecast v1.2.4 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
+  <div class="footer">Grant's Fishing Forecast v1.2.5 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
 </div>
 
 <script>
