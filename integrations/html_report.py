@@ -9,6 +9,7 @@ Generate a self-contained HTML fishing forecast report with:
 Opens in browser, includes print/PDF export.
 """
 
+import html as html_mod
 import logging
 import math
 import webbrowser
@@ -319,8 +320,8 @@ def generate_html_string(forecast) -> str:
         f"★ Best offshore: {best_offshore.date.strftime('%a')} {_fmtdate(best_offshore.date)} ({best_offshore.offshore_score}/10)",
     ]
     _raw = "\n".join(share_lines)
-    # Escape for embedding in a JS single-quoted string
-    share_text = _raw.replace("\\", "\\\\").replace("'", "\\'").replace("\n", "\\n")
+    # HTML-escape for safe embedding in a data attribute
+    share_text_escaped = html_mod.escape(_raw, quote=True)
 
     # ── Build per-day detail sections ────────────────────────────────────────
     day_sections = ""
@@ -656,7 +657,7 @@ def generate_html_string(forecast) -> str:
 
   <div class="top-bar no-print">
     <div>
-      <button class="btn" id="shareBtn">📤 Share</button>
+      <button class="btn" id="shareBtn" data-share-text="{share_text_escaped}">📤 Share</button>
       <button class="btn btn-outline" id="pdfBtn" style="margin-left:6px">�️ Print</button>
       <button class="btn btn-outline" id="expandBtn" style="margin-left:6px">Expand All</button>
       <button class="btn btn-outline" id="collapseBtn" style="margin-left:6px">Collapse All</button>
@@ -700,7 +701,7 @@ def generate_html_string(forecast) -> str:
 
   {day_sections}
 
-  <div class="footer">Fishing Forecast v1.2.0 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
+  <div class="footer">Fishing Forecast v1.2.1 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
 </div>
 
 <script>
@@ -755,7 +756,7 @@ document.addEventListener('DOMContentLoaded', () => {{
   }});
 }});
 async function shareForecast() {{
-  const text = '{share_text}';
+  const text = document.getElementById('shareBtn').getAttribute('data-share-text');
   if (navigator.share) {{
     try {{
       await navigator.share({{ title: '🎣 Fishing Forecast', text: text }});
