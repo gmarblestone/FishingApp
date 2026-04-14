@@ -488,7 +488,7 @@ def generate_html_string(forecast) -> str:
   .header .area {{ font-size:15px; opacity:0.9; }}
   .header .subtitle {{ font-size:12px; opacity:0.7; margin-top:2px; }}
   .top-bar {{ display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:8px; }}
-  .btn {{ background:#0369a1; color:white; border:none; padding:8px 18px; border-radius:8px; cursor:pointer; font-size:13px; font-weight:500; }}
+  .btn {{ background:#0369a1; color:white; border:none; padding:5px 12px; border-radius:6px; cursor:pointer; font-size:12px; font-weight:500; }}
   .btn:hover {{ background:#0c4a6e; }}
   .btn-outline {{ background:transparent; border:2px solid #0369a1; color:#0369a1; }}
   .btn-outline:hover {{ background:#0369a1; color:white; }}
@@ -618,6 +618,9 @@ def generate_html_string(forecast) -> str:
     .callout-item {{ min-width:100px; }}
     .wind-speed {{ font-size:22px; }}
     .time-summary {{ flex-direction:column; gap:4px; }}
+    .btn {{ padding:4px 10px; font-size:11px; border-radius:6px; }}
+    .btn-outline {{ border-width:1.5px; }}
+    .top-bar {{ gap:4px; }}
   }}
 
   @media print {{
@@ -658,10 +661,10 @@ def generate_html_string(forecast) -> str:
   <div class="top-bar no-print">
     <div>
       <button class="btn" id="shareBtn" data-share-text="{share_text_escaped}">📤 Share</button>
-      <button class="btn btn-outline" id="pdfBtn" style="margin-left:6px">�️ Print</button>
-      <button class="btn btn-outline" id="expandBtn" style="margin-left:6px">Expand All</button>
-      <button class="btn btn-outline" id="collapseBtn" style="margin-left:6px">Collapse All</button>
-      <button class="btn btn-outline" id="darkBtn" style="margin-left:6px">🌙 Dark</button>
+      <button class="btn btn-outline" id="pdfBtn" style="margin-left:4px">🖨️ Print</button>
+      <button class="btn btn-outline" id="expandBtn" style="margin-left:4px">Expand All</button>
+      <button class="btn btn-outline" id="collapseBtn" style="margin-left:4px">Collapse All</button>
+      <button class="btn btn-outline" id="darkBtn" style="margin-left:4px">🌙 Dark</button>
     </div>
     <div class="hint-text" style="font-size:12px;color:#64748b">Click any day to expand</div>
   </div>
@@ -701,7 +704,7 @@ def generate_html_string(forecast) -> str:
 
   {day_sections}
 
-  <div class="footer">Fishing Forecast v1.2.1 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
+  <div class="footer">Fishing Forecast v1.2.2 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
 </div>
 
 <script>
