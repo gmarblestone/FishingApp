@@ -6,20 +6,18 @@ REPORT_PATH=$(bashio::config 'report_path')
 
 HA_TOKEN="${SUPERVISOR_TOKEN}"
 HA_API="http://supervisor/core/api"
-INGRESS_PORT="${INGRESS_PORT:-5055}"
 
 bashio::log.info "============================================"
 bashio::log.info "Fishing Forecast Add-on starting"
 bashio::log.info "Area: ${AREA}"
 bashio::log.info "Refresh hours: ${REFRESH_HOURS}"
 bashio::log.info "Report path: ${REPORT_PATH}"
-bashio::log.info "Ingress port: ${INGRESS_PORT}"
 bashio::log.info "============================================"
 
 mkdir -p "$(dirname "${REPORT_PATH}")" 2>/dev/null || true
-mkdir -p /app/www
+mkdir -p /app/www /run/nginx
 
-# ── Write a loading page so the web server has something to show ─────────────
+# ── Write a loading page so nginx has something to show immediately ──────────
 
 cat > /app/www/index.html << 'LOADING'
 <!DOCTYPE html>
@@ -33,22 +31,17 @@ LOADING
 
 bashio::log.info "Loading page written to /app/www/index.html"
 
-# ── Start web server FIRST so ingress works immediately ──────────────────────
+# ── Start nginx FIRST so ingress works immediately ───────────────────────────
 
-bashio::log.info "Starting web server on port ${INGRESS_PORT}..."
-cd /app/www
-python3 -m http.server "${INGRESS_PORT}" --bind 0.0.0.0 &
-WEB_PID=$!
-bashio::log.info "Web server started (PID ${WEB_PID})"
-
-# Give the server a moment to bind
+bashio::log.info "Starting nginx on port 5055..."
+nginx &
+NGINX_PID=$!
 sleep 1
 
-# Verify it's running
-if kill -0 "${WEB_PID}" 2>/dev/null; then
-    bashio::log.info "Web server is running on port ${INGRESS_PORT}"
+if kill -0 "${NGINX_PID}" 2>/dev/null; then
+    bashio::log.info "nginx started (PID ${NGINX_PID})"
 else
-    bashio::log.error "Web server failed to start!"
+    bashio::log.error "nginx failed to start!"
 fi
 
 # ── Helper: run forecast and push sensors ────────────────────────────────────
@@ -153,12 +146,11 @@ while true; do
         run_forecast && last_run_hour="${current_hour}" || bashio::log.warning "Scheduled forecast failed"
     fi
 
-    # Make sure web server is still running
-    if ! kill -0 "${WEB_PID}" 2>/dev/null; then
-        bashio::log.warning "Web server died — restarting..."
-        cd /app/www
-        python3 -m http.server "${INGRESS_PORT}" --bind 0.0.0.0 &
-        WEB_PID=$!
+    # Make sure nginx is still running
+    if ! kill -0 "${NGINX_PID}" 2>/dev/null; then
+        bashio::log.warning "nginx died — restarting..."
+        nginx &
+        NGINX_PID=$!
     fi
 
     sleep 1800
