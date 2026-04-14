@@ -256,7 +256,7 @@ def generate_image_string(forecast) -> Image.Image:
 
     # ── Footer ───────────────────────────────────────────────────────────────
     footer_y = CARD_H - 50
-    draw.text((40, footer_y), f"Grant's Fishing Forecast v1.2.5 | NOAA / NDBC / NWS | {forecast.generated_at}", fill="#64748b", font=f_tiny)
+    draw.text((40, footer_y), f"Grant's Fishing Forecast v1.2.6 | NOAA / NDBC / NWS | {forecast.generated_at}", fill="#64748b", font=f_tiny)
 
     return img
 
@@ -359,7 +359,7 @@ def generate_detail_image(forecast, day_indices, title, output_path):
             y = _draw_day_detail(draw, days[idx], y, fonts, CARD_W, is_today=(idx == 0))
 
     # Footer
-    draw.text((40, y + 10), f"Grant's Fishing Forecast v1.2.5 | NOAA / NDBC / NWS | {forecast.generated_at}", fill="#64748b", font=f_tiny)
+    draw.text((40, y + 10), f"Grant's Fishing Forecast v1.2.6 | NOAA / NDBC / NWS | {forecast.generated_at}", fill="#64748b", font=f_tiny)
 
     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
     img.save(output_path, "JPEG", quality=90)
