@@ -269,7 +269,9 @@ def generate_html_string(forecast) -> str:
         f"★ Best inshore: {best_inshore.date.strftime('%a %b %d')} ({best_inshore.inshore_score}/10)",
         f"★ Best offshore: {best_offshore.date.strftime('%a %b %d')} ({best_offshore.offshore_score}/10)",
     ]
-    share_text = "\\n".join(share_lines).replace("'", "\\'")
+    _raw = "\n".join(share_lines)
+    # Escape for embedding in a JS single-quoted string
+    share_text = _raw.replace("\\", "\\\\").replace("'", "\\'").replace("\n", "\\n")
 
     # ── Build per-day detail sections ────────────────────────────────────────
     day_sections = ""
@@ -693,7 +695,6 @@ async function shareForecast() {{
       b.textContent = '✅ Copied!';
       setTimeout(() => b.textContent = orig, 2000);
     }} catch(e) {{
-      // Final fallback: select-all in a textarea
       const ta = document.createElement('textarea');
       ta.value = text;
       document.body.appendChild(ta);
@@ -704,8 +705,6 @@ async function shareForecast() {{
     }}
   }}
 }}
-  if (btn && document.documentElement.classList.contains('dark')) btn.textContent = '☀️ Light';
-}});
 </script>
 </body>
 </html>"""
