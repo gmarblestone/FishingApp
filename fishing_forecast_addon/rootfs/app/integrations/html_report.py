@@ -31,6 +31,24 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 
+# ── Format helpers ───────────────────────────────────────────────────────────
+
+def _fmt12(time_24: str) -> str:
+    """Convert 'HH:MM' 24h to '12:30 PM' 12h format."""
+    try:
+        h, m = int(time_24.split(":")[0]), time_24.split(":")[1]
+        suffix = "AM" if h < 12 else "PM"
+        h12 = h % 12 or 12
+        return f"{h12}:{m} {suffix}"
+    except Exception:
+        return time_24
+
+
+def _fmtdate(d) -> str:
+    """Format a date object as M/DD."""
+    return f"{d.month}/{d.day:02d}"
+
+
 # ── Color helpers ────────────────────────────────────────────────────────────
 
 def _score_color(score: int) -> str:
@@ -280,9 +298,9 @@ def generate_html_string(forecast) -> str:
     off_go = "GO" if today.offshore_score >= 6 else "MARGINAL" if today.offshore_score >= 4 else "NO-GO"
     share_lines = [
         f"🎣 Fishing Forecast — {forecast.area}",
-        f"{days[0].date.strftime('%b %d')} – {days[-1].date.strftime('%b %d')}",
+        f"{_fmtdate(days[0].date)} – {_fmtdate(days[-1].date)}",
         "",
-        f"TODAY ({today.date.strftime('%a %b %d')}):",
+        f"TODAY ({today.date.strftime('%a')} {_fmtdate(today.date)}):",
         f"  Inshore {today.inshore_score}/10 · Offshore {today.offshore_score}/10 ({off_go})",
         f"  🐟 {today.best_species}",
         f"  📍 {today.location_rec}",
@@ -293,12 +311,12 @@ def generate_html_string(forecast) -> str:
     for d in days[1:]:
         off_tag = "✅" if d.offshore_score >= 6 else "⚠️" if d.offshore_score >= 4 else "❌"
         share_lines.append(
-            f"{d.date.strftime('%a %d')}: IN {d.inshore_score} · OFF {d.offshore_score}{off_tag} · {d.conditions.wind.speed_mph:.0f}mph · {d.conditions.buoy.wave_height_ft:.1f}ft"
+            f"{d.date.strftime('%a')} {_fmtdate(d.date)}: IN {d.inshore_score} · OFF {d.offshore_score}{off_tag} · {d.conditions.wind.speed_mph:.0f}mph · {d.conditions.buoy.wave_height_ft:.1f}ft"
         )
     share_lines += [
         "",
-        f"★ Best inshore: {best_inshore.date.strftime('%a %b %d')} ({best_inshore.inshore_score}/10)",
-        f"★ Best offshore: {best_offshore.date.strftime('%a %b %d')} ({best_offshore.offshore_score}/10)",
+        f"★ Best inshore: {best_inshore.date.strftime('%a')} {_fmtdate(best_inshore.date)} ({best_inshore.inshore_score}/10)",
+        f"★ Best offshore: {best_offshore.date.strftime('%a')} {_fmtdate(best_offshore.date)} ({best_offshore.offshore_score}/10)",
     ]
     _raw = "\n".join(share_lines)
     # Escape for embedding in a JS single-quoted string
@@ -307,7 +325,7 @@ def generate_html_string(forecast) -> str:
     # ── Build per-day detail sections ────────────────────────────────────────
     day_sections = ""
     for d in days:
-        day_name = d.date.strftime("%A, %b %d")
+        day_name = f"{d.date.strftime('%A')}, {_fmtdate(d.date)}"
         is_today = d.date == today.date
 
         badges = ""
@@ -421,8 +439,8 @@ def generate_html_string(forecast) -> str:
             {_tide_chart_svg(d.conditions.tide.hourly, d.conditions.tide.high_times, d.conditions.tide.low_times, is_today=is_today, current_hour=datetime.now(tz=CENTRAL).hour + datetime.now(tz=CENTRAL).minute / 60.0 if is_today else None)}
             <div class="tide-summary">
               Range: {d.conditions.tide.range_ft:.2f} ft &middot;
-              Highs: {', '.join(d.conditions.tide.high_times) or '—'} &middot;
-              Lows: {', '.join(d.conditions.tide.low_times) or '—'}
+              Highs: {', '.join(_fmt12(t) for t in d.conditions.tide.high_times) or '—'} &middot;
+              Lows: {', '.join(_fmt12(t) for t in d.conditions.tide.low_times) or '—'}
             </div>
           </div>
         </div>
@@ -436,7 +454,7 @@ def generate_html_string(forecast) -> str:
     for d in days:
         off_label = "GO" if d.offshore_score >= 6 else "MARG" if d.offshore_score >= 4 else "NO"
         week_rows += f"""<tr>
-          <td class="day-name">{d.date.strftime('%a %b %d')}</td>
+          <td class="day-name">{d.date.strftime('%a')} {_fmtdate(d.date)}</td>
           <td><span class="score-pill" style="background:{_score_color(d.inshore_score)}">{d.inshore_score}</span></td>
           <td><span class="score-pill" style="background:{_score_color(d.nearshore_score)}">{d.nearshore_score}</span></td>
           <td><span class="score-pill" style="background:{_score_color(d.offshore_score)}">{d.offshore_score}<small> {off_label}</small></span></td>
@@ -629,7 +647,7 @@ def generate_html_string(forecast) -> str:
   <div class="header">
     <h1>🎣 Fishing Forecast</h1>
     <div class="area">{forecast.area}</div>
-    <div class="subtitle">Generated {forecast.generated_at} &middot; {days[0].date.strftime('%b %d')} – {days[-1].date.strftime('%b %d, %Y')}</div>
+    <div class="subtitle">Generated {forecast.generated_at} &middot; {_fmtdate(days[0].date)} – {_fmtdate(days[-1].date)}/{days[-1].date.year}</div>
   </div>
 
   <div class="top-bar no-print">
@@ -661,12 +679,12 @@ def generate_html_string(forecast) -> str:
   <div class="best-days">
     <div class="best-day-card inshore">
       <h3>★ Best Inshore Day</h3>
-      <div class="day">{best_inshore.date.strftime('%A, %b %d')}</div>
+      <div class="day">{best_inshore.date.strftime('%A')}, {_fmtdate(best_inshore.date)}</div>
       <div class="meta">{best_inshore.inshore_score}/10 &middot; {best_inshore.best_species} &middot; {best_inshore.location_rec}</div>
     </div>
     <div class="best-day-card offshore">
       <h3>{"★ Best Offshore Day" if best_offshore.offshore_score >= 5 else "⚠️ Offshore — Best Available"}</h3>
-      <div class="day">{best_offshore.date.strftime('%A, %b %d')}</div>
+      <div class="day">{best_offshore.date.strftime('%A')}, {_fmtdate(best_offshore.date)}</div>
       <div class="meta">{best_offshore.offshore_score}/10 &middot; Waves {best_offshore.conditions.buoy.wave_height_ft:.1f} ft &middot; Wind {best_offshore.conditions.wind.speed_mph:.0f} mph {"— ✅ Fishable" if best_offshore.offshore_score >= 6 else "— ⚠️ Marginal" if best_offshore.offshore_score >= 4 else "— ❌ Rough"}</div>
     </div>
   </div>
@@ -678,7 +696,7 @@ def generate_html_string(forecast) -> str:
 
   {day_sections}
 
-  <div class="footer">Fishing Forecast v1.1.8 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
+  <div class="footer">Fishing Forecast v1.1.9 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
 </div>
 
 <script>

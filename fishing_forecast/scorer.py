@@ -13,6 +13,24 @@ try:
 except Exception:
     CENTRAL = timezone(timedelta(hours=-5))
 
+
+def _fmt12(time_24: str) -> str:
+    """Convert 'HH:MM' 24h to '12:30 PM'."""
+    try:
+        h, m = int(time_24.split(":")[0]), time_24.split(":")[1]
+        suffix = "AM" if h < 12 else "PM"
+        h12 = h % 12 or 12
+        return f"{h12}:{m} {suffix}"
+    except Exception:
+        return time_24
+
+
+def _fmt_generated_at(dt: datetime) -> str:
+    """Format datetime as 'M/DD/YYYY h:MM AM/PM'."""
+    h = dt.hour % 12 or 12
+    suffix = "AM" if dt.hour < 12 else "PM"
+    return f"{dt.month}/{dt.day:02d}/{dt.year} {h}:{dt.minute:02d} {suffix}"
+
 try:
     from fishing_forecast.config import (
         AREAS,
@@ -154,7 +172,7 @@ def _pick_best_window(conditions: DayConditions) -> str:
     if conditions.air_temp_high_f > 85:
         return "Dawn to mid-morning (beat the heat)"
     if len(conditions.tide.high_times) > 0:
-        return f"Around tide changes: highs {', '.join(conditions.tide.high_times)}"
+        return f"Around tide changes: highs {', '.join(_fmt12(t) for t in conditions.tide.high_times)}"
     return "Early morning best"
 
 
@@ -168,7 +186,7 @@ def _pick_worst_window(conditions: DayConditions) -> str:
         return "Afternoon (storms likely)"
     # Slack tide = slowest
     if conditions.tide.low_times:
-        return f"Slack low tide around {conditions.tide.low_times[0]}"
+        return f"Slack low tide around {_fmt12(conditions.tide.low_times[0])}"
     return "Midday (slack tide period)"
 
 
@@ -192,7 +210,7 @@ def _build_time_windows(conditions: DayConditions) -> list[TimeWindow]:
     morning_tides = [t for t in tide_events if "07" <= t[:2] <= "10"]
     if morning_tides:
         morning_quality = "prime"
-        morning_reason = f"Tide change at {', '.join(morning_tides)} — peak movement"
+        morning_reason = f"Tide change at {', '.join(_fmt12(t) for t in morning_tides)} — peak movement"
     if wind > WIND_FISHABLE_MPH:
         morning_quality = "fair"
         morning_reason += f" (wind {wind:.0f} mph)"
@@ -210,7 +228,7 @@ def _build_time_windows(conditions: DayConditions) -> list[TimeWindow]:
     midday_tides = [t for t in tide_events if "10" <= t[:2] <= "14"]
     if midday_tides and midday_quality != "poor":
         midday_quality = "good"
-        midday_reason = f"Tide change at {', '.join(midday_tides)} keeps fish active"
+        midday_reason = f"Tide change at {', '.join(_fmt12(t) for t in midday_tides)} keeps fish active"
     windows.append(TimeWindow("10:00 AM – 2:00 PM", midday_quality, midday_reason))
 
     # Afternoon (2-5 PM)
@@ -222,7 +240,7 @@ def _build_time_windows(conditions: DayConditions) -> list[TimeWindow]:
     afternoon_tides = [t for t in tide_events if "14" <= t[:2] <= "17"]
     if afternoon_tides and afternoon_quality != "poor":
         afternoon_quality = "good"
-        afternoon_reason = f"Tide change at {', '.join(afternoon_tides)}"
+        afternoon_reason = f"Tide change at {', '.join(_fmt12(t) for t in afternoon_tides)}"
     windows.append(TimeWindow("2:00 PM – 5:00 PM", afternoon_quality, afternoon_reason))
 
     # Evening (5-8 PM)
@@ -231,7 +249,7 @@ def _build_time_windows(conditions: DayConditions) -> list[TimeWindow]:
     evening_tides = [t for t in tide_events if "17" <= t[:2] <= "20"]
     if evening_tides:
         evening_quality = "prime"
-        evening_reason = f"Tide change at {', '.join(evening_tides)} + low light = prime"
+        evening_reason = f"Tide change at {', '.join(_fmt12(t) for t in evening_tides)} + low light = prime"
     if conditions.rain_chance_pct >= 60:
         evening_quality = "fair"
         evening_reason = "Possible lingering storms"
@@ -396,7 +414,7 @@ def generate_forecast(area_key: str = "matagorda", num_days: int = 7) -> Forecas
 
     return ForecastResult(
         area=area.get("name", area_key),
-        generated_at=datetime.now(tz=CENTRAL).isoformat(timespec="minutes"),
+        generated_at=_fmt_generated_at(datetime.now(tz=CENTRAL)),
         days=days,
         best_inshore_day=best_inshore.date.isoformat() if best_inshore else None,
         best_offshore_day=best_offshore.date.isoformat() if best_offshore else None,
