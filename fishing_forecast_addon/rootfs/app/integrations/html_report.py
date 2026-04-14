@@ -304,7 +304,7 @@ def generate_html_string(forecast) -> str:
 
         day_sections += f"""
     <div class="day-section {'day-today' if is_today else ''}">
-      <div class="day-header" onclick="toggleDay('day-{d.date.isoformat()}')">
+      <div class="day-header" data-day="day-{d.date.isoformat()}">
         <div>
           <h2>{day_name} {badges}</h2>
           <span class="day-factor">{d.key_factor}</span>
@@ -603,11 +603,11 @@ def generate_html_string(forecast) -> str:
 
   <div class="top-bar no-print">
     <div>
-      <button class="btn" onclick="shareForecast()">📤 Share</button>
-      <button class="btn btn-outline" onclick="window.print()" style="margin-left:6px">📄 PDF</button>
-      <button class="btn btn-outline" onclick="expandAll()" style="margin-left:6px">Expand All</button>
-      <button class="btn btn-outline" onclick="collapseAll()" style="margin-left:6px">Collapse All</button>
-      <button class="btn btn-outline" onclick="toggleDark()" style="margin-left:6px" id="darkBtn">🌙 Dark</button>
+      <button class="btn" id="shareBtn">📤 Share</button>
+      <button class="btn btn-outline" id="pdfBtn" style="margin-left:6px">📄 PDF</button>
+      <button class="btn btn-outline" id="expandBtn" style="margin-left:6px">Expand All</button>
+      <button class="btn btn-outline" id="collapseBtn" style="margin-left:6px">Collapse All</button>
+      <button class="btn btn-outline" id="darkBtn" style="margin-left:6px">🌙 Dark</button>
     </div>
     <div class="hint-text" style="font-size:12px;color:#64748b">Click any day to expand</div>
   </div>
@@ -674,10 +674,23 @@ function toggleDark() {{
   const btn = document.getElementById('darkBtn');
   btn.textContent = html.classList.contains('dark') ? '☀️ Light' : '🌙 Dark';
 }}
-// Update button label on load
+// Wire up all event listeners (no inline onclick — CSP safe)
 document.addEventListener('DOMContentLoaded', () => {{
-  const btn = document.getElementById('darkBtn');
-  if (btn && document.documentElement.classList.contains('dark')) btn.textContent = '☀️ Light';
+  const darkBtn = document.getElementById('darkBtn');
+  if (darkBtn && document.documentElement.classList.contains('dark')) darkBtn.textContent = '☀️ Light';
+
+  // Toolbar buttons
+  document.getElementById('shareBtn').addEventListener('click', shareForecast);
+  document.getElementById('pdfBtn').addEventListener('click', () => window.print());
+  document.getElementById('expandBtn').addEventListener('click', expandAll);
+  document.getElementById('collapseBtn').addEventListener('click', collapseAll);
+  darkBtn.addEventListener('click', toggleDark);
+
+  // Day-header accordion — event delegation
+  document.addEventListener('click', (e) => {{
+    const hdr = e.target.closest('.day-header[data-day]');
+    if (hdr) toggleDay(hdr.getAttribute('data-day'));
+  }});
 }});
 async function shareForecast() {{
   const text = '{share_text}';
@@ -690,7 +703,7 @@ async function shareForecast() {{
   }} else {{
     try {{
       await navigator.clipboard.writeText(text);
-      const b = event.target.closest('button');
+      const b = document.getElementById('shareBtn');
       const orig = b.textContent;
       b.textContent = '✅ Copied!';
       setTimeout(() => b.textContent = orig, 2000);
