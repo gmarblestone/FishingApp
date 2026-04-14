@@ -604,7 +604,7 @@ def generate_html_string(forecast) -> str:
   <div class="top-bar no-print">
     <div>
       <button class="btn" id="shareBtn">📤 Share</button>
-      <button class="btn btn-outline" id="pdfBtn" style="margin-left:6px">📄 PDF</button>
+      <button class="btn btn-outline" id="pdfBtn" style="margin-left:6px">�️ Print</button>
       <button class="btn btn-outline" id="expandBtn" style="margin-left:6px">Expand All</button>
       <button class="btn btn-outline" id="collapseBtn" style="margin-left:6px">Collapse All</button>
       <button class="btn btn-outline" id="darkBtn" style="margin-left:6px">🌙 Dark</button>
@@ -647,7 +647,7 @@ def generate_html_string(forecast) -> str:
 
   {day_sections}
 
-  <div class="footer">Fishing Forecast v1.1.4 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
+  <div class="footer">Fishing Forecast v1.1.5 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
 </div>
 
 <script>
@@ -681,7 +681,16 @@ document.addEventListener('DOMContentLoaded', () => {{
 
   // Toolbar buttons
   document.getElementById('shareBtn').addEventListener('click', shareForecast);
-  document.getElementById('pdfBtn').addEventListener('click', () => window.print());
+  document.getElementById('pdfBtn').addEventListener('click', async () => {{
+    // On iOS/mobile WebView, window.print() is not supported — use share sheet which has Print
+    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent) && navigator.share) {{
+      try {{
+        await navigator.share({{ title: '🎣 Fishing Forecast', url: window.location.href }});
+      }} catch(e) {{ if (e.name !== 'AbortError') console.error(e); }}
+    }} else {{
+      window.print();
+    }}
+  }});
   document.getElementById('expandBtn').addEventListener('click', expandAll);
   document.getElementById('collapseBtn').addEventListener('click', collapseAll);
   darkBtn.addEventListener('click', toggleDark);
