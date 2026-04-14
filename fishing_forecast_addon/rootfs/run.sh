@@ -1,35 +1,43 @@
 #!/bin/bash
 set -o pipefail
 
-# ── Read add-on options from /data/options.json (no s6/bashio dependency) ─────
-OPTIONS="/data/options.json"
-if [ ! -f "$OPTIONS" ]; then
-  echo "[ERROR] Missing $OPTIONS"
-  exit 1
-fi
-
-AREA=$(jq -r '.area // "matagorda"' "$OPTIONS")
-REFRESH_HOURS=$(jq -r '.refresh_hours // "5,12"' "$OPTIONS")
-REPORT_PATH=$(jq -r '.report_path // "/config/www/fishing_forecast.html"' "$OPTIONS")
-
-HA_TOKEN="${SUPERVISOR_TOKEN:-}"
-HA_API="http://supervisor/core/api"
-
-log() { echo "[INFO] $*"; }
-warn() { echo "[WARN] $*"; }
-err() { echo "[ERROR] $*"; }
+log() { echo "[INFO]  $(date '+%H:%M:%S') $*"; }
+warn() { echo "[WARN]  $(date '+%H:%M:%S') $*"; }
+err() { echo "[ERROR] $(date '+%H:%M:%S') $*"; }
 
 log "============================================"
 log "Fishing Forecast Add-on starting"
-log "Area: ${AREA}"
-log "Refresh hours: ${REFRESH_HOURS}"
-log "Report path: ${REPORT_PATH}"
+log "PID $$, user $(whoami)"
 log "============================================"
+
+# ── Read add-on options ──────────────────────────────────────────────────────
+
+OPTIONS="/data/options.json"
+if [ ! -f "$OPTIONS" ]; then
+  err "Missing $OPTIONS — add-on options not rendered by supervisor?"
+  err "Listing /data:"
+  ls -la /data/ 2>&1 || true
+  # Fall back to defaults so nginx at least starts
+  AREA="matagorda"
+  REFRESH_HOURS="5,12"
+  REPORT_PATH="/config/www/fishing_forecast.html"
+else
+  AREA=$(jq -r '.area // "matagorda"' "$OPTIONS")
+  REFRESH_HOURS=$(jq -r '.refresh_hours // "5,12"' "$OPTIONS")
+  REPORT_PATH=$(jq -r '.report_path // "/config/www/fishing_forecast.html"' "$OPTIONS")
+  log "Options loaded: area=${AREA} refresh=${REFRESH_HOURS}"
+fi
+
+# Use INGRESS_PORT if supervisor sets it, else fall back to config default
+PORT="${INGRESS_PORT:-5055}"
+log "Ingress port: ${PORT}"
+
+HA_TOKEN="${SUPERVISOR_TOKEN:-}"
 
 mkdir -p "$(dirname "${REPORT_PATH}")" 2>/dev/null || true
 mkdir -p /app/www /run/nginx
 
-# ── Write a loading page so nginx has something to show immediately ──────────
+# ── Write loading page ───────────────────────────────────────────────────────
 
 cat > /app/www/index.html << 'LOADING'
 <!DOCTYPE html>
@@ -40,54 +48,76 @@ h1{color:#0c4a6e;margin-bottom:8px;} p{color:#64748b;}</style></head>
 <body><div class="box"><h1>🎣 Fishing Forecast</h1><p>Loading forecast data...</p><p>This page will refresh automatically.</p>
 <script>setTimeout(()=>location.reload(),15000)</script></div></body></html>
 LOADING
+log "Loading page written"
 
-log "Loading page written to /app/www/index.html"
+# ── Kill any stale nginx from previous run ───────────────────────────────────
 
-# ── Start nginx FIRST so ingress works immediately ───────────────────────────
+if command -v pkill >/dev/null 2>&1; then
+  pkill -f "nginx" 2>/dev/null || true
+  sleep 1
+fi
+# Verify port is free
+if command -v ss >/dev/null 2>&1; then
+  if ss -tlnp 2>/dev/null | grep -q ":${PORT} "; then
+    warn "Port ${PORT} still in use after cleanup!"
+    ss -tlnp 2>/dev/null | grep ":${PORT} " || true
+  else
+    log "Port ${PORT} is free"
+  fi
+fi
+
+# ── Configure and start nginx ────────────────────────────────────────────────
 
 if ! command -v nginx >/dev/null 2>&1; then
-  err "nginx not found! Build may have failed."
+  err "nginx not installed!"
   exit 1
 fi
 
+# Inject actual port into nginx config
+sed -i "s/__PORT__/${PORT}/" /etc/nginx/nginx.conf
+log "nginx config: port set to ${PORT}"
+
+# Test config
 log "Testing nginx config..."
 nginx -t 2>&1 | while IFS= read -r line; do log "  $line"; done
 
-log "Starting nginx on port 5055..."
-nginx -g 'daemon off;' &
+# Start nginx (daemon off is in config, so it stays foreground-ish)
+log "Starting nginx..."
+nginx &
 NGINX_PID=$!
 sleep 2
 
 if kill -0 "${NGINX_PID}" 2>/dev/null; then
-    log "nginx started (PID ${NGINX_PID})"
+  log "nginx running (PID ${NGINX_PID})"
 else
-    err "nginx failed to start! Check logs above."
+  err "nginx FAILED to start!"
+  # Try to see what went wrong
+  cat /var/log/nginx/error.log 2>/dev/null || true
+  err "Falling back to python3 http.server on port ${PORT}"
+  cd /app/www && python3 -m http.server "${PORT}" --bind 0.0.0.0 &
+  NGINX_PID=$!
+  sleep 1
+  if kill -0 "${NGINX_PID}" 2>/dev/null; then
+    log "Python fallback server running (PID ${NGINX_PID})"
+  else
+    err "Fallback server also failed! Ingress will 502."
+  fi
 fi
 
-# ── Helper: run forecast and push sensors ────────────────────────────────────
+# ── Graceful shutdown ────────────────────────────────────────────────────────
+
+shutdown() {
+  log "Shutdown requested..."
+  kill -TERM "${NGINX_PID}" 2>/dev/null || true
+  wait "${NGINX_PID}" 2>/dev/null || true
+  exit 0
+}
+trap shutdown INT TERM
+
+# ── Forecast helper ───────────────────────────────────────────────────────────
 
 run_forecast() {
     log "Running forecast for ${AREA}..."
-
-    # Test Python works
-    log "Testing Python..."
-    python3 --version 2>&1 | while read -r line; do log "  ${line}"; done
-
-    # Test imports
-    log "Testing imports..."
-    cd /app && python3 -c "
-import sys
-sys.path.insert(0, '.')
-try:
-    from fishing_forecast.config import AREAS
-    print('Config OK — areas: ' + ', '.join(AREAS.keys()))
-except Exception as e:
-    print('Import error: ' + str(e))
-    raise
-" 2>&1 | while read -r line; do log "  ${line}"; done
-
-    # Generate HTML report directly (simpler, avoids JSON escaping issues)
-    log "Generating forecast and report..."
     cd /app && python3 -c "
 import sys, traceback
 sys.path.insert(0, '.')
@@ -115,18 +145,15 @@ except Exception as e:
     fi
 
     # Push sensors to HA
-    log "Pushing sensors to Home Assistant..."
+    log "Pushing sensors..."
     cd /app && python3 -c "
-import sys, json, traceback
+import sys, traceback, os
 sys.path.insert(0, '.')
 try:
     from fishing_forecast.scorer import generate_forecast
     forecast = generate_forecast('${AREA}')
     from push_sensors import push_sensors
-    import os
-    ha_token = os.environ.get('SUPERVISOR_TOKEN', '')
-    ha_api = 'http://supervisor/core/api'
-    push_sensors(forecast.to_dict(), ha_api, ha_token)
+    push_sensors(forecast.to_dict(), 'http://supervisor/core/api', os.environ.get('SUPERVISOR_TOKEN', ''))
 except Exception as e:
     print('Sensor push error: ' + str(e))
     traceback.print_exc()
@@ -152,11 +179,11 @@ is_refresh_hour() {
 # ── Initial run ──────────────────────────────────────────────────────────────
 
 log "Running initial forecast..."
-run_forecast || warn "Initial forecast failed — will retry at next scheduled refresh"
+run_forecast || warn "Initial forecast failed — will retry at next refresh"
 
 # ── Main loop ────────────────────────────────────────────────────────────────
 
-log "Entering main loop — checking every 30 minutes"
+log "Entering main loop"
 last_run_hour=""
 
 while true; do
@@ -166,10 +193,10 @@ while true; do
         run_forecast && last_run_hour="${current_hour}" || warn "Scheduled forecast failed"
     fi
 
-    # Make sure nginx is still running
+    # Keep nginx alive
     if ! kill -0 "${NGINX_PID}" 2>/dev/null; then
         warn "nginx died — restarting..."
-        nginx -g 'daemon off;' &
+        nginx &
         NGINX_PID=$!
     fi
 

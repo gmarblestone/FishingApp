@@ -7,8 +7,10 @@ COPY rootfs/run.sh /run.sh
 COPY rootfs/app /app
 COPY rootfs/nginx.conf /etc/nginx/nginx.conf
 
-RUN chmod +x /run.sh \
-    && mkdir -p /run/nginx /var/lib/nginx/tmp /app/www
+# Strip Windows CRLF that breaks #!/bin/bash shebang
+RUN sed -i 's/\r$//' /run.sh \
+    && chmod +x /run.sh \
+    && mkdir -p /run/nginx /var/lib/nginx/tmp /var/log/nginx /app/www
 
 WORKDIR /app
 
