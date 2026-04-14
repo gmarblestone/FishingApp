@@ -12,8 +12,14 @@ Opens in browser, includes print/PDF export.
 import logging
 import math
 import webbrowser
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
+
+try:
+    import zoneinfo
+    CENTRAL = zoneinfo.ZoneInfo("America/Chicago")
+except Exception:
+    CENTRAL = timezone(timedelta(hours=-5))
 
 try:
     from fishing_forecast.config import DEFAULT_AREA
@@ -76,7 +82,7 @@ def _gauge_svg(score: int, label: str, size: int = 120) -> str:
     </svg>"""
 
 
-def _tide_chart_svg(hourly_points, high_times, low_times, width=480, height=120) -> str:
+def _tide_chart_svg(hourly_points, high_times, low_times, width=480, height=120, is_today=False, current_hour=None) -> str:
     """SVG area chart of hourly tide levels."""
     if not hourly_points:
         return '<div class="no-data">No tide data available</div>'
@@ -111,15 +117,39 @@ def _tide_chart_svg(hourly_points, high_times, low_times, width=480, height=120)
             elif hr == 18: label = "6 PM"
             time_labels += f'<text x="{tx(i):.1f}" y="{height-2}" text-anchor="middle" font-size="9" fill="#94a3b8">{label}</text>'
 
-    # Hi/Lo markers
+    # Hi/Lo markers — show time labels
     markers = ""
     for i, p in enumerate(hourly_points):
         if p.time in high_times:
+            hr = int(p.time.split(":")[0])
+            am_pm = "AM" if hr < 12 else "PM"
+            hr12 = hr % 12 or 12
+            time_label = f"{hr12}{am_pm}"
             markers += f"""<circle cx="{tx(i):.1f}" cy="{ty(p.height_ft):.1f}" r="4" fill="#ef4444" stroke="white" stroke-width="1.5"/>
-            <text x="{tx(i):.1f}" y="{ty(p.height_ft) - 8:.1f}" text-anchor="middle" font-size="9" font-weight="600" fill="#ef4444">H {p.height_ft:.1f}'</text>"""
+            <text x="{tx(i):.1f}" y="{ty(p.height_ft) - 8:.1f}" text-anchor="middle" font-size="9" font-weight="600" fill="#ef4444">H {p.height_ft:.1f}' @ {time_label}</text>"""
         if p.time in low_times:
+            hr = int(p.time.split(":")[0])
+            am_pm = "AM" if hr < 12 else "PM"
+            hr12 = hr % 12 or 12
+            time_label = f"{hr12}{am_pm}"
             markers += f"""<circle cx="{tx(i):.1f}" cy="{ty(p.height_ft):.1f}" r="4" fill="#3b82f6" stroke="white" stroke-width="1.5"/>
-            <text x="{tx(i):.1f}" y="{ty(p.height_ft) + 14:.1f}" text-anchor="middle" font-size="9" font-weight="600" fill="#3b82f6">L {p.height_ft:.1f}'</text>"""
+            <text x="{tx(i):.1f}" y="{ty(p.height_ft) + 14:.1f}" text-anchor="middle" font-size="9" font-weight="600" fill="#3b82f6">L {p.height_ft:.1f}' @ {time_label}</text>"""
+
+    # Current time marker (today only)
+    now_marker = ""
+    if is_today and current_hour is not None and len(hourly_points) > 1:
+        # Fractional index for current hour
+        frac_idx = current_hour / 24.0 * (len(hourly_points) - 1)
+        idx_lo = int(frac_idx)
+        idx_hi = min(idx_lo + 1, len(hourly_points) - 1)
+        frac = frac_idx - idx_lo
+        interp_h = heights[idx_lo] + frac * (heights[idx_hi] - heights[idx_lo])
+        nx = tx(frac_idx)
+        ny = ty(interp_h)
+        # Vertical dashed line + dot + "Now" label
+        now_marker = f"""<line x1="{nx:.1f}" y1="{pad_t}" x2="{nx:.1f}" y2="{pad_t + ch}" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.7"/>
+        <circle cx="{nx:.1f}" cy="{ny:.1f}" r="5" fill="#f59e0b" stroke="white" stroke-width="2"/>
+        <text x="{nx:.1f}" y="{pad_t - 1:.1f}" text-anchor="middle" font-size="9" font-weight="700" fill="#f59e0b">Now</text>"""
 
     # Y-axis labels
     y_labels = ""
@@ -134,6 +164,7 @@ def _tide_chart_svg(hourly_points, high_times, low_times, width=480, height=120)
       <polygon points="{fill_pts}" fill="url(#tideGrad)"/>
       <polyline points="{pts}" fill="none" stroke="#0ea5e9" stroke-width="2.5" stroke-linejoin="round"/>
       {markers}
+      {now_marker}
       {time_labels}
       {y_labels}
     </svg>"""
@@ -387,7 +418,7 @@ def generate_html_string(forecast) -> str:
 
           <div class="col-card">
             <div class="section-label" style="margin:0 0 4px 0">🌊 Tides</div>
-            {_tide_chart_svg(d.conditions.tide.hourly, d.conditions.tide.high_times, d.conditions.tide.low_times)}
+            {_tide_chart_svg(d.conditions.tide.hourly, d.conditions.tide.high_times, d.conditions.tide.low_times, is_today=is_today, current_hour=datetime.now(tz=CENTRAL).hour + datetime.now(tz=CENTRAL).minute / 60.0 if is_today else None)}
             <div class="tide-summary">
               Range: {d.conditions.tide.range_ft:.2f} ft &middot;
               Highs: {', '.join(d.conditions.tide.high_times) or '—'} &middot;
@@ -647,7 +678,7 @@ def generate_html_string(forecast) -> str:
 
   {day_sections}
 
-  <div class="footer">Fishing Forecast v1.1.6 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
+  <div class="footer">Fishing Forecast v1.1.7 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
 </div>
 
 <script>
