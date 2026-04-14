@@ -561,9 +561,9 @@ def generate_html_string(forecast) -> str:
   .dark .rec-box,.dark .datum {{ background:#0f172a; border-color:#334155; }}
   .dark .alert-box {{ background:#450a0a; border-color:#7f1d1d; }}
   .dark .alert-item {{ color:#fca5a5; }}
-  .dark .btn {{ background:#0ea5e9; color:#0f172a; }}
+  .dark .btn {{ background:#0ea5e9; color:#0f172a; font-weight:600; }}
   .dark .btn:hover {{ background:#38bdf8; color:#0f172a; }}
-  .dark .btn-outline {{ border-color:#38bdf8; color:#38bdf8; }}
+  .dark .btn-outline {{ background:rgba(56,189,248,0.15); border-color:#7dd3fc; color:#e0f2fe; font-weight:600; }}
   .dark .btn-outline:hover {{ background:#38bdf8; color:#0f172a; }}
   .dark .hint-text {{ color:#94a3b8; }}
   .dark .day-today {{ border-color:#0ea5e9; }}
@@ -678,7 +678,7 @@ def generate_html_string(forecast) -> str:
 
   {day_sections}
 
-  <div class="footer">Fishing Forecast v1.1.7 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
+  <div class="footer">Fishing Forecast v1.1.8 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
 </div>
 
 <script>
