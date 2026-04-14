@@ -245,6 +245,32 @@ def generate_html_string(forecast) -> str:
     best_inshore = max(days, key=lambda d: d.inshore_score)
     best_offshore = max(days, key=lambda d: d.offshore_score)
 
+    # ── Build share text (baked into HTML for Web Share API) ─────────────────
+    off_go = "GO" if today.offshore_score >= 6 else "MARGINAL" if today.offshore_score >= 4 else "NO-GO"
+    share_lines = [
+        f"🎣 Fishing Forecast — {forecast.area}",
+        f"{days[0].date.strftime('%b %d')} – {days[-1].date.strftime('%b %d')}",
+        "",
+        f"TODAY ({today.date.strftime('%a %b %d')}):",
+        f"  Inshore {today.inshore_score}/10 · Offshore {today.offshore_score}/10 ({off_go})",
+        f"  🐟 {today.best_species}",
+        f"  📍 {today.location_rec}",
+        f"  ⏰ Best: {today.best_window}",
+        f"  💨 {today.conditions.wind.speed_mph:.0f}mph {today.conditions.wind.direction} · 🌊 {today.conditions.buoy.wave_height_ft:.1f}ft · 🌡️ {today.conditions.buoy.water_temp_f:.0f}°F",
+        "",
+    ]
+    for d in days[1:]:
+        off_tag = "✅" if d.offshore_score >= 6 else "⚠️" if d.offshore_score >= 4 else "❌"
+        share_lines.append(
+            f"{d.date.strftime('%a %d')}: IN {d.inshore_score} · OFF {d.offshore_score}{off_tag} · {d.conditions.wind.speed_mph:.0f}mph · {d.conditions.buoy.wave_height_ft:.1f}ft"
+        )
+    share_lines += [
+        "",
+        f"★ Best inshore: {best_inshore.date.strftime('%a %b %d')} ({best_inshore.inshore_score}/10)",
+        f"★ Best offshore: {best_offshore.date.strftime('%a %b %d')} ({best_offshore.offshore_score}/10)",
+    ]
+    share_text = "\\n".join(share_lines).replace("'", "\\'")
+
     # ── Build per-day detail sections ────────────────────────────────────────
     day_sections = ""
     for d in days:
@@ -575,7 +601,8 @@ def generate_html_string(forecast) -> str:
 
   <div class="top-bar no-print">
     <div>
-      <button class="btn" onclick="window.print()">📄 Export PDF</button>
+      <button class="btn" onclick="shareForecast()">📤 Share</button>
+      <button class="btn btn-outline" onclick="window.print()" style="margin-left:6px">📄 PDF</button>
       <button class="btn btn-outline" onclick="expandAll()" style="margin-left:6px">Expand All</button>
       <button class="btn btn-outline" onclick="collapseAll()" style="margin-left:6px">Collapse All</button>
       <button class="btn btn-outline" onclick="toggleDark()" style="margin-left:6px" id="darkBtn">🌙 Dark</button>
@@ -648,6 +675,35 @@ function toggleDark() {{
 // Update button label on load
 document.addEventListener('DOMContentLoaded', () => {{
   const btn = document.getElementById('darkBtn');
+  if (btn && document.documentElement.classList.contains('dark')) btn.textContent = '☀️ Light';
+}});
+async function shareForecast() {{
+  const text = '{share_text}';
+  if (navigator.share) {{
+    try {{
+      await navigator.share({{ title: '🎣 Fishing Forecast', text: text }});
+    }} catch(e) {{
+      if (e.name !== 'AbortError') console.error(e);
+    }}
+  }} else {{
+    try {{
+      await navigator.clipboard.writeText(text);
+      const b = event.target.closest('button');
+      const orig = b.textContent;
+      b.textContent = '✅ Copied!';
+      setTimeout(() => b.textContent = orig, 2000);
+    }} catch(e) {{
+      // Final fallback: select-all in a textarea
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      alert('Forecast copied to clipboard!');
+    }}
+  }}
+}}
   if (btn && document.documentElement.classList.contains('dark')) btn.textContent = '☀️ Light';
 }});
 </script>
