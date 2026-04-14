@@ -9,6 +9,7 @@ Generate a self-contained HTML fishing forecast report with:
 Opens in browser, includes print/PDF export.
 """
 
+import base64
 import html as html_mod
 import logging
 import math
@@ -322,6 +323,17 @@ def generate_html_string(forecast) -> str:
     _raw = "\n".join(share_lines)
     # HTML-escape for safe embedding in a data attribute
     share_text_escaped = html_mod.escape(_raw, quote=True)
+
+    # ── Base64-encode logo for inline embedding ─────────────────────────────
+    logo_b64 = ""
+    logo_paths = [
+        Path(__file__).resolve().parent.parent / "assets" / "logo.png",
+        Path("/app/assets/logo.png"),
+    ]
+    for lp in logo_paths:
+        if lp.exists():
+            logo_b64 = base64.b64encode(lp.read_bytes()).decode()
+            break
 
     # ── Build per-day detail sections ────────────────────────────────────────
     day_sections = ""
@@ -657,19 +669,7 @@ def generate_html_string(forecast) -> str:
   <div class="header">
     <div class="header-row">
       <div class="header-logo">
-        <svg width="72" height="72" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="50" cy="50" r="46" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="3"/>
-          <!-- Top hook (gold) — shank from top, curves right then hooks left toward center -->
-          <path d="M50 8 L50 32 Q50 44 60 44 Q72 44 72 34 Q72 24 62 24 Q54 24 54 32" fill="none" stroke="#fbbf24" stroke-width="4" stroke-linecap="round"/>
-          <circle cx="54" cy="32" r="3" fill="#fbbf24"/>
-          <!-- Eye of top hook -->
-          <circle cx="50" cy="8" r="4" fill="none" stroke="#fbbf24" stroke-width="2.5"/>
-          <!-- Bottom hook (sky blue) — shank from bottom, curves left then hooks right toward center -->
-          <path d="M50 92 L50 68 Q50 56 40 56 Q28 56 28 66 Q28 76 38 76 Q46 76 46 68" fill="none" stroke="#38bdf8" stroke-width="4" stroke-linecap="round"/>
-          <circle cx="46" cy="68" r="3" fill="#38bdf8"/>
-          <!-- Eye of bottom hook -->
-          <circle cx="50" cy="92" r="4" fill="none" stroke="#38bdf8" stroke-width="2.5"/>
-        </svg>
+        <img src="data:image/png;base64,{logo_b64}" width="72" height="72" alt="Grant's Fishing Report" style="border-radius:50%;">
       </div>
       <div>
         <h1>Grant's Fishing Forecast</h1>

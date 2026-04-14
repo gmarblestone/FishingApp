@@ -93,65 +93,33 @@ def _load_font_bold(size: int):
     return _load_font(size)
 
 
-def _draw_logo(draw, cx, cy, radius):
-    """Draw the hook yin-yang logo at center (cx, cy) with given radius."""
-    r = radius
-    # Outer circle
-    draw.ellipse([cx - r, cy - r, cx + r, cy + r], outline="rgba(255,255,255,80)", width=3)
+_LOGO_IMG = None
 
-    # Top hook (gold) — shank goes down from top, curves right, hooks left toward center
-    gold = "#fbbf24"
-    # Shank
-    draw.line([(cx, cy - r + 6), (cx, cy - r * 0.32)], fill=gold, width=4)
-    # Bend — draw arc approximation with small line segments
-    pts_top = []
-    # Curve right from shank bottom
-    bend_cx_t = cx + r * 0.18
-    bend_cy_t = cy - r * 0.08
-    bend_r_t = r * 0.36
-    for a in range(180, 360 + 15, 15):
-        rad = math.radians(a)
-        px = bend_cx_t + bend_r_t * math.cos(rad) * 0.6
-        py = bend_cy_t + bend_r_t * math.sin(rad) * 0.6
-        pts_top.append((px, py))
-    # Hook tip curving back inward
-    for a in range(0, 120, 15):
-        rad = math.radians(a)
-        px = bend_cx_t + r * 0.12 + r * 0.18 * math.cos(rad)
-        py = bend_cy_t - r * 0.22 + r * 0.18 * math.sin(rad)
-        pts_top.append((px, py))
-    if len(pts_top) >= 2:
-        draw.line(pts_top, fill=gold, width=4, joint="curve")
-    # Barb dot
-    if pts_top:
-        bx, by = pts_top[-1]
-        draw.ellipse([bx - 3, by - 3, bx + 3, by + 3], fill=gold)
-    # Eye circle at top
-    draw.ellipse([cx - 5, cy - r + 1, cx + 5, cy - r + 11], outline=gold, width=3)
 
-    # Bottom hook (sky blue) — mirror of top, shank goes up from bottom
-    blue = "#38bdf8"
-    draw.line([(cx, cy + r - 6), (cx, cy + r * 0.32)], fill=blue, width=4)
-    pts_bot = []
-    bend_cx_b = cx - r * 0.18
-    bend_cy_b = cy + r * 0.08
-    bend_r_b = r * 0.36
-    for a in range(0, 180 + 15, 15):
-        rad = math.radians(a)
-        px = bend_cx_b + bend_r_b * math.cos(rad) * 0.6
-        py = bend_cy_b + bend_r_b * math.sin(rad) * 0.6
-        pts_bot.append((px, py))
-    for a in range(180, 300, 15):
-        rad = math.radians(a)
-        px = bend_cx_b - r * 0.12 + r * 0.18 * math.cos(rad)
-        py = bend_cy_b + r * 0.22 + r * 0.18 * math.sin(rad)
-        pts_bot.append((px, py))
-    if len(pts_bot) >= 2:
-        draw.line(pts_bot, fill=blue, width=4, joint="curve")
-    if pts_bot:
-        bx, by = pts_bot[-1]
-        draw.ellipse([bx - 3, by - 3, bx + 3, by + 3], fill=blue)
-    draw.ellipse([cx - 5, cy + r - 11, cx + 5, cy + r - 1], outline=blue, width=3)
+def _get_logo():
+    """Load and cache the logo PNG image."""
+    global _LOGO_IMG
+    if _LOGO_IMG is not None:
+        return _LOGO_IMG
+    logo_paths = [
+        Path(__file__).resolve().parent.parent / "assets" / "logo.png",
+        Path("/app/assets/logo.png"),
+    ]
+    for p in logo_paths:
+        if p.exists():
+            _LOGO_IMG = Image.open(p).convert("RGBA")
+            return _LOGO_IMG
+    logger.warning("Logo file not found, skipping logo")
+    return None
+
+
+def _paste_logo(img, x, y, size):
+    """Paste the logo PNG onto img at (x, y) resized to size x size."""
+    logo = _get_logo()
+    if logo is None:
+        return
+    resized = logo.resize((size, size), Image.LANCZOS)
+    img.paste(resized, (x, y), resized)
 
 
 def generate_image_string(forecast) -> Image.Image:
@@ -181,9 +149,9 @@ def generate_image_string(forecast) -> Image.Image:
 
     # ── Header ───────────────────────────────────────────────────────────────
     draw.rectangle([0, 0, CARD_W, 160], fill=HEADER_BG)
-    logo_r = 34
-    _draw_logo(draw, 40 + logo_r, 30 + logo_r, logo_r)
-    tx = 40 + logo_r * 2 + 18
+    logo_sz = 100
+    _paste_logo(img, 30, 30, logo_sz)
+    tx = 30 + logo_sz + 18
     draw.text((tx, 30), "Grant's Fishing Forecast", fill=WHITE, font=f_title)
     draw.text((tx, 90), forecast.area, fill=MUTED, font=f_area)
     draw.text((tx, 125), f"Generated {forecast.generated_at}", fill=MUTED, font=f_tiny)
@@ -377,9 +345,9 @@ def generate_detail_image(forecast, day_indices, title, output_path):
 
     # Header
     draw.rectangle([0, 0, CARD_W, 160], fill=HEADER_BG)
-    logo_r = 34
-    _draw_logo(draw, 40 + logo_r, 30 + logo_r, logo_r)
-    tx = 40 + logo_r * 2 + 18
+    logo_sz = 100
+    _paste_logo(img, 30, 30, logo_sz)
+    tx = 30 + logo_sz + 18
     draw.text((tx, 30), title, fill=WHITE, font=f_title)
     draw.text((tx, 90), forecast.area, fill=MUTED, font=f_area)
     draw.text((tx, 125), f"Generated {forecast.generated_at}", fill=MUTED, font=f_tiny)

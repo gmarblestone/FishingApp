@@ -8,6 +8,7 @@ ENV TZ=America/Chicago
 COPY rootfs/run.sh /run.sh
 COPY rootfs/app /app
 COPY rootfs/nginx.conf /etc/nginx/nginx.conf
+COPY assets /app/assets
 
 # Strip Windows CRLF that breaks #!/bin/bash shebang
 RUN sed -i 's/\r$//' /run.sh \
