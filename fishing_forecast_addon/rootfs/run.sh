@@ -120,12 +120,26 @@ else
   fi
 fi
 
+# ── Start refresh API server ────────────────────────────────────────────────
+
+log "Starting refresh API server..."
+python3 /app/refresh_server.py &
+REFRESH_PID=$!
+sleep 1
+if kill -0 "${REFRESH_PID}" 2>/dev/null; then
+  log "Refresh server running (PID ${REFRESH_PID})"
+else
+  warn "Refresh server failed to start"
+fi
+
 # ── Graceful shutdown ────────────────────────────────────────────────────────
 
 shutdown() {
   log "Shutdown requested..."
   kill -TERM "${NGINX_PID}" 2>/dev/null || true
+  kill -TERM "${REFRESH_PID}" 2>/dev/null || true
   wait "${NGINX_PID}" 2>/dev/null || true
+  wait "${REFRESH_PID}" 2>/dev/null || true
   exit 0
 }
 trap shutdown INT TERM
@@ -134,6 +148,7 @@ trap shutdown INT TERM
 
 run_forecast() {
     log "Running forecast for ${AREA}..."
+    touch /tmp/refresh_running
     cd /app && python3 -c "
 import sys, traceback, os
 sys.path.insert(0, '.')
@@ -174,6 +189,7 @@ except Exception as e:
 
     if [ $? -ne 0 ]; then
         err "Forecast generation failed"
+        rm -f /tmp/refresh_running
         return 1
     fi
 
@@ -198,6 +214,7 @@ except Exception as e:
 " 2>&1 | while read -r line; do log "  ${line}"; done
 
     log "Forecast complete"
+    rm -f /tmp/refresh_running
 }
 
 # ── Helper: check if current hour is a refresh hour ──────────────────────────
@@ -225,8 +242,18 @@ log "Entering main loop"
 last_run_hour=""
 
 while true; do
+    sleep 5
+
     current_hour=$(date +%H | sed 's/^0//')
 
+    # Check for manual refresh trigger
+    if [ -f /tmp/refresh_trigger ]; then
+        log "Manual refresh triggered!"
+        rm -f /tmp/refresh_trigger
+        run_forecast && last_run_hour="${current_hour}" || warn "Triggered forecast failed"
+    fi
+
+    # Scheduled refresh at configured hours
     if is_refresh_hour && [ "${current_hour}" != "${last_run_hour}" ]; then
         run_forecast && last_run_hour="${current_hour}" || warn "Scheduled forecast failed"
     fi
@@ -238,5 +265,10 @@ while true; do
         NGINX_PID=$!
     fi
 
-    sleep 1800
+    # Keep refresh server alive
+    if ! kill -0 "${REFRESH_PID}" 2>/dev/null; then
+        warn "Refresh server died — restarting..."
+        python3 /app/refresh_server.py &
+        REFRESH_PID=$!
+    fi
 done

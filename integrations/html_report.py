@@ -686,6 +686,7 @@ def generate_html_string(forecast) -> str:
     <div>
       <button class="btn" id="shareBtn" data-share-text="{share_text_escaped}">📤 Share</button>
       <button class="btn btn-outline" id="pdfBtn" style="margin-left:4px">🖨️ Print</button>
+      <button class="btn btn-outline" id="refreshBtn" style="margin-left:4px">🔄 Refresh</button>
       <button class="btn btn-outline" id="expandBtn" style="margin-left:4px">Expand All</button>
       <button class="btn btn-outline" id="collapseBtn" style="margin-left:4px">Collapse All</button>
       <button class="btn btn-outline" id="darkBtn" style="margin-left:4px">🌙 Dark</button>
@@ -728,7 +729,7 @@ def generate_html_string(forecast) -> str:
 
   {day_sections}
 
-  <div class="footer">Grant's Fishing Forecast v1.2.6 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
+  <div class="footer">Grant's Fishing Forecast v1.3.0 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
 </div>
 
 <script>
@@ -775,6 +776,28 @@ document.addEventListener('DOMContentLoaded', () => {{
   document.getElementById('expandBtn').addEventListener('click', expandAll);
   document.getElementById('collapseBtn').addEventListener('click', collapseAll);
   darkBtn.addEventListener('click', toggleDark);
+
+  // Refresh — trigger server-side forecast regeneration
+  var refreshBtn = document.getElementById('refreshBtn');
+  refreshBtn.addEventListener('click', function() {{
+    refreshBtn.textContent = '⏳ Refreshing...';
+    refreshBtn.disabled = true;
+    refreshBtn.style.opacity = '0.6';
+    fetch('api/refresh')
+      .then(function(r) {{ return r.json(); }})
+      .then(function(data) {{
+        if (data.status === 'busy') {{
+          refreshBtn.textContent = '⏳ Already running...';
+        }} else {{
+          refreshBtn.textContent = '⏳ Fetching data...';
+        }}
+        setTimeout(function() {{ location.reload(); }}, 45000);
+      }})
+      .catch(function() {{
+        refreshBtn.textContent = '❌ Error';
+        setTimeout(function() {{ location.reload(); }}, 5000);
+      }});
+  }});
 
   // Day-header accordion — event delegation
   document.addEventListener('click', (e) => {{
