@@ -25,6 +25,18 @@ def _fmt12(time_24: str) -> str:
         return time_24
 
 
+def _fmt12_offset(time_24: str, offset_min: int) -> str:
+    """Offset a 'HH:MM' time by offset_min minutes and format as 12h."""
+    try:
+        h, m = int(time_24.split(":")[0]), int(time_24.split(":")[1])
+        total = h * 60 + m + offset_min
+        total = max(0, min(total, 23 * 60 + 59))
+        new_h, new_m = divmod(total, 60)
+        return _fmt12(f"{new_h:02d}:{new_m:02d}")
+    except Exception:
+        return time_24
+
+
 def _fmt_generated_at(dt: datetime) -> str:
     """Format datetime as 'M/DD/YYYY h:MM AM/PM'."""
     h = dt.hour % 12 or 12
@@ -77,13 +89,17 @@ def _score_wind(speed: float, max_ideal: float, max_fishable: float) -> float:
 
 
 def _score_tide(conditions: DayConditions) -> float:
-    """Score tide quality. More swings and bigger range = better."""
+    """Score tide quality. Bigger range = stronger current between tides.
+    More events = more windows of moving water. Current flow (not slack)
+    is what drives feeding, so range is weighted heavier."""
     total_events = len(conditions.tide.high_times) + len(conditions.tide.low_times)
     if total_events == 0:
         return 3.0  # no data, neutral
-    range_score = min(conditions.tide.range_ft / 2.0, 1.0) * 5
-    event_score = min(total_events / 4, 1.0) * 5
-    return range_score + event_score
+    # Range drives current strength — heavier weight (up to 6 pts)
+    range_score = min(conditions.tide.range_ft / 1.5, 1.0) * 6
+    # More tide changes = more windows of moving water (up to 4 pts)
+    event_score = min(total_events / 4, 1.0) * 4
+    return min(range_score + event_score, 10.0)
 
 
 def _score_pressure(trend: str) -> float:
@@ -119,12 +135,13 @@ def _score_water_temp(temp_f: float) -> float:
 
 
 def _score_cloud_cover(pct: int) -> float:
-    """Overcast can be good. Partly cloudy is ideal."""
+    """Overcast is good for inshore — fish feed shallower and are less spooky.
+    Partly cloudy is ideal. Clear skies push fish deeper."""
     if 30 <= pct <= 70:
         return 8.0
-    if pct < 30:
-        return 6.0
-    return 5.0
+    if pct > 70:
+        return 7.0  # overcast: fish less spooky, feed aggressively
+    return 6.0  # clear skies: bright, fish hold deeper
 
 
 def _weighted_score(subscores: dict[str, float], weights: dict[str, float]) -> int:
@@ -165,52 +182,101 @@ def _pick_species(conditions: DayConditions) -> str:
 
 
 def _pick_best_window(conditions: DayConditions) -> str:
-    """Identify the best fishing window for the day."""
+    """Identify the best fishing window for the day.
+    Peak current flow is 1-2 hours before high and low tides."""
     wind = conditions.wind.speed_mph
+    all_tides = conditions.tide.high_times + conditions.tide.low_times
     if wind <= WIND_IDEAL_MPH:
+        if all_tides:
+            approach_times = [_fmt12_offset(t, -90) for t in sorted(all_tides)]
+            return f"All day — light wind, prime 1-2 hrs before tide changes (start by {', '.join(approach_times)})"
         return "All day — light wind"
     if conditions.air_temp_high_f > 85:
         return "Dawn to mid-morning (beat the heat)"
-    if len(conditions.tide.high_times) > 0:
-        return f"Around tide changes: highs {', '.join(_fmt12(t) for t in conditions.tide.high_times)}"
+    if all_tides:
+        approach_times = [_fmt12_offset(t, -90) for t in sorted(all_tides)]
+        return f"1-2 hrs before tide changes — peak current flow (start by {', '.join(approach_times)})"
     return "Early morning best"
 
 
 def _pick_worst_window(conditions: DayConditions) -> str:
-    """Identify the worst fishing window for the day."""
+    """Identify the worst fishing window for the day.
+    Slack water at the moment of high/low tide is the slowest bite."""
     if conditions.air_temp_high_f > 85:
         return "Midday 11 AM - 3 PM (peak heat)"
     if conditions.wind.speed_mph > WIND_FISHABLE_MPH:
         return "All day — wind too strong"
     if conditions.rain_chance_pct >= 60:
         return "Afternoon (storms likely)"
-    # Slack tide = slowest
-    if conditions.tide.low_times:
-        return f"Slack low tide around {_fmt12(conditions.tide.low_times[0])}"
+    # Slack water at high/low = current stalls, bite dies
+    all_tides = conditions.tide.high_times + conditions.tide.low_times
+    if all_tides:
+        slack_times = ', '.join(_fmt12(t) for t in sorted(all_tides))
+        return f"Slack water at tide changes ({slack_times}) — current stalls"
     return "Midday (slack tide period)"
 
 
+def _has_approaching_tide(tide_events: list[str], win_start_h: int, win_end_h: int) -> list[str]:
+    """Find tide events whose peak current period (90-15 min before) overlaps a window."""
+    results = []
+    for t in tide_events:
+        try:
+            h, m = int(t.split(":")[0]), int(t.split(":")[1])
+            event_min = h * 60 + m
+            approach_start = event_min - 90
+            approach_end = event_min - 15
+            win_start_min = win_start_h * 60
+            win_end_min = win_end_h * 60
+            if approach_start < win_end_min and approach_end > win_start_min:
+                results.append(t)
+        except Exception:
+            continue
+    return results
+
+
+def _has_slack_tide(tide_events: list[str], win_start_h: int, win_end_h: int) -> list[str]:
+    """Find tide events where slack water (at the event) falls in a window."""
+    results = []
+    for t in tide_events:
+        try:
+            h = int(t.split(":")[0])
+            if win_start_h <= h < win_end_h:
+                results.append(t)
+        except Exception:
+            continue
+    return results
+
+
 def _build_time_windows(conditions: DayConditions) -> list[TimeWindow]:
-    """Break the day into fishing quality windows."""
+    """Break the day into fishing quality windows.
+    Peak current flow (1-2 hrs before tide changes) = prime fishing.
+    Slack water (at tide high/low) = slowest bite."""
     windows = []
     wind = conditions.wind.speed_mph
     temp_high = conditions.air_temp_high_f
+    all_tides = conditions.tide.high_times + conditions.tide.low_times
 
     # Dawn (5-7 AM) — usually best
     dawn_quality = "prime" if wind <= WIND_IDEAL_MPH else "good" if wind <= WIND_FISHABLE_MPH else "fair"
     dawn_reason = "Calm water, low light, active fish"
     if wind > WIND_FISHABLE_MPH:
         dawn_reason = f"Wind already {wind:.0f} mph but low light helps"
+    approaching = _has_approaching_tide(all_tides, 5, 7)
+    if approaching:
+        dawn_quality = "prime"
+        dawn_reason = f"Strong current building before tide at {', '.join(_fmt12(t) for t in approaching)} + low light"
     windows.append(TimeWindow("5:00 AM – 7:00 AM", dawn_quality, dawn_reason))
 
     # Morning (7-10 AM) — tide-dependent
     morning_quality = "good"
     morning_reason = "Good light, fish still feeding"
-    tide_events = conditions.tide.high_times + conditions.tide.low_times
-    morning_tides = [t for t in tide_events if "07" <= t[:2] <= "10"]
-    if morning_tides:
+    approaching = _has_approaching_tide(all_tides, 7, 10)
+    slack = _has_slack_tide(all_tides, 7, 10)
+    if approaching:
         morning_quality = "prime"
-        morning_reason = f"Tide change at {', '.join(_fmt12(t) for t in morning_tides)} — peak movement"
+        morning_reason = f"Peak current 1-2 hrs before tide at {', '.join(_fmt12(t) for t in approaching)} — fish feeding hard"
+    elif slack:
+        morning_reason += f" (slack water at {', '.join(_fmt12(t) for t in slack)} — slower bite)"
     if wind > WIND_FISHABLE_MPH:
         morning_quality = "fair"
         morning_reason += f" (wind {wind:.0f} mph)"
@@ -225,10 +291,13 @@ def _build_time_windows(conditions: DayConditions) -> list[TimeWindow]:
     elif temp_high < 65:
         midday_quality = "good"
         midday_reason = "Warmest part of day — winter fish move up"
-    midday_tides = [t for t in tide_events if "10" <= t[:2] <= "14"]
-    if midday_tides and midday_quality != "poor":
+    approaching = _has_approaching_tide(all_tides, 10, 14)
+    slack = _has_slack_tide(all_tides, 10, 14)
+    if approaching and midday_quality != "poor":
         midday_quality = "good"
-        midday_reason = f"Tide change at {', '.join(_fmt12(t) for t in midday_tides)} keeps fish active"
+        midday_reason = f"Current building before tide at {', '.join(_fmt12(t) for t in approaching)} keeps fish active"
+    elif slack and midday_quality != "poor":
+        midday_reason += f" (slack at {', '.join(_fmt12(t) for t in slack)})"
     windows.append(TimeWindow("10:00 AM – 2:00 PM", midday_quality, midday_reason))
 
     # Afternoon (2-5 PM)
@@ -237,19 +306,25 @@ def _build_time_windows(conditions: DayConditions) -> list[TimeWindow]:
     if conditions.rain_chance_pct >= 50:
         afternoon_quality = "poor"
         afternoon_reason = "Storm risk — safety concern"
-    afternoon_tides = [t for t in tide_events if "14" <= t[:2] <= "17"]
-    if afternoon_tides and afternoon_quality != "poor":
+    approaching = _has_approaching_tide(all_tides, 14, 17)
+    slack = _has_slack_tide(all_tides, 14, 17)
+    if approaching and afternoon_quality != "poor":
         afternoon_quality = "good"
-        afternoon_reason = f"Tide change at {', '.join(_fmt12(t) for t in afternoon_tides)}"
+        afternoon_reason = f"Current building before tide at {', '.join(_fmt12(t) for t in approaching)}"
+    elif slack and afternoon_quality != "poor":
+        afternoon_reason += f" (slack at {', '.join(_fmt12(t) for t in slack)})"
     windows.append(TimeWindow("2:00 PM – 5:00 PM", afternoon_quality, afternoon_reason))
 
     # Evening (5-8 PM)
     evening_quality = "good"
     evening_reason = "Wind dies, low light, evening feed"
-    evening_tides = [t for t in tide_events if "17" <= t[:2] <= "20"]
-    if evening_tides:
+    approaching = _has_approaching_tide(all_tides, 17, 20)
+    slack = _has_slack_tide(all_tides, 17, 20)
+    if approaching:
         evening_quality = "prime"
-        evening_reason = f"Tide change at {', '.join(_fmt12(t) for t in evening_tides)} + low light = prime"
+        evening_reason = f"Current building before tide at {', '.join(_fmt12(t) for t in approaching)} + low light = prime"
+    elif slack:
+        evening_reason += f" (slack at {', '.join(_fmt12(t) for t in slack)} — focus on structure)"
     if conditions.rain_chance_pct >= 60:
         evening_quality = "fair"
         evening_reason = "Possible lingering storms"

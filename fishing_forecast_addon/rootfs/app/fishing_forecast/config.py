@@ -98,10 +98,10 @@ NWS_API_BASE = "https://api.weather.gov"
 INSHORE_WEIGHTS = {
     "tide": 0.30,
     "wind": 0.25,
-    "pressure": 0.20,
-    "solunar": 0.15,
-    "water_temp": 0.05,
-    "cloud_cover": 0.05,
+    "pressure": 0.15,
+    "solunar": 0.10,
+    "water_temp": 0.10,
+    "cloud_cover": 0.10,
 }
 
 NEARSHORE_WEIGHTS = {
