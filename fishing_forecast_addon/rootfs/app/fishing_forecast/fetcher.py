@@ -28,6 +28,7 @@ try:
         SolunarData,
         TideData,
         TidePoint,
+        WaterLevelData,
         WindData,
     )
 except ImportError:
@@ -43,6 +44,7 @@ except ImportError:
         SolunarData,
         TideData,
         TidePoint,
+        WaterLevelData,
         WindData,
     )
 
@@ -131,6 +133,97 @@ def fetch_hourly_tides(station_id: str, begin: date, end: date) -> dict[str, lis
         results[day_str].append(TidePoint(time=dt.strftime("%H:%M"), height_ft=float(pred.get("v", 0))))
 
     return results
+
+
+def fetch_water_level_deviation(station_id: str) -> WaterLevelData:
+    """Compare recent observed water levels to NOAA predictions to determine
+    if the bay is running higher or lower than nominal.
+
+    Fetches the last 24 hours of observed water levels and predictions at
+    hourly intervals, computes the mean deviation, and classifies as
+    high / low / normal.
+    """
+    result = WaterLevelData()
+    end = datetime.now(tz=CENTRAL)
+    begin = end - timedelta(hours=24)
+    begin_str = begin.strftime("%Y%m%d %H:%M")
+    end_str = end.strftime("%Y%m%d %H:%M")
+    base_params = {
+        "begin_date": begin_str,
+        "end_date": end_str,
+        "station": station_id,
+        "datum": "MLLW",
+        "time_zone": "lst_ldt",
+        "units": "english",
+        "interval": "h",
+        "format": "json",
+        "application": "FishingForecast",
+    }
+
+    try:
+        # Fetch observed water levels
+        obs_resp = SESSION.get(
+            NOAA_TIDES_API,
+            params={**base_params, "product": "water_level"},
+            timeout=REQUEST_TIMEOUT,
+        )
+        obs_resp.raise_for_status()
+        obs_data = obs_resp.json().get("data", [])
+
+        # Fetch predicted levels for same window
+        pred_resp = SESSION.get(
+            NOAA_TIDES_API,
+            params={**base_params, "product": "predictions"},
+            timeout=REQUEST_TIMEOUT,
+        )
+        pred_resp.raise_for_status()
+        pred_data = pred_resp.json().get("predictions", [])
+    except Exception:
+        logger.exception("Failed to fetch water level data for station %s", station_id)
+        return result
+
+    if not obs_data or not pred_data:
+        return result
+
+    # Index predictions by timestamp for quick lookup
+    pred_by_time: dict[str, float] = {}
+    for p in pred_data:
+        pred_by_time[p["t"]] = float(p.get("v", 0))
+
+    # Compute mean observed and mean predicted over matched timestamps
+    obs_vals: list[float] = []
+    pred_vals: list[float] = []
+    for o in obs_data:
+        v = o.get("v", "")
+        if v == "" or v is None:
+            continue
+        t = o["t"]
+        if t in pred_by_time:
+            obs_vals.append(float(v))
+            pred_vals.append(pred_by_time[t])
+
+    if not obs_vals:
+        return result
+
+    obs_avg = sum(obs_vals) / len(obs_vals)
+    pred_avg = sum(pred_vals) / len(pred_vals)
+    deviation = round(obs_avg - pred_avg, 2)
+
+    # Classify: > +0.2 ft = high, < -0.2 ft = low, else normal
+    if deviation >= 0.2:
+        status = "high"
+    elif deviation <= -0.2:
+        status = "low"
+    else:
+        status = "normal"
+
+    return WaterLevelData(
+        observed_avg_ft=round(obs_avg, 2),
+        predicted_avg_ft=round(pred_avg, 2),
+        deviation_ft=deviation,
+        status=status,
+        has_data=True,
+    )
 
 
 def fetch_buoy(station_id: str) -> BuoyData:
@@ -222,6 +315,9 @@ def fetch_all_conditions(
     # Hourly tides for charts
     hourly_by_day = fetch_hourly_tides(area["tide_stations"][0], today, end)
 
+    # Water level deviation (observed vs predicted) — single snapshot applies to all days
+    water_level = fetch_water_level_deviation(area["tide_stations"][0])
+
     # Buoy — latest observation (applies to all days as baseline)
     buoy = fetch_buoy(area["buoy_ids"][0])
 
@@ -283,6 +379,7 @@ def fetch_all_conditions(
                 rain_chance_pct=rain_chance,
                 air_temp_high_f=air_high,
                 air_temp_low_f=air_low,
+                water_level=water_level,
                 has_weather=has_weather,
             )
         )

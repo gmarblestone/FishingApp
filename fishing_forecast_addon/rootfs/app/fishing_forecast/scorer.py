@@ -365,16 +365,35 @@ def _recommend_location(conditions: DayConditions) -> tuple[str, str]:
 
     # Warm & calm — open bay flats (prime conditions)
     if temp and 68 <= temp <= 80 and wind <= WIND_IDEAL_MPH:
+        wl = conditions.water_level
+        wl_note = ""
+        if wl.has_data and wl.status == "high":
+            wl_note = (f" Water is +{wl.deviation_ft:.1f}' above normal — "
+                       "back-lake marshes and shallow flats are flooded, "
+                       "fish spread onto shoreline grass that's normally dry.")
+        elif wl.has_data and wl.status == "low":
+            wl_note = (f" Water is {wl.deviation_ft:.1f}' below normal — "
+                       "shallow flats may be too thin. Focus on deeper "
+                       "reefs, channels, and gut edges where fish concentrate.")
         return ("Open Bay Flats & Reefs",
                 f"Ideal conditions — {temp:.0f}°F water, {wind:.0f} mph wind. "
-                "Wade or drift the open bay flats, shell reefs, and grass edges.")
+                "Wade or drift the open bay flats, shell reefs, and grass edges."
+                + wl_note)
 
     # Spring / warming up — transition to flats
     if month in (3, 4, 5) and temp and temp >= 62:
+        wl = conditions.water_level
+        wl_note = ""
+        if wl.has_data and wl.status == "high":
+            wl_note = (f" Water running +{wl.deviation_ft:.1f}' high — "
+                       "back-lake flats flooded, reds pushing into grass.")
+        elif wl.has_data and wl.status == "low":
+            wl_note = (f" Water running {wl.deviation_ft:.1f}' low — "
+                       "target deeper grass edges and guts.")
         return ("Bay Flats & Grass Edges",
                 f"Spring pattern — {temp:.0f}°F and warming. "
                 "Fish are moving to shallow grass flats and shell pads. "
-                "Wade the shorelines on incoming tide.")
+                "Wade the shorelines on incoming tide." + wl_note)
 
     # Hot summer — deep structure
     if temp and temp > 82:
@@ -414,6 +433,11 @@ def _pick_key_factor(conditions: DayConditions) -> str:
         factors.append("falling pressure")
     if conditions.rain_chance_pct >= 50:
         factors.append("rain likely")
+    wl = conditions.water_level
+    if wl.has_data and wl.status == "high":
+        factors.append(f"water +{wl.deviation_ft:.1f}' above normal")
+    elif wl.has_data and wl.status == "low":
+        factors.append(f"water {wl.deviation_ft:.1f}' below normal")
     return " + ".join(factors) if factors else "average conditions"
 
 

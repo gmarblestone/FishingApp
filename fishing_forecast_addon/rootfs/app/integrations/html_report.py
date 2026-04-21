@@ -246,6 +246,39 @@ def _wave_bar_svg(height_ft: float, max_ft: float = 8.0, width: int = 200, bar_h
     </svg>"""
 
 
+def _water_level_badge(water_level) -> str:
+    """HTML badge showing whether water is running higher or lower than nominal."""
+    if not water_level.has_data:
+        return '<span class="wl-badge wl-unknown">Water Level: N/A</span>'
+    dev = water_level.deviation_ft
+    if water_level.status == "high":
+        color = "#0ea5e9"
+        icon = "↑"
+        label = f"+{dev:.1f}' above normal"
+    elif water_level.status == "low":
+        color = "#f97316"
+        icon = "↓"
+        label = f"{dev:.1f}' below normal"
+    else:
+        color = "#22c55e"
+        icon = "≈"
+        label = "near normal"
+    return (f'<span class="wl-badge" style="color:{color};border-color:{color}">'
+            f'{icon} Water Level: {label}</span>')
+
+
+def _water_level_text(water_level) -> str:
+    """Plain-text water level summary for share/export."""
+    if not water_level.has_data:
+        return "N/A"
+    dev = water_level.deviation_ft
+    if water_level.status == "high":
+        return f"+{dev:.1f}' above normal"
+    elif water_level.status == "low":
+        return f"{dev:.1f}' below normal"
+    return "near normal"
+
+
 def _timeline_svg(time_windows, width: int = 480, height: int = 50) -> str:
     """Timeline bar showing fishing quality windows across the day."""
     if not time_windows:
@@ -308,6 +341,7 @@ def generate_html_string(forecast) -> str:
         f"  📍 {today.location_rec}",
         f"  ⏰ Best: {today.best_window}",
         f"  💨 {today.conditions.wind.speed_mph:.0f}mph {today.conditions.wind.direction} · 🌊 {today.conditions.buoy.wave_height_ft:.1f}ft · 🌡️ {today.conditions.buoy.water_temp_f:.0f}°F",
+        f"  🌊 Bay Level: {_water_level_text(today.conditions.water_level)}",
         "",
     ]
     for d in days[1:]:
@@ -457,6 +491,7 @@ def generate_html_string(forecast) -> str:
               Highs: {', '.join(_fmt12(t) for t in d.conditions.tide.high_times) or '—'} &middot;
               Lows: {', '.join(_fmt12(t) for t in d.conditions.tide.low_times) or '—'}
             </div>
+            <div class="water-level-row">{_water_level_badge(d.conditions.water_level)}</div>
           </div>
         </div>
 
@@ -574,6 +609,9 @@ def generate_html_string(forecast) -> str:
   .wind-dir {{ font-size:13px; color:#64748b; }}
   .wind-assessment {{ font-size:12px; margin-top:4px; }}
   .tide-summary {{ font-size:11px; color:#64748b; margin-top:4px; }}
+  .water-level-row {{ margin-top:6px; }}
+  .wl-badge {{ display:inline-block; font-size:12px; font-weight:600; padding:3px 10px; border-radius:12px; border:1.5px solid; background:white; }}
+  .wl-unknown {{ color:#94a3b8; border-color:#cbd5e1; }}
   .detail-row-data {{ display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }}
   .datum {{ flex:1 1 140px; background:white; border-radius:6px; padding:6px 10px; border:1px solid #e2e8f0; }}
   .datum-label {{ display:block; font-size:10px; text-transform:uppercase; color:#94a3b8; letter-spacing:.3px; }}
@@ -598,6 +636,7 @@ def generate_html_string(forecast) -> str:
   .dark .day-header:hover {{ background:#334155; }}
   .dark .col-card,.dark .timeline-container {{ background:#1e293b; }}
   .dark .rec-box,.dark .datum {{ background:#0f172a; border-color:#334155; }}
+  .dark .wl-badge {{ background:#0f172a; }}
   .dark .alert-box {{ background:#450a0a; border-color:#7f1d1d; }}
   .dark .alert-item {{ color:#fca5a5; }}
   .dark .btn {{ background:#0ea5e9; color:#0f172a; font-weight:600; }}
@@ -707,6 +746,7 @@ def generate_html_string(forecast) -> str:
     <div class="callout-item"><div class="label">Water</div><div class="value">{today.conditions.buoy.water_temp_f:.1f}°F</div></div>
     <div class="callout-item"><div class="label">Wind</div><div class="value">{today.conditions.wind.speed_mph:.0f} mph {today.conditions.wind.direction}</div></div>
     <div class="callout-item"><div class="label">Waves</div><div class="value">{today.conditions.buoy.wave_height_ft:.1f} ft</div></div>
+    <div class="callout-item"><div class="label">Bay Level</div><div class="value">{_water_level_badge(today.conditions.water_level)}</div></div>
   </div>
 
   <div class="best-days">
@@ -729,7 +769,7 @@ def generate_html_string(forecast) -> str:
 
   {day_sections}
 
-  <div class="footer">Grant's Fishing Forecast v1.3.0 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
+  <div class="footer">Grant's Fishing Forecast v1.5.0 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
 </div>
 
 <script>

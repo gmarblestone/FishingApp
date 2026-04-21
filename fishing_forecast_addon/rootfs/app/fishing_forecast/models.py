@@ -33,6 +33,15 @@ class BuoyData:
 
 
 @dataclass
+class WaterLevelData:
+    observed_avg_ft: float = 0.0   # mean observed level (MLLW) over recent window
+    predicted_avg_ft: float = 0.0  # mean predicted level (MLLW) over same window
+    deviation_ft: float = 0.0      # observed - predicted (positive = higher than normal)
+    status: str = ""               # "high", "low", or "normal"
+    has_data: bool = False
+
+
+@dataclass
 class SolunarData:
     major1: str = ""
     major2: str = ""
@@ -54,6 +63,7 @@ class DayConditions:
     rain_chance_pct: int = 0
     air_temp_high_f: float = 0.0
     air_temp_low_f: float = 0.0
+    water_level: WaterLevelData = field(default_factory=WaterLevelData)
     has_weather: bool = True  # False for extended days beyond NWS range
 
 
