@@ -657,6 +657,9 @@ def generate_html_string(forecast) -> str:
   .dark .svg-bg {{ fill:#334155; }}
   .dark .svg-center {{ fill:#1e293b; }}
   .dark .svg-time {{ fill:#94a3b8; }}
+  .dark .reg-note {{ color:#94a3b8 !important; }}
+  .dark .reg-disclaimer {{ color:#64748b !important; }}
+  .dark .reg-disclaimer a {{ color:#38bdf8 !important; }}
 
   /* ── Mobile ── */
   @media (max-width:640px) {{
@@ -769,7 +772,54 @@ def generate_html_string(forecast) -> str:
 
   {day_sections}
 
-  <div class="footer">Grant's Fishing Forecast v1.5.0 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
+  <!-- Fishing Regulations -->
+  <div class="day-section" style="margin-top:20px;">
+    <div class="day-header" style="cursor:default;">
+      <h2>📋 Current Fishing Regulations</h2>
+      <span class="day-factor">Texas Gulf Coast — TPWD</span>
+    </div>
+    <div class="day-body" style="display:block;">
+      <table class="week-table" style="margin-bottom:0;">
+        <thead>
+          <tr>
+            <th>Species</th>
+            <th>Daily Bag Limit</th>
+            <th>Length Limit</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:600;">Red Drum (Redfish)</td>
+            <td>3</td>
+            <td>20–28 inches</td>
+            <td class="reg-note" style="font-size:12px; color:#64748b;">One over 28″ may be kept per year with a special tag</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Spotted Seatrout (Trout)</td>
+            <td>5</td>
+            <td>15–25 inches</td>
+            <td class="reg-note" style="font-size:12px; color:#64748b;">Only one over 25″ allowed</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Flounder</td>
+            <td>5</td>
+            <td>14 inches minimum</td>
+            <td class="reg-note" style="font-size:12px; color:#64748b;">—</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Sheepshead</td>
+            <td>5</td>
+            <td>15 inches minimum</td>
+            <td class="reg-note" style="font-size:12px; color:#64748b;">—</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="reg-disclaimer" style="font-size:11px; color:#94a3b8; padding:8px 12px;">Regulations per TPWD. Always verify current rules at <a href="https://tpwd.texas.gov" target="_blank" rel="noopener" style="color:#0ea5e9;">tpwd.texas.gov</a> before your trip.</div>
+    </div>
+  </div>
+
+  <div class="footer">Grant's Fishing Forecast v1.5.1 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
 </div>
 
 <script>
