@@ -819,7 +819,7 @@ def generate_html_string(forecast) -> str:
     </div>
   </div>
 
-  <div class="footer">Grant's Fishing Forecast v1.5.1 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
+  <div class="footer">Grant's Fishing Forecast v1.5.2 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
 </div>
 
 <script>

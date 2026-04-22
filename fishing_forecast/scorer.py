@@ -361,7 +361,7 @@ def _recommend_location(conditions: DayConditions) -> tuple[str, str]:
     if wind > 12:
         return ("ICW & Lee Shorelines",
                 f"Wind {wind:.0f} mph — open bay is choppy. "
-                "Focus on ICW structure and shorelines sheltered from {conditions.wind.direction} wind.")
+                f"Focus on ICW structure and shorelines sheltered from {conditions.wind.direction} wind.")
 
     # Warm & calm — open bay flats (prime conditions)
     if temp and 68 <= temp <= 80 and wind <= WIND_IDEAL_MPH:

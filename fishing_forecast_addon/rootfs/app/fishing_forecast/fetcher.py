@@ -319,7 +319,12 @@ def fetch_all_conditions(
     water_level = fetch_water_level_deviation(area["tide_stations"][0])
 
     # Buoy — latest observation (applies to all days as baseline)
-    buoy = fetch_buoy(area["buoy_ids"][0])
+    # Try each configured buoy until one returns data
+    buoy = BuoyData()
+    for bid in area["buoy_ids"]:
+        buoy = fetch_buoy(bid)
+        if buoy.wave_height_ft or buoy.water_temp_f:
+            break
 
     # NWS 7-day forecast
     nws_periods = fetch_nws_forecast(area["nws_gridpoint"], num_days)
