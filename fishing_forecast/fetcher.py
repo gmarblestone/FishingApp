@@ -227,7 +227,7 @@ def fetch_water_level_deviation(station_id: str) -> WaterLevelData:
 
 
 def fetch_buoy(station_id: str) -> BuoyData:
-    """Fetch latest NDBC buoy observation."""
+    """Fetch latest NDBC buoy observation. Scans recent rows for non-MM values."""
     try:
         url = NDBC_OBSERVATION_URL.format(station=station_id)
         resp = SESSION.get(url, timeout=REQUEST_TIMEOUT)
@@ -235,26 +235,97 @@ def fetch_buoy(station_id: str) -> BuoyData:
         lines = resp.text.strip().split("\n")
         if len(lines) < 3:
             return BuoyData()
-        # Header in line 0, units in line 1, data starts line 2
         headers = lines[0].split()
-        values = lines[2].split()
-        data_map = dict(zip(headers, values))
 
-        def safe_float(key: str) -> float:
-            val = data_map.get(key, "MM")
-            return float(val) if val != "MM" else 0.0
+        wave_m = 0.0
+        wave_period = 0.0
+        water_c = 0.0
+        pressure = 0.0
 
-        wave_m = safe_float("WVHT")
-        water_c = safe_float("WTMP")
+        # Scan up to 24 recent observations to find non-MM values
+        for line in lines[2:26]:
+            values = line.split()
+            data_map = dict(zip(headers, values))
+
+            def safe_float(key: str) -> float:
+                val = data_map.get(key, "MM")
+                return float(val) if val != "MM" else 0.0
+
+            if not wave_m:
+                wave_m = safe_float("WVHT")
+                if wave_m:
+                    wave_period = safe_float("DPD")
+            if not water_c:
+                water_c = safe_float("WTMP")
+            if not pressure:
+                pressure = safe_float("PRES")
+            if wave_m and water_c and pressure:
+                break
+
         return BuoyData(
             wave_height_ft=round(wave_m * 3.28084, 1),
-            wave_period_sec=safe_float("DPD"),
+            wave_period_sec=wave_period,
             water_temp_f=round(water_c * 9 / 5 + 32, 1) if water_c else 0.0,
-            pressure_mb=safe_float("PRES"),
+            pressure_mb=pressure,
         )
     except Exception:
         logger.exception("Failed to fetch buoy %s", station_id)
         return BuoyData()
+
+
+def fetch_inshore_met(station_id: str) -> dict:
+    """Fetch latest NDBC inshore met station data (wind, pressure, water temp).
+
+    Returns a dict with available readings; missing values are 0.0.
+    Scans up to 24 recent observations to find non-MM values.
+    """
+    result = {"water_temp_f": 0.0, "pressure_mb": 0.0, "wind_speed_mph": 0.0,
+              "wind_gust_mph": 0.0, "wind_dir": ""}
+    try:
+        url = NDBC_OBSERVATION_URL.format(station=station_id)
+        resp = SESSION.get(url, timeout=REQUEST_TIMEOUT)
+        resp.raise_for_status()
+        lines = resp.text.strip().split("\n")
+        if len(lines) < 3:
+            return result
+        headers = lines[0].split()
+
+        # Scan recent observations to find non-MM values
+        for line in lines[2:26]:
+            values = line.split()
+            data_map = dict(zip(headers, values))
+
+            def safe_float(key: str) -> float:
+                val = data_map.get(key, "MM")
+                return float(val) if val != "MM" else 0.0
+
+            if not result["water_temp_f"]:
+                wtmp = safe_float("WTMP")
+                if wtmp:
+                    result["water_temp_f"] = round(wtmp * 9 / 5 + 32, 1)
+
+            if not result["pressure_mb"]:
+                pres = safe_float("PRES")
+                if pres:
+                    result["pressure_mb"] = pres
+
+            if not result["wind_speed_mph"]:
+                wspd = safe_float("WSPD")
+                if wspd:
+                    result["wind_speed_mph"] = round(wspd * 2.23694, 1)
+                    gst = safe_float("GST")
+                    result["wind_gust_mph"] = round(gst * 2.23694, 1) if gst else 0.0
+                    wdir = data_map.get("WDIR", "MM")
+                    result["wind_dir"] = wdir if wdir != "MM" else ""
+
+            # Stop once all fields are populated
+            if result["water_temp_f"] and result["pressure_mb"] and result["wind_speed_mph"]:
+                break
+
+        return result
+    except Exception:
+        logger.exception("Failed to fetch inshore met %s", station_id)
+        return result
 
 
 def fetch_nws_forecast(gridpoint: str, days: int = 7) -> list[dict]:
@@ -324,6 +395,17 @@ def fetch_all_conditions(
     for bid in area["buoy_ids"]:
         buoy = fetch_buoy(bid)
         if buoy.wave_height_ft or buoy.water_temp_f:
+            break
+
+    # Inshore met stations — supplement buoy with local water temp & pressure
+    inshore_stations = area.get("inshore_stations", [])
+    for sid in inshore_stations:
+        met = fetch_inshore_met(sid)
+        if not buoy.water_temp_f and met["water_temp_f"]:
+            buoy.water_temp_f = met["water_temp_f"]
+        if not buoy.pressure_mb and met["pressure_mb"]:
+            buoy.pressure_mb = met["pressure_mb"]
+        if buoy.water_temp_f and buoy.pressure_mb:
             break
 
     # NWS 7-day forecast

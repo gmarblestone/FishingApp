@@ -8,7 +8,8 @@ AREAS = {
     "matagorda": {
         "name": "Matagorda / Sargent, TX",
         "tide_stations": ["8773037", "8772985"],
-        "buoy_ids": ["42019", "42035"],
+        "buoy_ids": ["42035"],
+        "inshore_stations": ["AWRT2", "MBET2"],
         "nws_office": "HGX",
         "nws_gridpoint": "HGX/53,51",
         "lat": 28.77,
@@ -28,7 +29,7 @@ AREAS = {
     "freeport": {
         "name": "Freeport / Surfside, TX",
         "tide_stations": ["8772440", "8772471"],
-        "buoy_ids": ["42019", "42035"],
+        "buoy_ids": ["42035"],
         "nws_office": "HGX",
         "nws_gridpoint": "HGX/73,65",
         "lat": 29.08,
@@ -38,7 +39,8 @@ AREAS = {
     "port_oconnor": {
         "name": "Port O'Connor / Espiritu Santo Bay, TX",
         "tide_stations": ["8773259", "8773146"],
-        "buoy_ids": ["42019"],
+        "buoy_ids": ["42035"],
+        "inshore_stations": ["AWRT2"],
         "nws_office": "CRP",
         "nws_gridpoint": "CRP/149,62",
         "lat": 28.44,
