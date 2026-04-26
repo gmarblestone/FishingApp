@@ -732,6 +732,7 @@ def generate_html_string(forecast) -> str:
       <button class="btn btn-outline" id="expandBtn" style="margin-left:4px">Expand All</button>
       <button class="btn btn-outline" id="collapseBtn" style="margin-left:4px">Collapse All</button>
       <button class="btn btn-outline" id="darkBtn" style="margin-left:4px">🌙 Dark</button>
+      <button class="btn btn-outline" id="popoutBtn" style="margin-left:4px">↗️ Pop Out</button>
     </div>
     <div class="hint-text" style="font-size:12px;color:#64748b">Click any day to expand</div>
   </div>
@@ -819,7 +820,7 @@ def generate_html_string(forecast) -> str:
     </div>
   </div>
 
-  <div class="footer">Grant's Fishing Forecast v1.5.3 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
+  <div class="footer">Grant's Fishing Forecast v1.5.4 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
 </div>
 
 <script>
@@ -866,6 +867,9 @@ document.addEventListener('DOMContentLoaded', () => {{
   document.getElementById('expandBtn').addEventListener('click', expandAll);
   document.getElementById('collapseBtn').addEventListener('click', collapseAll);
   darkBtn.addEventListener('click', toggleDark);
+  document.getElementById('popoutBtn').addEventListener('click', () => {{
+    window.open(window.location.href, '_blank');
+  }});
 
   // Refresh — trigger server-side forecast regeneration
   var refreshBtn = document.getElementById('refreshBtn');
