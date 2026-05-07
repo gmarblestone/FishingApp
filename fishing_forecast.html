@@ -203,7 +203,7 @@
       <div>
         <h1>Grant's Fishing Forecast</h1>
         <div class="area">Matagorda / Sargent, TX</div>
-        <div class="subtitle">Generated 4/26/2026 2:37 PM &middot; 4/26 – 5/02/2026</div>
+        <div class="subtitle">Generated 5/07/2026 6:12 PM &middot; 5/07 – 5/13/2026</div>
       </div>
     </div>
   </div>
@@ -211,30 +211,31 @@
   <div class="top-bar no-print">
     <div>
       <button class="btn" id="shareBtn" data-share-text="🎣 Fishing Forecast — Matagorda / Sargent, TX
-4/26 – 5/02
+5/07 – 5/13
 
-TODAY (Sun 4/26):
-  Inshore 6/10 · Offshore 7/10 (GO)
+TODAY (Thu 5/07):
+  Inshore 6/10 · Offshore 6/10 (GO)
   🐟 Redfish
   📍 ICW &amp; Lee Shorelines
-  ⏰ Best: 1-2 hrs before tide changes — peak current flow (start by 12:25 AM, 10:33 AM, 9:05 PM)
-  💨 15mph SE · 🌊 0.0ft · 🌡️ 76°F
-  🌊 Bay Level: +0.5&#x27; above normal
+  ⏰ Best: 1-2 hrs before tide changes — peak current flow (start by 8:35 AM, 9:22 PM)
+  💨 15mph E · 🌊 2.6ft · 🌡️ 76°F
+  🌊 Bay Level: +0.2&#x27; above normal
 
-Mon 4/27: IN 6 · OFF 7✅ · 15mph · 0.0ft
-Tue 4/28: IN 6 · OFF 7✅ · 15mph · 0.0ft
-Wed 4/29: IN 7 · OFF 9✅ · 10mph · 0.0ft
-Thu 4/30: IN 6 · OFF 7✅ · 15mph · 0.0ft
-Fri 5/01: IN 5 · OFF 6✅ · 20mph · 0.0ft
-Sat 5/02: IN 5 · OFF 6✅ · 20mph · 0.0ft
+Fri 5/08: IN 7 · OFF 7✅ · 10mph · 2.6ft
+Sat 5/09: IN 7 · OFF 7✅ · 10mph · 2.6ft
+Sun 5/10: IN 7 · OFF 8✅ · 10mph · 2.6ft
+Mon 5/11: IN 7 · OFF 8✅ · 10mph · 2.6ft
+Tue 5/12: IN 7 · OFF 8✅ · 10mph · 2.6ft
+Wed 5/13: IN 7 · OFF 8✅ · 10mph · 2.6ft
 
-★ Best inshore: Wed 4/29 (7/10)
-★ Best offshore: Wed 4/29 (9/10)">📤 Share</button>
+★ Best inshore: Fri 5/08 (7/10)
+★ Best offshore: Sun 5/10 (8/10)">📤 Share</button>
       <button class="btn btn-outline" id="pdfBtn" style="margin-left:4px">🖨️ Print</button>
       <button class="btn btn-outline" id="refreshBtn" style="margin-left:4px">🔄 Refresh</button>
       <button class="btn btn-outline" id="expandBtn" style="margin-left:4px">Expand All</button>
       <button class="btn btn-outline" id="collapseBtn" style="margin-left:4px">Collapse All</button>
       <button class="btn btn-outline" id="darkBtn" style="margin-left:4px">🌙 Dark</button>
+      <button class="btn btn-outline" id="popoutBtn" style="margin-left:4px">↗️ Pop Out</button>
     </div>
     <div class="hint-text" style="font-size:12px;color:#64748b">Click any day to expand</div>
   </div>
@@ -252,18 +253,18 @@ Sat 5/02: IN 5 · OFF 6✅ · 20mph · 0.0ft
     <div class="gauge-item"><svg width="120" height="120" viewBox="0 0 120 120">
       <path d="M 93.9 93.9 A 48 48 0 1 1 93.9 26.1"
             class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="10" stroke-linecap="round"/>
-      <path d="M 93.9 93.9 A 48 48 0 1 1 31.8 21.2"
+      <path d="M 93.9 93.9 A 48 48 0 0 1 17.2 38.2"
             fill="none" stroke="#eab308" stroke-width="10" stroke-linecap="round"/>
-      <text x="60" y="58" text-anchor="middle" font-size="28" font-weight="bold" fill="#eab308">7</text>
+      <text x="60" y="58" text-anchor="middle" font-size="28" font-weight="bold" fill="#eab308">6</text>
       <text x="60" y="76" text-anchor="middle" font-size="11" fill="#6b7280" class="svg-muted">/10</text>
       <text x="60" y="98" text-anchor="middle" font-size="11" font-weight="600" fill="#374151" class="svg-text">Nearshore</text>
     </svg><h3>Nearshore</h3></div>
     <div class="gauge-item"><svg width="120" height="120" viewBox="0 0 120 120">
       <path d="M 93.9 93.9 A 48 48 0 1 1 93.9 26.1"
             class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="10" stroke-linecap="round"/>
-      <path d="M 93.9 93.9 A 48 48 0 1 1 31.8 21.2"
+      <path d="M 93.9 93.9 A 48 48 0 0 1 17.2 38.2"
             fill="none" stroke="#eab308" stroke-width="10" stroke-linecap="round"/>
-      <text x="60" y="58" text-anchor="middle" font-size="28" font-weight="bold" fill="#eab308">7</text>
+      <text x="60" y="58" text-anchor="middle" font-size="28" font-weight="bold" fill="#eab308">6</text>
       <text x="60" y="76" text-anchor="middle" font-size="11" fill="#6b7280" class="svg-muted">/10</text>
       <text x="60" y="98" text-anchor="middle" font-size="11" font-weight="600" fill="#374151" class="svg-text">GO</text>
     </svg><h3>Offshore</h3></div>
@@ -272,137 +273,33 @@ Sat 5/02: IN 5 · OFF 6✅ · 20mph · 0.0ft
   <div class="callout">
     <div class="callout-item"><div class="label">Target</div><div class="value">🐟 Redfish</div></div>
     <div class="callout-item"><div class="label">Where</div><div class="value">🛤️ ICW & Lee Shorelines</div></div>
-    <div class="callout-item"><div class="label">Best Window</div><div class="value">1-2 hrs before tide changes — peak current flow (start by 12:25 AM, 10:33 AM, 9:05 PM)</div></div>
-    <div class="callout-item"><div class="label">Water</div><div class="value">75.7°F</div></div>
-    <div class="callout-item"><div class="label">Wind</div><div class="value">15 mph SE</div></div>
-    <div class="callout-item"><div class="label">Waves</div><div class="value">0.0 ft</div></div>
-    <div class="callout-item"><div class="label">Bay Level</div><div class="value"><span class="wl-badge" style="color:#0ea5e9;border-color:#0ea5e9">↑ Water Level: +0.5' above normal</span></div></div>
+    <div class="callout-item"><div class="label">Best Window</div><div class="value">1-2 hrs before tide changes — peak current flow (start by 8:35 AM, 9:22 PM)</div></div>
+    <div class="callout-item"><div class="label">Water</div><div class="value">75.6°F</div></div>
+    <div class="callout-item"><div class="label">Wind</div><div class="value">15 mph E</div></div>
+    <div class="callout-item"><div class="label">Waves</div><div class="value">2.6 ft</div></div>
+    <div class="callout-item"><div class="label">Bay Level</div><div class="value"><span class="wl-badge" style="color:#0ea5e9;border-color:#0ea5e9">↑ Water Level: +0.2' above normal</span></div></div>
   </div>
 
   <div class="best-days">
     <div class="best-day-card inshore">
       <h3>★ Best Inshore Day</h3>
-      <div class="day">Wednesday, 4/29</div>
+      <div class="day">Friday, 5/08</div>
       <div class="meta">7/10 &middot; Redfish &middot; Open Bay Flats & Reefs</div>
     </div>
     <div class="best-day-card offshore">
       <h3>★ Best Offshore Day</h3>
-      <div class="day">Wednesday, 4/29</div>
-      <div class="meta">9/10 &middot; Waves 0.0 ft &middot; Wind 10 mph — ✅ Fishable</div>
+      <div class="day">Sunday, 5/10</div>
+      <div class="meta">8/10 &middot; Waves 2.6 ft &middot; Wind 10 mph — ✅ Fishable</div>
     </div>
   </div>
 
   <table class="week-table">
     <thead><tr><th>Day</th><th>Inshore</th><th>Near</th><th>Offshore</th><th>Wind</th><th>Waves</th><th>Species</th><th>Where</th></tr></thead>
     <tbody><tr>
-          <td class="day-name">Sun 4/26</td>
+          <td class="day-name">Thu 5/07</td>
           <td><span class="score-pill" style="background:#eab308">6</span></td>
-          <td><span class="score-pill" style="background:#eab308">7</span></td>
-          <td><span class="score-pill" style="background:#eab308">7<small> GO</small></span></td>
-          <td class="td-wind"><svg width="44" height="44" viewBox="0 0 44 44">
-      <circle cx="22" cy="22" r="8" class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="1.5"/>
-      <text x="22" y="8" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">N</text><text x="39" y="25" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">E</text><text x="22" y="42" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">S</text><text x="5" y="25" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">W</text>
-      <g transform="rotate(135 22 22)">
-        <line x1="22" y1="34" x2="22" y2="20" stroke="#eab308" stroke-width="3" stroke-linecap="round"/>
-        <polygon points="22,16 17,26 27,26" fill="#eab308"/>
-      </g>
-      <circle cx="22" cy="22" r="10" class="svg-center" fill="white" stroke="#eab308" stroke-width="2"/>
-      <text x="22" y="26" text-anchor="middle" font-size="9" font-weight="bold" fill="#eab308">15</text>
-    </svg></td>
-          <td class="td-wave"><svg width="120" height="38" viewBox="0 0 120 38">
-      <rect x="30" y="4" width="60" height="16" rx="4" class="svg-bg" fill="#f1f5f9"/>
-      <line x1="45" y1="2" x2="45" y2="22" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
-        <text x="45" y="34" text-anchor="middle" font-size="8" fill="#94a3b8">2'</text><line x1="60" y1="2" x2="60" y2="22" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
-        <text x="60" y="34" text-anchor="middle" font-size="8" fill="#94a3b8">4'</text><line x1="75" y1="2" x2="75" y2="22" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
-        <text x="75" y="34" text-anchor="middle" font-size="8" fill="#94a3b8">6'</text>
-      <rect x="30" y="4" width="2" height="16" rx="4" fill="#22c55e" opacity="0.85"/>
-      <text x="2" y="14" font-size="12" font-weight="bold" fill="#22c55e">0.0'</text>
-    </svg></td>
-          <td>Redfish</td>
-          <td class="td-loc">ICW & Lee Shorelines</td>
-        </tr><tr>
-          <td class="day-name">Mon 4/27</td>
           <td><span class="score-pill" style="background:#eab308">6</span></td>
-          <td><span class="score-pill" style="background:#eab308">7</span></td>
-          <td><span class="score-pill" style="background:#eab308">7<small> GO</small></span></td>
-          <td class="td-wind"><svg width="44" height="44" viewBox="0 0 44 44">
-      <circle cx="22" cy="22" r="8" class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="1.5"/>
-      <text x="22" y="8" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">N</text><text x="39" y="25" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">E</text><text x="22" y="42" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">S</text><text x="5" y="25" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">W</text>
-      <g transform="rotate(135 22 22)">
-        <line x1="22" y1="34" x2="22" y2="20" stroke="#eab308" stroke-width="3" stroke-linecap="round"/>
-        <polygon points="22,16 17,26 27,26" fill="#eab308"/>
-      </g>
-      <circle cx="22" cy="22" r="10" class="svg-center" fill="white" stroke="#eab308" stroke-width="2"/>
-      <text x="22" y="26" text-anchor="middle" font-size="9" font-weight="bold" fill="#eab308">15</text>
-    </svg></td>
-          <td class="td-wave"><svg width="120" height="38" viewBox="0 0 120 38">
-      <rect x="30" y="4" width="60" height="16" rx="4" class="svg-bg" fill="#f1f5f9"/>
-      <line x1="45" y1="2" x2="45" y2="22" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
-        <text x="45" y="34" text-anchor="middle" font-size="8" fill="#94a3b8">2'</text><line x1="60" y1="2" x2="60" y2="22" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
-        <text x="60" y="34" text-anchor="middle" font-size="8" fill="#94a3b8">4'</text><line x1="75" y1="2" x2="75" y2="22" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
-        <text x="75" y="34" text-anchor="middle" font-size="8" fill="#94a3b8">6'</text>
-      <rect x="30" y="4" width="2" height="16" rx="4" fill="#22c55e" opacity="0.85"/>
-      <text x="2" y="14" font-size="12" font-weight="bold" fill="#22c55e">0.0'</text>
-    </svg></td>
-          <td>Redfish</td>
-          <td class="td-loc">ICW & Lee Shorelines</td>
-        </tr><tr>
-          <td class="day-name">Tue 4/28</td>
-          <td><span class="score-pill" style="background:#eab308">6</span></td>
-          <td><span class="score-pill" style="background:#eab308">7</span></td>
-          <td><span class="score-pill" style="background:#eab308">7<small> GO</small></span></td>
-          <td class="td-wind"><svg width="44" height="44" viewBox="0 0 44 44">
-      <circle cx="22" cy="22" r="8" class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="1.5"/>
-      <text x="22" y="8" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">N</text><text x="39" y="25" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">E</text><text x="22" y="42" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">S</text><text x="5" y="25" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">W</text>
-      <g transform="rotate(135 22 22)">
-        <line x1="22" y1="34" x2="22" y2="20" stroke="#eab308" stroke-width="3" stroke-linecap="round"/>
-        <polygon points="22,16 17,26 27,26" fill="#eab308"/>
-      </g>
-      <circle cx="22" cy="22" r="10" class="svg-center" fill="white" stroke="#eab308" stroke-width="2"/>
-      <text x="22" y="26" text-anchor="middle" font-size="9" font-weight="bold" fill="#eab308">15</text>
-    </svg></td>
-          <td class="td-wave"><svg width="120" height="38" viewBox="0 0 120 38">
-      <rect x="30" y="4" width="60" height="16" rx="4" class="svg-bg" fill="#f1f5f9"/>
-      <line x1="45" y1="2" x2="45" y2="22" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
-        <text x="45" y="34" text-anchor="middle" font-size="8" fill="#94a3b8">2'</text><line x1="60" y1="2" x2="60" y2="22" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
-        <text x="60" y="34" text-anchor="middle" font-size="8" fill="#94a3b8">4'</text><line x1="75" y1="2" x2="75" y2="22" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
-        <text x="75" y="34" text-anchor="middle" font-size="8" fill="#94a3b8">6'</text>
-      <rect x="30" y="4" width="2" height="16" rx="4" fill="#22c55e" opacity="0.85"/>
-      <text x="2" y="14" font-size="12" font-weight="bold" fill="#22c55e">0.0'</text>
-    </svg></td>
-          <td>Redfish</td>
-          <td class="td-loc">ICW & Lee Shorelines</td>
-        </tr><tr>
-          <td class="day-name">Wed 4/29</td>
-          <td><span class="score-pill" style="background:#eab308">7</span></td>
-          <td><span class="score-pill" style="background:#22c55e">8</span></td>
-          <td><span class="score-pill" style="background:#22c55e">9<small> GO</small></span></td>
-          <td class="td-wind"><svg width="44" height="44" viewBox="0 0 44 44">
-      <circle cx="22" cy="22" r="8" class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="1.5"/>
-      <text x="22" y="8" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">N</text><text x="39" y="25" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">E</text><text x="22" y="42" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">S</text><text x="5" y="25" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">W</text>
-      <g transform="rotate(180 22 22)">
-        <line x1="22" y1="34" x2="22" y2="20" stroke="#22c55e" stroke-width="3" stroke-linecap="round"/>
-        <polygon points="22,16 17,26 27,26" fill="#22c55e"/>
-      </g>
-      <circle cx="22" cy="22" r="10" class="svg-center" fill="white" stroke="#22c55e" stroke-width="2"/>
-      <text x="22" y="26" text-anchor="middle" font-size="9" font-weight="bold" fill="#22c55e">10</text>
-    </svg></td>
-          <td class="td-wave"><svg width="120" height="38" viewBox="0 0 120 38">
-      <rect x="30" y="4" width="60" height="16" rx="4" class="svg-bg" fill="#f1f5f9"/>
-      <line x1="45" y1="2" x2="45" y2="22" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
-        <text x="45" y="34" text-anchor="middle" font-size="8" fill="#94a3b8">2'</text><line x1="60" y1="2" x2="60" y2="22" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
-        <text x="60" y="34" text-anchor="middle" font-size="8" fill="#94a3b8">4'</text><line x1="75" y1="2" x2="75" y2="22" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
-        <text x="75" y="34" text-anchor="middle" font-size="8" fill="#94a3b8">6'</text>
-      <rect x="30" y="4" width="2" height="16" rx="4" fill="#22c55e" opacity="0.85"/>
-      <text x="2" y="14" font-size="12" font-weight="bold" fill="#22c55e">0.0'</text>
-    </svg></td>
-          <td>Redfish</td>
-          <td class="td-loc">Open Bay Flats & Reefs</td>
-        </tr><tr>
-          <td class="day-name">Thu 4/30</td>
-          <td><span class="score-pill" style="background:#eab308">6</span></td>
-          <td><span class="score-pill" style="background:#eab308">7</span></td>
-          <td><span class="score-pill" style="background:#eab308">7<small> GO</small></span></td>
+          <td><span class="score-pill" style="background:#eab308">6<small> GO</small></span></td>
           <td class="td-wind"><svg width="44" height="44" viewBox="0 0 44 44">
       <circle cx="22" cy="22" r="8" class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="1.5"/>
       <text x="22" y="8" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">N</text><text x="39" y="25" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">E</text><text x="22" y="42" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">S</text><text x="5" y="25" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">W</text>
@@ -419,25 +316,77 @@ Sat 5/02: IN 5 · OFF 6✅ · 20mph · 0.0ft
         <text x="45" y="34" text-anchor="middle" font-size="8" fill="#94a3b8">2'</text><line x1="60" y1="2" x2="60" y2="22" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
         <text x="60" y="34" text-anchor="middle" font-size="8" fill="#94a3b8">4'</text><line x1="75" y1="2" x2="75" y2="22" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
         <text x="75" y="34" text-anchor="middle" font-size="8" fill="#94a3b8">6'</text>
-      <rect x="30" y="4" width="2" height="16" rx="4" fill="#22c55e" opacity="0.85"/>
-      <text x="2" y="14" font-size="12" font-weight="bold" fill="#22c55e">0.0'</text>
+      <rect x="30" y="4" width="20" height="16" rx="4" fill="#eab308" opacity="0.85"/>
+      <text x="2" y="14" font-size="12" font-weight="bold" fill="#eab308">2.6'</text>
     </svg></td>
           <td>Redfish</td>
           <td class="td-loc">ICW & Lee Shorelines</td>
         </tr><tr>
-          <td class="day-name">Fri 5/01</td>
-          <td><span class="score-pill" style="background:#f97316">5</span></td>
-          <td><span class="score-pill" style="background:#eab308">6</span></td>
-          <td><span class="score-pill" style="background:#eab308">6<small> GO</small></span></td>
+          <td class="day-name">Fri 5/08</td>
+          <td><span class="score-pill" style="background:#eab308">7</span></td>
+          <td><span class="score-pill" style="background:#22c55e">8</span></td>
+          <td><span class="score-pill" style="background:#eab308">7<small> GO</small></span></td>
+          <td class="td-wind"><svg width="44" height="44" viewBox="0 0 44 44">
+      <circle cx="22" cy="22" r="8" class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="1.5"/>
+      <text x="22" y="8" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">N</text><text x="39" y="25" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">E</text><text x="22" y="42" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">S</text><text x="5" y="25" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">W</text>
+      <g transform="rotate(90 22 22)">
+        <line x1="22" y1="34" x2="22" y2="20" stroke="#22c55e" stroke-width="3" stroke-linecap="round"/>
+        <polygon points="22,16 17,26 27,26" fill="#22c55e"/>
+      </g>
+      <circle cx="22" cy="22" r="10" class="svg-center" fill="white" stroke="#22c55e" stroke-width="2"/>
+      <text x="22" y="26" text-anchor="middle" font-size="9" font-weight="bold" fill="#22c55e">10</text>
+    </svg></td>
+          <td class="td-wave"><svg width="120" height="38" viewBox="0 0 120 38">
+      <rect x="30" y="4" width="60" height="16" rx="4" class="svg-bg" fill="#f1f5f9"/>
+      <line x1="45" y1="2" x2="45" y2="22" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
+        <text x="45" y="34" text-anchor="middle" font-size="8" fill="#94a3b8">2'</text><line x1="60" y1="2" x2="60" y2="22" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
+        <text x="60" y="34" text-anchor="middle" font-size="8" fill="#94a3b8">4'</text><line x1="75" y1="2" x2="75" y2="22" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
+        <text x="75" y="34" text-anchor="middle" font-size="8" fill="#94a3b8">6'</text>
+      <rect x="30" y="4" width="20" height="16" rx="4" fill="#eab308" opacity="0.85"/>
+      <text x="2" y="14" font-size="12" font-weight="bold" fill="#eab308">2.6'</text>
+    </svg></td>
+          <td>Redfish</td>
+          <td class="td-loc">Open Bay Flats & Reefs</td>
+        </tr><tr>
+          <td class="day-name">Sat 5/09</td>
+          <td><span class="score-pill" style="background:#eab308">7</span></td>
+          <td><span class="score-pill" style="background:#22c55e">8</span></td>
+          <td><span class="score-pill" style="background:#eab308">7<small> GO</small></span></td>
+          <td class="td-wind"><svg width="44" height="44" viewBox="0 0 44 44">
+      <circle cx="22" cy="22" r="8" class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="1.5"/>
+      <text x="22" y="8" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">N</text><text x="39" y="25" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">E</text><text x="22" y="42" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">S</text><text x="5" y="25" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">W</text>
+      <g transform="rotate(90 22 22)">
+        <line x1="22" y1="34" x2="22" y2="20" stroke="#22c55e" stroke-width="3" stroke-linecap="round"/>
+        <polygon points="22,16 17,26 27,26" fill="#22c55e"/>
+      </g>
+      <circle cx="22" cy="22" r="10" class="svg-center" fill="white" stroke="#22c55e" stroke-width="2"/>
+      <text x="22" y="26" text-anchor="middle" font-size="9" font-weight="bold" fill="#22c55e">10</text>
+    </svg></td>
+          <td class="td-wave"><svg width="120" height="38" viewBox="0 0 120 38">
+      <rect x="30" y="4" width="60" height="16" rx="4" class="svg-bg" fill="#f1f5f9"/>
+      <line x1="45" y1="2" x2="45" y2="22" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
+        <text x="45" y="34" text-anchor="middle" font-size="8" fill="#94a3b8">2'</text><line x1="60" y1="2" x2="60" y2="22" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
+        <text x="60" y="34" text-anchor="middle" font-size="8" fill="#94a3b8">4'</text><line x1="75" y1="2" x2="75" y2="22" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
+        <text x="75" y="34" text-anchor="middle" font-size="8" fill="#94a3b8">6'</text>
+      <rect x="30" y="4" width="20" height="16" rx="4" fill="#eab308" opacity="0.85"/>
+      <text x="2" y="14" font-size="12" font-weight="bold" fill="#eab308">2.6'</text>
+    </svg></td>
+          <td>Redfish</td>
+          <td class="td-loc">Open Bay Flats & Reefs</td>
+        </tr><tr>
+          <td class="day-name">Sun 5/10</td>
+          <td><span class="score-pill" style="background:#eab308">7</span></td>
+          <td><span class="score-pill" style="background:#22c55e">8</span></td>
+          <td><span class="score-pill" style="background:#22c55e">8<small> GO</small></span></td>
           <td class="td-wind"><svg width="44" height="44" viewBox="0 0 44 44">
       <circle cx="22" cy="22" r="8" class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="1.5"/>
       <text x="22" y="8" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">N</text><text x="39" y="25" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">E</text><text x="22" y="42" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">S</text><text x="5" y="25" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">W</text>
       <g transform="rotate(135 22 22)">
-        <line x1="22" y1="34" x2="22" y2="20" stroke="#f97316" stroke-width="3" stroke-linecap="round"/>
-        <polygon points="22,16 17,26 27,26" fill="#f97316"/>
+        <line x1="22" y1="34" x2="22" y2="20" stroke="#22c55e" stroke-width="3" stroke-linecap="round"/>
+        <polygon points="22,16 17,26 27,26" fill="#22c55e"/>
       </g>
-      <circle cx="22" cy="22" r="10" class="svg-center" fill="white" stroke="#f97316" stroke-width="2"/>
-      <text x="22" y="26" text-anchor="middle" font-size="9" font-weight="bold" fill="#f97316">20</text>
+      <circle cx="22" cy="22" r="10" class="svg-center" fill="white" stroke="#22c55e" stroke-width="2"/>
+      <text x="22" y="26" text-anchor="middle" font-size="9" font-weight="bold" fill="#22c55e">10</text>
     </svg></td>
           <td class="td-wave"><svg width="120" height="38" viewBox="0 0 120 38">
       <rect x="30" y="4" width="60" height="16" rx="4" class="svg-bg" fill="#f1f5f9"/>
@@ -445,25 +394,25 @@ Sat 5/02: IN 5 · OFF 6✅ · 20mph · 0.0ft
         <text x="45" y="34" text-anchor="middle" font-size="8" fill="#94a3b8">2'</text><line x1="60" y1="2" x2="60" y2="22" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
         <text x="60" y="34" text-anchor="middle" font-size="8" fill="#94a3b8">4'</text><line x1="75" y1="2" x2="75" y2="22" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
         <text x="75" y="34" text-anchor="middle" font-size="8" fill="#94a3b8">6'</text>
-      <rect x="30" y="4" width="2" height="16" rx="4" fill="#22c55e" opacity="0.85"/>
-      <text x="2" y="14" font-size="12" font-weight="bold" fill="#22c55e">0.0'</text>
+      <rect x="30" y="4" width="20" height="16" rx="4" fill="#eab308" opacity="0.85"/>
+      <text x="2" y="14" font-size="12" font-weight="bold" fill="#eab308">2.6'</text>
     </svg></td>
           <td>Redfish</td>
-          <td class="td-loc">ICW & Protected Shorelines</td>
+          <td class="td-loc">Open Bay Flats & Reefs</td>
         </tr><tr>
-          <td class="day-name">Sat 5/02</td>
-          <td><span class="score-pill" style="background:#f97316">5</span></td>
-          <td><span class="score-pill" style="background:#eab308">6</span></td>
-          <td><span class="score-pill" style="background:#eab308">6<small> GO</small></span></td>
+          <td class="day-name">Mon 5/11</td>
+          <td><span class="score-pill" style="background:#eab308">7</span></td>
+          <td><span class="score-pill" style="background:#22c55e">8</span></td>
+          <td><span class="score-pill" style="background:#22c55e">8<small> GO</small></span></td>
           <td class="td-wind"><svg width="44" height="44" viewBox="0 0 44 44">
       <circle cx="22" cy="22" r="8" class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="1.5"/>
       <text x="22" y="8" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">N</text><text x="39" y="25" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">E</text><text x="22" y="42" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">S</text><text x="5" y="25" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">W</text>
       <g transform="rotate(45 22 22)">
-        <line x1="22" y1="34" x2="22" y2="20" stroke="#f97316" stroke-width="3" stroke-linecap="round"/>
-        <polygon points="22,16 17,26 27,26" fill="#f97316"/>
+        <line x1="22" y1="34" x2="22" y2="20" stroke="#22c55e" stroke-width="3" stroke-linecap="round"/>
+        <polygon points="22,16 17,26 27,26" fill="#22c55e"/>
       </g>
-      <circle cx="22" cy="22" r="10" class="svg-center" fill="white" stroke="#f97316" stroke-width="2"/>
-      <text x="22" y="26" text-anchor="middle" font-size="9" font-weight="bold" fill="#f97316">20</text>
+      <circle cx="22" cy="22" r="10" class="svg-center" fill="white" stroke="#22c55e" stroke-width="2"/>
+      <text x="22" y="26" text-anchor="middle" font-size="9" font-weight="bold" fill="#22c55e">10</text>
     </svg></td>
           <td class="td-wave"><svg width="120" height="38" viewBox="0 0 120 38">
       <rect x="30" y="4" width="60" height="16" rx="4" class="svg-bg" fill="#f1f5f9"/>
@@ -471,32 +420,84 @@ Sat 5/02: IN 5 · OFF 6✅ · 20mph · 0.0ft
         <text x="45" y="34" text-anchor="middle" font-size="8" fill="#94a3b8">2'</text><line x1="60" y1="2" x2="60" y2="22" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
         <text x="60" y="34" text-anchor="middle" font-size="8" fill="#94a3b8">4'</text><line x1="75" y1="2" x2="75" y2="22" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
         <text x="75" y="34" text-anchor="middle" font-size="8" fill="#94a3b8">6'</text>
-      <rect x="30" y="4" width="2" height="16" rx="4" fill="#22c55e" opacity="0.85"/>
-      <text x="2" y="14" font-size="12" font-weight="bold" fill="#22c55e">0.0'</text>
+      <rect x="30" y="4" width="20" height="16" rx="4" fill="#eab308" opacity="0.85"/>
+      <text x="2" y="14" font-size="12" font-weight="bold" fill="#eab308">2.6'</text>
     </svg></td>
           <td>Redfish</td>
-          <td class="td-loc">ICW & Protected Shorelines</td>
+          <td class="td-loc">Open Bay Flats & Reefs</td>
+        </tr><tr>
+          <td class="day-name">Tue 5/12</td>
+          <td><span class="score-pill" style="background:#eab308">7</span></td>
+          <td><span class="score-pill" style="background:#22c55e">8</span></td>
+          <td><span class="score-pill" style="background:#22c55e">8<small> GO</small></span></td>
+          <td class="td-wind"><svg width="44" height="44" viewBox="0 0 44 44">
+      <circle cx="22" cy="22" r="8" class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="1.5"/>
+      <text x="22" y="8" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">N</text><text x="39" y="25" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">E</text><text x="22" y="42" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">S</text><text x="5" y="25" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">W</text>
+      <g transform="rotate(90 22 22)">
+        <line x1="22" y1="34" x2="22" y2="20" stroke="#22c55e" stroke-width="3" stroke-linecap="round"/>
+        <polygon points="22,16 17,26 27,26" fill="#22c55e"/>
+      </g>
+      <circle cx="22" cy="22" r="10" class="svg-center" fill="white" stroke="#22c55e" stroke-width="2"/>
+      <text x="22" y="26" text-anchor="middle" font-size="9" font-weight="bold" fill="#22c55e">10</text>
+    </svg></td>
+          <td class="td-wave"><svg width="120" height="38" viewBox="0 0 120 38">
+      <rect x="30" y="4" width="60" height="16" rx="4" class="svg-bg" fill="#f1f5f9"/>
+      <line x1="45" y1="2" x2="45" y2="22" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
+        <text x="45" y="34" text-anchor="middle" font-size="8" fill="#94a3b8">2'</text><line x1="60" y1="2" x2="60" y2="22" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
+        <text x="60" y="34" text-anchor="middle" font-size="8" fill="#94a3b8">4'</text><line x1="75" y1="2" x2="75" y2="22" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
+        <text x="75" y="34" text-anchor="middle" font-size="8" fill="#94a3b8">6'</text>
+      <rect x="30" y="4" width="20" height="16" rx="4" fill="#eab308" opacity="0.85"/>
+      <text x="2" y="14" font-size="12" font-weight="bold" fill="#eab308">2.6'</text>
+    </svg></td>
+          <td>Redfish</td>
+          <td class="td-loc">Open Bay Flats & Reefs</td>
+        </tr><tr>
+          <td class="day-name">Wed 5/13</td>
+          <td><span class="score-pill" style="background:#eab308">7</span></td>
+          <td><span class="score-pill" style="background:#22c55e">8</span></td>
+          <td><span class="score-pill" style="background:#22c55e">8<small> GO</small></span></td>
+          <td class="td-wind"><svg width="44" height="44" viewBox="0 0 44 44">
+      <circle cx="22" cy="22" r="8" class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="1.5"/>
+      <text x="22" y="8" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">N</text><text x="39" y="25" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">E</text><text x="22" y="42" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">S</text><text x="5" y="25" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">W</text>
+      <g transform="rotate(135 22 22)">
+        <line x1="22" y1="34" x2="22" y2="20" stroke="#22c55e" stroke-width="3" stroke-linecap="round"/>
+        <polygon points="22,16 17,26 27,26" fill="#22c55e"/>
+      </g>
+      <circle cx="22" cy="22" r="10" class="svg-center" fill="white" stroke="#22c55e" stroke-width="2"/>
+      <text x="22" y="26" text-anchor="middle" font-size="9" font-weight="bold" fill="#22c55e">10</text>
+    </svg></td>
+          <td class="td-wave"><svg width="120" height="38" viewBox="0 0 120 38">
+      <rect x="30" y="4" width="60" height="16" rx="4" class="svg-bg" fill="#f1f5f9"/>
+      <line x1="45" y1="2" x2="45" y2="22" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
+        <text x="45" y="34" text-anchor="middle" font-size="8" fill="#94a3b8">2'</text><line x1="60" y1="2" x2="60" y2="22" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
+        <text x="60" y="34" text-anchor="middle" font-size="8" fill="#94a3b8">4'</text><line x1="75" y1="2" x2="75" y2="22" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
+        <text x="75" y="34" text-anchor="middle" font-size="8" fill="#94a3b8">6'</text>
+      <rect x="30" y="4" width="20" height="16" rx="4" fill="#eab308" opacity="0.85"/>
+      <text x="2" y="14" font-size="12" font-weight="bold" fill="#eab308">2.6'</text>
+    </svg></td>
+          <td>Redfish</td>
+          <td class="td-loc">Open Bay Flats & Reefs</td>
         </tr></tbody>
   </table>
 
   
     <div class="day-section day-today">
-      <div class="day-header" data-day="day-2026-04-26">
+      <div class="day-header" data-day="day-2026-05-07">
         <div>
-          <h2>Sunday, 4/26 <span class="badge badge-today">TODAY</span></h2>
-          <span class="day-factor">water +0.5' above normal</span>
-          <div class="print-summary">🐟 Redfish &middot; 📍 ICW & Lee Shorelines &middot; ⏰ 1-2 hrs before tide changes — peak current flow (start by 12:25 AM, 10:33 AM, 9:05 PM) &middot; 💨 15mph SE &middot; 🌊 0.0ft</div>
+          <h2>Thursday, 5/07 <span class="badge badge-today">TODAY</span></h2>
+          <span class="day-factor">rain likely + water +0.2' above normal</span>
+          <div class="print-summary">🐟 Redfish &middot; 📍 ICW & Lee Shorelines &middot; ⏰ 1-2 hrs before tide changes — peak current flow (start by 8:35 AM, 9:22 PM) &middot; 💨 15mph E &middot; 🌊 2.6ft</div>
         </div>
         <div class="day-scores-mini">
           <span class="score-pill" style="background:#eab308">IN 6</span>
-          <span class="score-pill" style="background:#eab308">NR 7</span>
-          <span class="score-pill" style="background:#eab308">OFF 7</span>
-          <span class="chevron" id="chev-2026-04-26">▼</span>
+          <span class="score-pill" style="background:#eab308">NR 6</span>
+          <span class="score-pill" style="background:#eab308">OFF 6</span>
+          <span class="chevron" id="chev-2026-05-07">▼</span>
         </div>
       </div>
 
-      <div class="day-body" id="day-2026-04-26" style="display:block">
-        
+      <div class="day-body" id="day-2026-05-07" style="display:block">
+        <div class="alert-box"><div class="alert-item">⚠️ Rain/storms likely</div></div>
 
         <div class="section-label">🕐 Fishing Windows</div>
         <div class="timeline-container">
@@ -504,658 +505,24 @@ Sat 5/02: IN 5 · OFF 6✅ · 20mph · 0.0ft
       <rect x="10" y="4" width="88" height="20" rx="4" fill="#3b82f6" opacity="0.2"/>
         <rect x="10" y="4" width="88" height="20" rx="4" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
         <text x="54" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#3b82f6">GOOD</text>
-        <text x="54" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">5:00 AM</text><rect x="102" y="4" width="88" height="20" rx="4" fill="#3b82f6" opacity="0.2"/>
-        <rect x="102" y="4" width="88" height="20" rx="4" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
-        <text x="146" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#3b82f6">GOOD</text>
-        <text x="146" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">7:00 AM</text><rect x="194" y="4" width="88" height="20" rx="4" fill="#3b82f6" opacity="0.2"/>
-        <rect x="194" y="4" width="88" height="20" rx="4" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
-        <text x="238" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#3b82f6">GOOD</text>
-        <text x="238" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">10:00 AM</text><rect x="286" y="4" width="88" height="20" rx="4" fill="#eab308" opacity="0.2"/>
-        <rect x="286" y="4" width="88" height="20" rx="4" fill="none" stroke="#eab308" stroke-width="1.5"/>
-        <text x="330" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#eab308">FAIR</text>
-        <text x="330" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">2:00 PM</text><rect x="378" y="4" width="88" height="20" rx="4" fill="#3b82f6" opacity="0.2"/>
-        <rect x="378" y="4" width="88" height="20" rx="4" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
-        <text x="422" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#3b82f6">GOOD</text>
-        <text x="422" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">5:00 PM</text><text x="470" y="38" text-anchor="end" font-size="8" class="svg-time" fill="#64748b">8:00 PM</text>
-    </svg>
-          <div class="tw-details"><div class="tw-tip"><span class="tw-dot" style="background:#3b82f6"></span><strong>5:00 AM – 7:00 AM</strong>: Calm water, low light, active fish</div><div class="tw-tip"><span class="tw-dot" style="background:#3b82f6"></span><strong>7:00 AM – 10:00 AM</strong>: Good light, fish still feeding</div><div class="tw-tip"><span class="tw-dot" style="background:#3b82f6"></span><strong>10:00 AM – 2:00 PM</strong>: Current building before tide at 12:03 PM keeps fish active</div><div class="tw-tip"><span class="tw-dot" style="background:#eab308"></span><strong>2:00 PM – 5:00 PM</strong>: Afternoon sea breeze typical</div><div class="tw-tip"><span class="tw-dot" style="background:#3b82f6"></span><strong>5:00 PM – 8:00 PM</strong>: Wind dies, low light, evening feed</div></div>
-          <div class="time-summary">
-            <span class="ts-best">✅ Best: 1-2 hrs before tide changes — peak current flow (start by 12:25 AM, 10:33 AM, 9:05 PM)</span>
-            <span class="ts-worst">❌ Avoid: Slack water at tide changes (1:55 AM, 12:03 PM, 10:35 PM) — current stalls</span>
-          </div>
-        </div>
-
-        <div class="two-col">
-          <div class="col-card inshore-card">
-            <div class="col-header">
-              <h3>🏖️ Inshore</h3>
-              <svg width="90" height="90" viewBox="0 0 90 90">
-      <path d="M 68.3 68.3 A 33 33 0 1 1 68.3 21.7"
-            class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="10" stroke-linecap="round"/>
-      <path d="M 68.3 68.3 A 33 33 0 0 1 15.6 30.0"
-            fill="none" stroke="#eab308" stroke-width="10" stroke-linecap="round"/>
-      <text x="45" y="43" text-anchor="middle" font-size="28" font-weight="bold" fill="#eab308">6</text>
-      <text x="45" y="61" text-anchor="middle" font-size="11" fill="#6b7280" class="svg-muted">/10</text>
-      <text x="45" y="83" text-anchor="middle" font-size="11" font-weight="600" fill="#374151" class="svg-text">Score</text>
-    </svg>
-            </div>
-            <div class="rec-box">
-              <div class="rec-label">📍 Where to Fish</div>
-              <div class="rec-location">🛤️ ICW & Lee Shorelines</div>
-              <div class="rec-reason">Wind 15 mph — open bay is choppy. Focus on ICW structure and shorelines sheltered from SE wind.</div>
-            </div>
-            <div class="rec-box">
-              <div class="rec-label">🐟 Target Species</div>
-              <div class="rec-species">Redfish</div>
-            </div>
-            <div class="detail-row-data">
-              <div class="datum"><span class="datum-label">Water Temp</span><span class="datum-value">75.7°F</span></div>
-              <div class="datum"><span class="datum-label">Pressure</span><span class="datum-value">1010.3 mb (stable)</span></div>
-              <div class="datum"><span class="datum-label">Cloud / Rain</span><span class="datum-value">40% / 0%</span></div>
-            </div>
-          </div>
-
-          <div class="col-card offshore-card">
-            <div class="col-header">
-              <h3>🚤 Offshore</h3>
-              <svg width="90" height="90" viewBox="0 0 90 90">
-      <path d="M 68.3 68.3 A 33 33 0 1 1 68.3 21.7"
-            class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="10" stroke-linecap="round"/>
-      <path d="M 68.3 68.3 A 33 33 0 1 1 25.6 18.3"
-            fill="none" stroke="#eab308" stroke-width="10" stroke-linecap="round"/>
-      <text x="45" y="43" text-anchor="middle" font-size="28" font-weight="bold" fill="#eab308">7</text>
-      <text x="45" y="61" text-anchor="middle" font-size="11" fill="#6b7280" class="svg-muted">/10</text>
-      <text x="45" y="83" text-anchor="middle" font-size="11" font-weight="600" fill="#374151" class="svg-text">GO</text>
-    </svg>
-            </div>
-            <div class="wave-section">
-              <div class="rec-label">🌊 Wave Height</div>
-              <svg width="200" height="46" viewBox="0 0 200 46">
-      <rect x="30" y="4" width="140" height="24" rx="4" class="svg-bg" fill="#f1f5f9"/>
-      <line x1="65" y1="2" x2="65" y2="30" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
-        <text x="65" y="42" text-anchor="middle" font-size="8" fill="#94a3b8">2'</text><line x1="100" y1="2" x2="100" y2="30" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
-        <text x="100" y="42" text-anchor="middle" font-size="8" fill="#94a3b8">4'</text><line x1="135" y1="2" x2="135" y2="30" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
-        <text x="135" y="42" text-anchor="middle" font-size="8" fill="#94a3b8">6'</text>
-      <rect x="30" y="4" width="2" height="24" rx="4" fill="#22c55e" opacity="0.85"/>
-      <text x="2" y="18" font-size="12" font-weight="bold" fill="#22c55e">0.0'</text>
-    </svg>
-              <div class="wave-detail">0.0 ft @ 0s period</div>
-            </div>
-            <div class="detail-row-data">
-              <div class="datum"><span class="datum-label">Seas</span><span class="datum-value">Calm — go fish!</span></div>
-              <div class="datum"><span class="datum-label">Water Temp</span><span class="datum-value">75.7°F</span></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="two-col">
-          <div class="col-card">
-            <div class="wind-row">
-              <div>
-                <div class="section-label" style="margin:0 0 4px 0">💨 Wind</div>
-                <svg width="80" height="80" viewBox="0 0 80 80">
-      <circle cx="40" cy="40" r="26" class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="1.5"/>
-      <text x="40" y="8" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">N</text><text x="75" y="43" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">E</text><text x="40" y="78" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">S</text><text x="5" y="43" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">W</text>
-      <g transform="rotate(135 40 40)">
-        <line x1="40" y1="52" x2="40" y2="20" stroke="#eab308" stroke-width="3" stroke-linecap="round"/>
-        <polygon points="40,16 35,26 45,26" fill="#eab308"/>
-      </g>
-      <circle cx="40" cy="40" r="10" class="svg-center" fill="white" stroke="#eab308" stroke-width="2"/>
-      <text x="40" y="44" text-anchor="middle" font-size="9" font-weight="bold" fill="#eab308">15</text>
-    </svg>
-              </div>
-              <div class="wind-details">
-                <div class="wind-speed">15 <span class="wind-unit">mph</span></div>
-                <div class="wind-dir">from SE</div>
-                <div class="wind-assessment">🟡 Breezy — fishable inshore</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-card">
-            <div class="section-label" style="margin:0 0 4px 0">🌊 Tides</div>
-            <svg width="100%" viewBox="0 0 480 120" preserveAspectRatio="xMidYMid meet">
-      <defs><linearGradient id="tideGrad" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#0ea5e9" stop-opacity="0.3"/>
-        <stop offset="100%" stop-color="#0ea5e9" stop-opacity="0.05"/>
-      </linearGradient></defs>
-      <polygon points="36.0,96 36.0,34.8 54.8,33.3 73.6,32.6 92.3,33.8 111.1,37.0 129.9,41.9 148.7,47.6 167.5,52.7 186.3,57.4 205.0,61.8 223.8,66.3 242.6,69.9 261.4,71.4 280.2,69.9 299.0,66.3 317.7,61.3 336.5,56.9 355.3,53.5 374.1,51.3 392.9,49.1 411.7,47.1 430.4,45.6 449.2,44.9 468.0,44.9 468.0,96" fill="url(#tideGrad)"/>
-      <polyline points="36.0,34.8 54.8,33.3 73.6,32.6 92.3,33.8 111.1,37.0 129.9,41.9 148.7,47.6 167.5,52.7 186.3,57.4 205.0,61.8 223.8,66.3 242.6,69.9 261.4,71.4 280.2,69.9 299.0,66.3 317.7,61.3 336.5,56.9 355.3,53.5 374.1,51.3 392.9,49.1 411.7,47.1 430.4,45.6 449.2,44.9 468.0,44.9" fill="none" stroke="#0ea5e9" stroke-width="2.5" stroke-linejoin="round"/>
-      
-      <line x1="299.1" y1="8" x2="299.1" y2="96" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.7"/>
-        <circle cx="299.1" cy="66.2" r="5" fill="#f59e0b" stroke="white" stroke-width="2"/>
-        <text x="299.1" y="7.0" text-anchor="middle" font-size="9" font-weight="700" fill="#f59e0b">Now</text>
-      <text x="36.0" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">12 AM</text><text x="148.7" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">6 AM</text><text x="261.4" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">12 PM</text><text x="374.1" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">6 PM</text>
-      <text x="32" y="99.0" text-anchor="end" font-size="9" fill="#94a3b8">0.4</text><text x="32" y="55.0" text-anchor="end" font-size="9" fill="#94a3b8">0.6</text><text x="32" y="11.0" text-anchor="end" font-size="9" fill="#94a3b8">0.8</text>
-    </svg>
-            <div class="tide-summary">
-              Range: 0.65 ft &middot;
-              Highs: 1:55 AM, 10:35 PM &middot;
-              Lows: 12:03 PM
-            </div>
-            <div class="water-level-row"><span class="wl-badge" style="color:#0ea5e9;border-color:#0ea5e9">↑ Water Level: +0.5' above normal</span></div>
-          </div>
-        </div>
-
-        
-      </div>
-    </div>
-    <div class="day-section ">
-      <div class="day-header" data-day="day-2026-04-27">
-        <div>
-          <h2>Monday, 4/27 </h2>
-          <span class="day-factor">water +0.5' above normal</span>
-          <div class="print-summary">🐟 Redfish &middot; 📍 ICW & Lee Shorelines &middot; ⏰ 1-2 hrs before tide changes — peak current flow (start by 10:16 AM, 6:39 PM) &middot; 💨 15mph SE &middot; 🌊 0.0ft</div>
-        </div>
-        <div class="day-scores-mini">
-          <span class="score-pill" style="background:#eab308">IN 6</span>
-          <span class="score-pill" style="background:#eab308">NR 7</span>
-          <span class="score-pill" style="background:#eab308">OFF 7</span>
-          <span class="chevron" id="chev-2026-04-27">▼</span>
-        </div>
-      </div>
-
-      <div class="day-body" id="day-2026-04-27" style="display:none">
-        
-
-        <div class="section-label">🕐 Fishing Windows</div>
-        <div class="timeline-container">
-          <svg width="100%" viewBox="0 0 480 50" preserveAspectRatio="xMidYMid meet">
-      <rect x="10" y="4" width="88" height="20" rx="4" fill="#3b82f6" opacity="0.2"/>
-        <rect x="10" y="4" width="88" height="20" rx="4" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
-        <text x="54" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#3b82f6">GOOD</text>
-        <text x="54" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">5:00 AM</text><rect x="102" y="4" width="88" height="20" rx="4" fill="#3b82f6" opacity="0.2"/>
-        <rect x="102" y="4" width="88" height="20" rx="4" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
-        <text x="146" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#3b82f6">GOOD</text>
-        <text x="146" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">7:00 AM</text><rect x="194" y="4" width="88" height="20" rx="4" fill="#3b82f6" opacity="0.2"/>
-        <rect x="194" y="4" width="88" height="20" rx="4" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
-        <text x="238" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#3b82f6">GOOD</text>
-        <text x="238" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">10:00 AM</text><rect x="286" y="4" width="88" height="20" rx="4" fill="#eab308" opacity="0.2"/>
-        <rect x="286" y="4" width="88" height="20" rx="4" fill="none" stroke="#eab308" stroke-width="1.5"/>
-        <text x="330" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#eab308">FAIR</text>
-        <text x="330" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">2:00 PM</text><rect x="378" y="4" width="88" height="20" rx="4" fill="#22c55e" opacity="0.2"/>
-        <rect x="378" y="4" width="88" height="20" rx="4" fill="none" stroke="#22c55e" stroke-width="1.5"/>
-        <text x="422" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#22c55e">PRIME</text>
-        <text x="422" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">5:00 PM</text><text x="470" y="38" text-anchor="end" font-size="8" class="svg-time" fill="#64748b">8:00 PM</text>
-    </svg>
-          <div class="tw-details"><div class="tw-tip"><span class="tw-dot" style="background:#3b82f6"></span><strong>5:00 AM – 7:00 AM</strong>: Calm water, low light, active fish</div><div class="tw-tip"><span class="tw-dot" style="background:#3b82f6"></span><strong>7:00 AM – 10:00 AM</strong>: Good light, fish still feeding</div><div class="tw-tip"><span class="tw-dot" style="background:#3b82f6"></span><strong>10:00 AM – 2:00 PM</strong>: Current building before tide at 11:46 AM keeps fish active</div><div class="tw-tip"><span class="tw-dot" style="background:#eab308"></span><strong>2:00 PM – 5:00 PM</strong>: Afternoon sea breeze typical</div><div class="tw-tip"><span class="tw-dot" style="background:#22c55e"></span><strong>5:00 PM – 8:00 PM</strong>: Current building before tide at 8:09 PM + low light = prime</div></div>
-          <div class="time-summary">
-            <span class="ts-best">✅ Best: 1-2 hrs before tide changes — peak current flow (start by 10:16 AM, 6:39 PM)</span>
-            <span class="ts-worst">❌ Avoid: Slack water at tide changes (11:46 AM, 8:09 PM) — current stalls</span>
-          </div>
-        </div>
-
-        <div class="two-col">
-          <div class="col-card inshore-card">
-            <div class="col-header">
-              <h3>🏖️ Inshore</h3>
-              <svg width="90" height="90" viewBox="0 0 90 90">
-      <path d="M 68.3 68.3 A 33 33 0 1 1 68.3 21.7"
-            class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="10" stroke-linecap="round"/>
-      <path d="M 68.3 68.3 A 33 33 0 0 1 15.6 30.0"
-            fill="none" stroke="#eab308" stroke-width="10" stroke-linecap="round"/>
-      <text x="45" y="43" text-anchor="middle" font-size="28" font-weight="bold" fill="#eab308">6</text>
-      <text x="45" y="61" text-anchor="middle" font-size="11" fill="#6b7280" class="svg-muted">/10</text>
-      <text x="45" y="83" text-anchor="middle" font-size="11" font-weight="600" fill="#374151" class="svg-text">Score</text>
-    </svg>
-            </div>
-            <div class="rec-box">
-              <div class="rec-label">📍 Where to Fish</div>
-              <div class="rec-location">🛤️ ICW & Lee Shorelines</div>
-              <div class="rec-reason">Wind 15 mph — open bay is choppy. Focus on ICW structure and shorelines sheltered from SE wind.</div>
-            </div>
-            <div class="rec-box">
-              <div class="rec-label">🐟 Target Species</div>
-              <div class="rec-species">Redfish</div>
-            </div>
-            <div class="detail-row-data">
-              <div class="datum"><span class="datum-label">Water Temp</span><span class="datum-value">75.7°F</span></div>
-              <div class="datum"><span class="datum-label">Pressure</span><span class="datum-value">1010.3 mb (stable)</span></div>
-              <div class="datum"><span class="datum-label">Cloud / Rain</span><span class="datum-value">40% / 0%</span></div>
-            </div>
-          </div>
-
-          <div class="col-card offshore-card">
-            <div class="col-header">
-              <h3>🚤 Offshore</h3>
-              <svg width="90" height="90" viewBox="0 0 90 90">
-      <path d="M 68.3 68.3 A 33 33 0 1 1 68.3 21.7"
-            class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="10" stroke-linecap="round"/>
-      <path d="M 68.3 68.3 A 33 33 0 1 1 25.6 18.3"
-            fill="none" stroke="#eab308" stroke-width="10" stroke-linecap="round"/>
-      <text x="45" y="43" text-anchor="middle" font-size="28" font-weight="bold" fill="#eab308">7</text>
-      <text x="45" y="61" text-anchor="middle" font-size="11" fill="#6b7280" class="svg-muted">/10</text>
-      <text x="45" y="83" text-anchor="middle" font-size="11" font-weight="600" fill="#374151" class="svg-text">GO</text>
-    </svg>
-            </div>
-            <div class="wave-section">
-              <div class="rec-label">🌊 Wave Height</div>
-              <svg width="200" height="46" viewBox="0 0 200 46">
-      <rect x="30" y="4" width="140" height="24" rx="4" class="svg-bg" fill="#f1f5f9"/>
-      <line x1="65" y1="2" x2="65" y2="30" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
-        <text x="65" y="42" text-anchor="middle" font-size="8" fill="#94a3b8">2'</text><line x1="100" y1="2" x2="100" y2="30" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
-        <text x="100" y="42" text-anchor="middle" font-size="8" fill="#94a3b8">4'</text><line x1="135" y1="2" x2="135" y2="30" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
-        <text x="135" y="42" text-anchor="middle" font-size="8" fill="#94a3b8">6'</text>
-      <rect x="30" y="4" width="2" height="24" rx="4" fill="#22c55e" opacity="0.85"/>
-      <text x="2" y="18" font-size="12" font-weight="bold" fill="#22c55e">0.0'</text>
-    </svg>
-              <div class="wave-detail">0.0 ft @ 0s period</div>
-            </div>
-            <div class="detail-row-data">
-              <div class="datum"><span class="datum-label">Seas</span><span class="datum-value">Calm — go fish!</span></div>
-              <div class="datum"><span class="datum-label">Water Temp</span><span class="datum-value">75.7°F</span></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="two-col">
-          <div class="col-card">
-            <div class="wind-row">
-              <div>
-                <div class="section-label" style="margin:0 0 4px 0">💨 Wind</div>
-                <svg width="80" height="80" viewBox="0 0 80 80">
-      <circle cx="40" cy="40" r="26" class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="1.5"/>
-      <text x="40" y="8" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">N</text><text x="75" y="43" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">E</text><text x="40" y="78" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">S</text><text x="5" y="43" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">W</text>
-      <g transform="rotate(135 40 40)">
-        <line x1="40" y1="52" x2="40" y2="20" stroke="#eab308" stroke-width="3" stroke-linecap="round"/>
-        <polygon points="40,16 35,26 45,26" fill="#eab308"/>
-      </g>
-      <circle cx="40" cy="40" r="10" class="svg-center" fill="white" stroke="#eab308" stroke-width="2"/>
-      <text x="40" y="44" text-anchor="middle" font-size="9" font-weight="bold" fill="#eab308">15</text>
-    </svg>
-              </div>
-              <div class="wind-details">
-                <div class="wind-speed">15 <span class="wind-unit">mph</span></div>
-                <div class="wind-dir">from SE</div>
-                <div class="wind-assessment">🟡 Breezy — fishable inshore</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-card">
-            <div class="section-label" style="margin:0 0 4px 0">🌊 Tides</div>
-            <svg width="100%" viewBox="0 0 480 120" preserveAspectRatio="xMidYMid meet">
-      <defs><linearGradient id="tideGrad" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#0ea5e9" stop-opacity="0.3"/>
-        <stop offset="100%" stop-color="#0ea5e9" stop-opacity="0.05"/>
-      </linearGradient></defs>
-      <polygon points="36.0,96 36.0,39.1 54.8,39.1 73.6,39.7 92.3,41.3 111.1,44.7 129.9,49.0 148.7,53.4 167.5,56.5 186.3,58.4 205.0,60.2 223.8,62.4 242.6,64.6 261.4,64.9 280.2,63.0 299.0,58.7 317.7,53.1 336.5,48.4 355.3,45.0 374.1,43.1 392.9,41.6 411.7,41.0 430.4,41.6 449.2,43.4 468.0,46.2 468.0,96" fill="url(#tideGrad)"/>
-      <polyline points="36.0,39.1 54.8,39.1 73.6,39.7 92.3,41.3 111.1,44.7 129.9,49.0 148.7,53.4 167.5,56.5 186.3,58.4 205.0,60.2 223.8,62.4 242.6,64.6 261.4,64.9 280.2,63.0 299.0,58.7 317.7,53.1 336.5,48.4 355.3,45.0 374.1,43.1 392.9,41.6 411.7,41.0 430.4,41.6 449.2,43.4 468.0,46.2" fill="none" stroke="#0ea5e9" stroke-width="2.5" stroke-linejoin="round"/>
-      
-      
-      <text x="36.0" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">12 AM</text><text x="148.7" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">6 AM</text><text x="261.4" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">12 PM</text><text x="374.1" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">6 PM</text>
-      <text x="32" y="99.0" text-anchor="end" font-size="9" fill="#94a3b8">0.4</text><text x="32" y="55.0" text-anchor="end" font-size="9" fill="#94a3b8">0.6</text><text x="32" y="11.0" text-anchor="end" font-size="9" fill="#94a3b8">0.7</text>
-    </svg>
-            <div class="tide-summary">
-              Range: 0.59 ft &middot;
-              Highs: 8:09 PM &middot;
-              Lows: 11:46 AM
-            </div>
-            <div class="water-level-row"><span class="wl-badge" style="color:#0ea5e9;border-color:#0ea5e9">↑ Water Level: +0.5' above normal</span></div>
-          </div>
-        </div>
-
-        
-      </div>
-    </div>
-    <div class="day-section ">
-      <div class="day-header" data-day="day-2026-04-28">
-        <div>
-          <h2>Tuesday, 4/28 </h2>
-          <span class="day-factor">water +0.5' above normal</span>
-          <div class="print-summary">🐟 Redfish &middot; 📍 ICW & Lee Shorelines &middot; ⏰ 1-2 hrs before tide changes — peak current flow (start by 5:17 AM, 5:20 PM) &middot; 💨 15mph SE &middot; 🌊 0.0ft</div>
-        </div>
-        <div class="day-scores-mini">
-          <span class="score-pill" style="background:#eab308">IN 6</span>
-          <span class="score-pill" style="background:#eab308">NR 7</span>
-          <span class="score-pill" style="background:#eab308">OFF 7</span>
-          <span class="chevron" id="chev-2026-04-28">▼</span>
-        </div>
-      </div>
-
-      <div class="day-body" id="day-2026-04-28" style="display:none">
-        
-
-        <div class="section-label">🕐 Fishing Windows</div>
-        <div class="timeline-container">
-          <svg width="100%" viewBox="0 0 480 50" preserveAspectRatio="xMidYMid meet">
-      <rect x="10" y="4" width="88" height="20" rx="4" fill="#22c55e" opacity="0.2"/>
-        <rect x="10" y="4" width="88" height="20" rx="4" fill="none" stroke="#22c55e" stroke-width="1.5"/>
-        <text x="54" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#22c55e">PRIME</text>
-        <text x="54" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">5:00 AM</text><rect x="102" y="4" width="88" height="20" rx="4" fill="#3b82f6" opacity="0.2"/>
-        <rect x="102" y="4" width="88" height="20" rx="4" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
-        <text x="146" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#3b82f6">GOOD</text>
+        <text x="54" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">5:00 AM</text><rect x="102" y="4" width="88" height="20" rx="4" fill="#22c55e" opacity="0.2"/>
+        <rect x="102" y="4" width="88" height="20" rx="4" fill="none" stroke="#22c55e" stroke-width="1.5"/>
+        <text x="146" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#22c55e">PRIME</text>
         <text x="146" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">7:00 AM</text><rect x="194" y="4" width="88" height="20" rx="4" fill="#eab308" opacity="0.2"/>
         <rect x="194" y="4" width="88" height="20" rx="4" fill="none" stroke="#eab308" stroke-width="1.5"/>
         <text x="238" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#eab308">FAIR</text>
-        <text x="238" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">10:00 AM</text><rect x="286" y="4" width="88" height="20" rx="4" fill="#eab308" opacity="0.2"/>
-        <rect x="286" y="4" width="88" height="20" rx="4" fill="none" stroke="#eab308" stroke-width="1.5"/>
-        <text x="330" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#eab308">FAIR</text>
-        <text x="330" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">2:00 PM</text><rect x="378" y="4" width="88" height="20" rx="4" fill="#22c55e" opacity="0.2"/>
-        <rect x="378" y="4" width="88" height="20" rx="4" fill="none" stroke="#22c55e" stroke-width="1.5"/>
-        <text x="422" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#22c55e">PRIME</text>
+        <text x="238" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">10:00 AM</text><rect x="286" y="4" width="88" height="20" rx="4" fill="#ef4444" opacity="0.2"/>
+        <rect x="286" y="4" width="88" height="20" rx="4" fill="none" stroke="#ef4444" stroke-width="1.5"/>
+        <text x="330" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#ef4444">POOR</text>
+        <text x="330" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">2:00 PM</text><rect x="378" y="4" width="88" height="20" rx="4" fill="#eab308" opacity="0.2"/>
+        <rect x="378" y="4" width="88" height="20" rx="4" fill="none" stroke="#eab308" stroke-width="1.5"/>
+        <text x="422" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#eab308">FAIR</text>
         <text x="422" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">5:00 PM</text><text x="470" y="38" text-anchor="end" font-size="8" class="svg-time" fill="#64748b">8:00 PM</text>
     </svg>
-          <div class="tw-details"><div class="tw-tip"><span class="tw-dot" style="background:#22c55e"></span><strong>5:00 AM – 7:00 AM</strong>: Strong current building before tide at 6:47 AM + low light</div><div class="tw-tip"><span class="tw-dot" style="background:#3b82f6"></span><strong>7:00 AM – 10:00 AM</strong>: Good light, fish still feeding</div><div class="tw-tip"><span class="tw-dot" style="background:#eab308"></span><strong>10:00 AM – 2:00 PM</strong>: Sun high, fish go deeper</div><div class="tw-tip"><span class="tw-dot" style="background:#eab308"></span><strong>2:00 PM – 5:00 PM</strong>: Afternoon sea breeze typical</div><div class="tw-tip"><span class="tw-dot" style="background:#22c55e"></span><strong>5:00 PM – 8:00 PM</strong>: Current building before tide at 6:50 PM + low light = prime</div></div>
+          <div class="tw-details"><div class="tw-tip"><span class="tw-dot" style="background:#3b82f6"></span><strong>5:00 AM – 7:00 AM</strong>: Calm water, low light, active fish</div><div class="tw-tip"><span class="tw-dot" style="background:#22c55e"></span><strong>7:00 AM – 10:00 AM</strong>: Peak current 1-2 hrs before tide at 10:05 AM — fish feeding hard</div><div class="tw-tip"><span class="tw-dot" style="background:#eab308"></span><strong>10:00 AM – 2:00 PM</strong>: Sun high, fish go deeper (slack at 10:05 AM)</div><div class="tw-tip"><span class="tw-dot" style="background:#ef4444"></span><strong>2:00 PM – 5:00 PM</strong>: Storm risk — safety concern</div><div class="tw-tip"><span class="tw-dot" style="background:#eab308"></span><strong>5:00 PM – 8:00 PM</strong>: Possible lingering storms</div></div>
           <div class="time-summary">
-            <span class="ts-best">✅ Best: 1-2 hrs before tide changes — peak current flow (start by 5:17 AM, 5:20 PM)</span>
-            <span class="ts-worst">❌ Avoid: Slack water at tide changes (6:47 AM, 6:50 PM) — current stalls</span>
-          </div>
-        </div>
-
-        <div class="two-col">
-          <div class="col-card inshore-card">
-            <div class="col-header">
-              <h3>🏖️ Inshore</h3>
-              <svg width="90" height="90" viewBox="0 0 90 90">
-      <path d="M 68.3 68.3 A 33 33 0 1 1 68.3 21.7"
-            class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="10" stroke-linecap="round"/>
-      <path d="M 68.3 68.3 A 33 33 0 0 1 15.6 30.0"
-            fill="none" stroke="#eab308" stroke-width="10" stroke-linecap="round"/>
-      <text x="45" y="43" text-anchor="middle" font-size="28" font-weight="bold" fill="#eab308">6</text>
-      <text x="45" y="61" text-anchor="middle" font-size="11" fill="#6b7280" class="svg-muted">/10</text>
-      <text x="45" y="83" text-anchor="middle" font-size="11" font-weight="600" fill="#374151" class="svg-text">Score</text>
-    </svg>
-            </div>
-            <div class="rec-box">
-              <div class="rec-label">📍 Where to Fish</div>
-              <div class="rec-location">🛤️ ICW & Lee Shorelines</div>
-              <div class="rec-reason">Wind 15 mph — open bay is choppy. Focus on ICW structure and shorelines sheltered from SE wind.</div>
-            </div>
-            <div class="rec-box">
-              <div class="rec-label">🐟 Target Species</div>
-              <div class="rec-species">Redfish</div>
-            </div>
-            <div class="detail-row-data">
-              <div class="datum"><span class="datum-label">Water Temp</span><span class="datum-value">75.7°F</span></div>
-              <div class="datum"><span class="datum-label">Pressure</span><span class="datum-value">1010.3 mb (stable)</span></div>
-              <div class="datum"><span class="datum-label">Cloud / Rain</span><span class="datum-value">10% / 0%</span></div>
-            </div>
-          </div>
-
-          <div class="col-card offshore-card">
-            <div class="col-header">
-              <h3>🚤 Offshore</h3>
-              <svg width="90" height="90" viewBox="0 0 90 90">
-      <path d="M 68.3 68.3 A 33 33 0 1 1 68.3 21.7"
-            class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="10" stroke-linecap="round"/>
-      <path d="M 68.3 68.3 A 33 33 0 1 1 25.6 18.3"
-            fill="none" stroke="#eab308" stroke-width="10" stroke-linecap="round"/>
-      <text x="45" y="43" text-anchor="middle" font-size="28" font-weight="bold" fill="#eab308">7</text>
-      <text x="45" y="61" text-anchor="middle" font-size="11" fill="#6b7280" class="svg-muted">/10</text>
-      <text x="45" y="83" text-anchor="middle" font-size="11" font-weight="600" fill="#374151" class="svg-text">GO</text>
-    </svg>
-            </div>
-            <div class="wave-section">
-              <div class="rec-label">🌊 Wave Height</div>
-              <svg width="200" height="46" viewBox="0 0 200 46">
-      <rect x="30" y="4" width="140" height="24" rx="4" class="svg-bg" fill="#f1f5f9"/>
-      <line x1="65" y1="2" x2="65" y2="30" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
-        <text x="65" y="42" text-anchor="middle" font-size="8" fill="#94a3b8">2'</text><line x1="100" y1="2" x2="100" y2="30" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
-        <text x="100" y="42" text-anchor="middle" font-size="8" fill="#94a3b8">4'</text><line x1="135" y1="2" x2="135" y2="30" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
-        <text x="135" y="42" text-anchor="middle" font-size="8" fill="#94a3b8">6'</text>
-      <rect x="30" y="4" width="2" height="24" rx="4" fill="#22c55e" opacity="0.85"/>
-      <text x="2" y="18" font-size="12" font-weight="bold" fill="#22c55e">0.0'</text>
-    </svg>
-              <div class="wave-detail">0.0 ft @ 0s period</div>
-            </div>
-            <div class="detail-row-data">
-              <div class="datum"><span class="datum-label">Seas</span><span class="datum-value">Calm — go fish!</span></div>
-              <div class="datum"><span class="datum-label">Water Temp</span><span class="datum-value">75.7°F</span></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="two-col">
-          <div class="col-card">
-            <div class="wind-row">
-              <div>
-                <div class="section-label" style="margin:0 0 4px 0">💨 Wind</div>
-                <svg width="80" height="80" viewBox="0 0 80 80">
-      <circle cx="40" cy="40" r="26" class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="1.5"/>
-      <text x="40" y="8" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">N</text><text x="75" y="43" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">E</text><text x="40" y="78" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">S</text><text x="5" y="43" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">W</text>
-      <g transform="rotate(135 40 40)">
-        <line x1="40" y1="52" x2="40" y2="20" stroke="#eab308" stroke-width="3" stroke-linecap="round"/>
-        <polygon points="40,16 35,26 45,26" fill="#eab308"/>
-      </g>
-      <circle cx="40" cy="40" r="10" class="svg-center" fill="white" stroke="#eab308" stroke-width="2"/>
-      <text x="40" y="44" text-anchor="middle" font-size="9" font-weight="bold" fill="#eab308">15</text>
-    </svg>
-              </div>
-              <div class="wind-details">
-                <div class="wind-speed">15 <span class="wind-unit">mph</span></div>
-                <div class="wind-dir">from SE</div>
-                <div class="wind-assessment">🟡 Breezy — fishable inshore</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-card">
-            <div class="section-label" style="margin:0 0 4px 0">🌊 Tides</div>
-            <svg width="100%" viewBox="0 0 480 120" preserveAspectRatio="xMidYMid meet">
-      <defs><linearGradient id="tideGrad" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#0ea5e9" stop-opacity="0.3"/>
-        <stop offset="100%" stop-color="#0ea5e9" stop-opacity="0.05"/>
-      </linearGradient></defs>
-      <polygon points="36.0,96 36.0,47.5 54.8,49.9 73.6,52.0 92.3,55.0 111.1,58.8 129.9,62.7 148.7,65.7 167.5,66.3 186.3,65.1 205.0,63.0 223.8,61.5 242.6,60.3 261.4,58.5 280.2,55.3 299.0,50.5 317.7,45.5 336.5,41.6 355.3,38.9 374.1,37.7 392.9,37.7 411.7,38.3 430.4,40.4 449.2,44.3 468.0,49.3 468.0,96" fill="url(#tideGrad)"/>
-      <polyline points="36.0,47.5 54.8,49.9 73.6,52.0 92.3,55.0 111.1,58.8 129.9,62.7 148.7,65.7 167.5,66.3 186.3,65.1 205.0,63.0 223.8,61.5 242.6,60.3 261.4,58.5 280.2,55.3 299.0,50.5 317.7,45.5 336.5,41.6 355.3,38.9 374.1,37.7 392.9,37.7 411.7,38.3 430.4,40.4 449.2,44.3 468.0,49.3" fill="none" stroke="#0ea5e9" stroke-width="2.5" stroke-linejoin="round"/>
-      
-      
-      <text x="36.0" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">12 AM</text><text x="148.7" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">6 AM</text><text x="261.4" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">12 PM</text><text x="374.1" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">6 PM</text>
-      <text x="32" y="99.0" text-anchor="end" font-size="9" fill="#94a3b8">0.4</text><text x="32" y="55.0" text-anchor="end" font-size="9" fill="#94a3b8">0.6</text><text x="32" y="11.0" text-anchor="end" font-size="9" fill="#94a3b8">0.7</text>
-    </svg>
-            <div class="tide-summary">
-              Range: 0.60 ft &middot;
-              Highs: 6:50 PM &middot;
-              Lows: 6:47 AM
-            </div>
-            <div class="water-level-row"><span class="wl-badge" style="color:#0ea5e9;border-color:#0ea5e9">↑ Water Level: +0.5' above normal</span></div>
-          </div>
-        </div>
-
-        
-      </div>
-    </div>
-    <div class="day-section ">
-      <div class="day-header" data-day="day-2026-04-29">
-        <div>
-          <h2>Wednesday, 4/29  <span class="badge badge-inshore">★ Best Inshore</span> <span class="badge badge-offshore">★ Best Offshore</span></h2>
-          <span class="day-factor">light wind + water +0.5' above normal</span>
-          <div class="print-summary">🐟 Redfish &middot; 📍 Open Bay Flats & Reefs &middot; ⏰ All day — light wind, prime 1-2 hrs before tide changes (start by 4:56 AM, 4:37 PM) &middot; 💨 10mph S &middot; 🌊 0.0ft</div>
-        </div>
-        <div class="day-scores-mini">
-          <span class="score-pill" style="background:#eab308">IN 7</span>
-          <span class="score-pill" style="background:#22c55e">NR 8</span>
-          <span class="score-pill" style="background:#22c55e">OFF 9</span>
-          <span class="chevron" id="chev-2026-04-29">▼</span>
-        </div>
-      </div>
-
-      <div class="day-body" id="day-2026-04-29" style="display:none">
-        
-
-        <div class="section-label">🕐 Fishing Windows</div>
-        <div class="timeline-container">
-          <svg width="100%" viewBox="0 0 480 50" preserveAspectRatio="xMidYMid meet">
-      <rect x="10" y="4" width="88" height="20" rx="4" fill="#22c55e" opacity="0.2"/>
-        <rect x="10" y="4" width="88" height="20" rx="4" fill="none" stroke="#22c55e" stroke-width="1.5"/>
-        <text x="54" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#22c55e">PRIME</text>
-        <text x="54" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">5:00 AM</text><rect x="102" y="4" width="88" height="20" rx="4" fill="#3b82f6" opacity="0.2"/>
-        <rect x="102" y="4" width="88" height="20" rx="4" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
-        <text x="146" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#3b82f6">GOOD</text>
-        <text x="146" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">7:00 AM</text><rect x="194" y="4" width="88" height="20" rx="4" fill="#eab308" opacity="0.2"/>
-        <rect x="194" y="4" width="88" height="20" rx="4" fill="none" stroke="#eab308" stroke-width="1.5"/>
-        <text x="238" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#eab308">FAIR</text>
-        <text x="238" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">10:00 AM</text><rect x="286" y="4" width="88" height="20" rx="4" fill="#3b82f6" opacity="0.2"/>
-        <rect x="286" y="4" width="88" height="20" rx="4" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
-        <text x="330" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#3b82f6">GOOD</text>
-        <text x="330" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">2:00 PM</text><rect x="378" y="4" width="88" height="20" rx="4" fill="#22c55e" opacity="0.2"/>
-        <rect x="378" y="4" width="88" height="20" rx="4" fill="none" stroke="#22c55e" stroke-width="1.5"/>
-        <text x="422" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#22c55e">PRIME</text>
-        <text x="422" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">5:00 PM</text><text x="470" y="38" text-anchor="end" font-size="8" class="svg-time" fill="#64748b">8:00 PM</text>
-    </svg>
-          <div class="tw-details"><div class="tw-tip"><span class="tw-dot" style="background:#22c55e"></span><strong>5:00 AM – 7:00 AM</strong>: Strong current building before tide at 6:26 AM + low light</div><div class="tw-tip"><span class="tw-dot" style="background:#3b82f6"></span><strong>7:00 AM – 10:00 AM</strong>: Good light, fish still feeding</div><div class="tw-tip"><span class="tw-dot" style="background:#eab308"></span><strong>10:00 AM – 2:00 PM</strong>: Sun high, fish go deeper</div><div class="tw-tip"><span class="tw-dot" style="background:#3b82f6"></span><strong>2:00 PM – 5:00 PM</strong>: Current building before tide at 6:07 PM</div><div class="tw-tip"><span class="tw-dot" style="background:#22c55e"></span><strong>5:00 PM – 8:00 PM</strong>: Current building before tide at 6:07 PM + low light = prime</div></div>
-          <div class="time-summary">
-            <span class="ts-best">✅ Best: All day — light wind, prime 1-2 hrs before tide changes (start by 4:56 AM, 4:37 PM)</span>
-            <span class="ts-worst">❌ Avoid: Slack water at tide changes (6:26 AM, 6:07 PM) — current stalls</span>
-          </div>
-        </div>
-
-        <div class="two-col">
-          <div class="col-card inshore-card">
-            <div class="col-header">
-              <h3>🏖️ Inshore</h3>
-              <svg width="90" height="90" viewBox="0 0 90 90">
-      <path d="M 68.3 68.3 A 33 33 0 1 1 68.3 21.7"
-            class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="10" stroke-linecap="round"/>
-      <path d="M 68.3 68.3 A 33 33 0 1 1 25.6 18.3"
-            fill="none" stroke="#eab308" stroke-width="10" stroke-linecap="round"/>
-      <text x="45" y="43" text-anchor="middle" font-size="28" font-weight="bold" fill="#eab308">7</text>
-      <text x="45" y="61" text-anchor="middle" font-size="11" fill="#6b7280" class="svg-muted">/10</text>
-      <text x="45" y="83" text-anchor="middle" font-size="11" font-weight="600" fill="#374151" class="svg-text">Score</text>
-    </svg>
-            </div>
-            <div class="rec-box">
-              <div class="rec-label">📍 Where to Fish</div>
-              <div class="rec-location">🌊 Open Bay Flats & Reefs</div>
-              <div class="rec-reason">Ideal conditions — 76°F water, 10 mph wind. Wade or drift the open bay flats, shell reefs, and grass edges. Water is +0.5' above normal — back-lake marshes and shallow flats are flooded, fish spread onto shoreline grass that's normally dry.</div>
-            </div>
-            <div class="rec-box">
-              <div class="rec-label">🐟 Target Species</div>
-              <div class="rec-species">Redfish</div>
-            </div>
-            <div class="detail-row-data">
-              <div class="datum"><span class="datum-label">Water Temp</span><span class="datum-value">75.7°F</span></div>
-              <div class="datum"><span class="datum-label">Pressure</span><span class="datum-value">1010.3 mb (stable)</span></div>
-              <div class="datum"><span class="datum-label">Cloud / Rain</span><span class="datum-value">10% / 0%</span></div>
-            </div>
-          </div>
-
-          <div class="col-card offshore-card">
-            <div class="col-header">
-              <h3>🚤 Offshore</h3>
-              <svg width="90" height="90" viewBox="0 0 90 90">
-      <path d="M 68.3 68.3 A 33 33 0 1 1 68.3 21.7"
-            class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="10" stroke-linecap="round"/>
-      <path d="M 68.3 68.3 A 33 33 0 1 1 55.2 13.6"
-            fill="none" stroke="#22c55e" stroke-width="10" stroke-linecap="round"/>
-      <text x="45" y="43" text-anchor="middle" font-size="28" font-weight="bold" fill="#22c55e">9</text>
-      <text x="45" y="61" text-anchor="middle" font-size="11" fill="#6b7280" class="svg-muted">/10</text>
-      <text x="45" y="83" text-anchor="middle" font-size="11" font-weight="600" fill="#374151" class="svg-text">GO</text>
-    </svg>
-            </div>
-            <div class="wave-section">
-              <div class="rec-label">🌊 Wave Height</div>
-              <svg width="200" height="46" viewBox="0 0 200 46">
-      <rect x="30" y="4" width="140" height="24" rx="4" class="svg-bg" fill="#f1f5f9"/>
-      <line x1="65" y1="2" x2="65" y2="30" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
-        <text x="65" y="42" text-anchor="middle" font-size="8" fill="#94a3b8">2'</text><line x1="100" y1="2" x2="100" y2="30" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
-        <text x="100" y="42" text-anchor="middle" font-size="8" fill="#94a3b8">4'</text><line x1="135" y1="2" x2="135" y2="30" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
-        <text x="135" y="42" text-anchor="middle" font-size="8" fill="#94a3b8">6'</text>
-      <rect x="30" y="4" width="2" height="24" rx="4" fill="#22c55e" opacity="0.85"/>
-      <text x="2" y="18" font-size="12" font-weight="bold" fill="#22c55e">0.0'</text>
-    </svg>
-              <div class="wave-detail">0.0 ft @ 0s period</div>
-            </div>
-            <div class="detail-row-data">
-              <div class="datum"><span class="datum-label">Seas</span><span class="datum-value">Calm — go fish!</span></div>
-              <div class="datum"><span class="datum-label">Water Temp</span><span class="datum-value">75.7°F</span></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="two-col">
-          <div class="col-card">
-            <div class="wind-row">
-              <div>
-                <div class="section-label" style="margin:0 0 4px 0">💨 Wind</div>
-                <svg width="80" height="80" viewBox="0 0 80 80">
-      <circle cx="40" cy="40" r="26" class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="1.5"/>
-      <text x="40" y="8" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">N</text><text x="75" y="43" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">E</text><text x="40" y="78" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">S</text><text x="5" y="43" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">W</text>
-      <g transform="rotate(180 40 40)">
-        <line x1="40" y1="52" x2="40" y2="20" stroke="#22c55e" stroke-width="3" stroke-linecap="round"/>
-        <polygon points="40,16 35,26 45,26" fill="#22c55e"/>
-      </g>
-      <circle cx="40" cy="40" r="10" class="svg-center" fill="white" stroke="#22c55e" stroke-width="2"/>
-      <text x="40" y="44" text-anchor="middle" font-size="9" font-weight="bold" fill="#22c55e">10</text>
-    </svg>
-              </div>
-              <div class="wind-details">
-                <div class="wind-speed">10 <span class="wind-unit">mph</span></div>
-                <div class="wind-dir">from S</div>
-                <div class="wind-assessment">🟢 Calm — great for all</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-card">
-            <div class="section-label" style="margin:0 0 4px 0">🌊 Tides</div>
-            <svg width="100%" viewBox="0 0 480 120" preserveAspectRatio="xMidYMid meet">
-      <defs><linearGradient id="tideGrad" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#0ea5e9" stop-opacity="0.3"/>
-        <stop offset="100%" stop-color="#0ea5e9" stop-opacity="0.05"/>
-      </linearGradient></defs>
-      <polygon points="36.0,96 36.0,49.1 54.8,52.9 73.6,56.4 92.3,60.1 111.1,64.4 129.9,68.7 148.7,70.9 167.5,70.9 186.3,68.2 205.0,64.2 223.8,60.1 242.6,56.4 261.4,52.6 280.2,48.1 299.0,43.4 317.7,38.8 336.5,35.3 355.3,33.6 374.1,33.1 392.9,33.3 411.7,34.6 430.4,37.3 449.2,41.8 468.0,47.4 468.0,96" fill="url(#tideGrad)"/>
-      <polyline points="36.0,49.1 54.8,52.9 73.6,56.4 92.3,60.1 111.1,64.4 129.9,68.7 148.7,70.9 167.5,70.9 186.3,68.2 205.0,64.2 223.8,60.1 242.6,56.4 261.4,52.6 280.2,48.1 299.0,43.4 317.7,38.8 336.5,35.3 355.3,33.6 374.1,33.1 392.9,33.3 411.7,34.6 430.4,37.3 449.2,41.8 468.0,47.4" fill="none" stroke="#0ea5e9" stroke-width="2.5" stroke-linejoin="round"/>
-      
-      
-      <text x="36.0" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">12 AM</text><text x="148.7" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">6 AM</text><text x="261.4" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">12 PM</text><text x="374.1" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">6 PM</text>
-      <text x="32" y="99.0" text-anchor="end" font-size="9" fill="#94a3b8">0.4</text><text x="32" y="55.0" text-anchor="end" font-size="9" fill="#94a3b8">0.5</text><text x="32" y="11.0" text-anchor="end" font-size="9" fill="#94a3b8">0.7</text>
-    </svg>
-            <div class="tide-summary">
-              Range: 0.61 ft &middot;
-              Highs: 6:07 PM &middot;
-              Lows: 6:26 AM
-            </div>
-            <div class="water-level-row"><span class="wl-badge" style="color:#0ea5e9;border-color:#0ea5e9">↑ Water Level: +0.5' above normal</span></div>
-          </div>
-        </div>
-
-        
-      </div>
-    </div>
-    <div class="day-section ">
-      <div class="day-header" data-day="day-2026-04-30">
-        <div>
-          <h2>Thursday, 4/30 </h2>
-          <span class="day-factor">water +0.5' above normal</span>
-          <div class="print-summary">🐟 Redfish &middot; 📍 ICW & Lee Shorelines &middot; ⏰ 1-2 hrs before tide changes — peak current flow (start by 5:02 AM, 4:30 PM) &middot; 💨 15mph E &middot; 🌊 0.0ft</div>
-        </div>
-        <div class="day-scores-mini">
-          <span class="score-pill" style="background:#eab308">IN 6</span>
-          <span class="score-pill" style="background:#eab308">NR 7</span>
-          <span class="score-pill" style="background:#eab308">OFF 7</span>
-          <span class="chevron" id="chev-2026-04-30">▼</span>
-        </div>
-      </div>
-
-      <div class="day-body" id="day-2026-04-30" style="display:none">
-        
-
-        <div class="section-label">🕐 Fishing Windows</div>
-        <div class="timeline-container">
-          <svg width="100%" viewBox="0 0 480 50" preserveAspectRatio="xMidYMid meet">
-      <rect x="10" y="4" width="88" height="20" rx="4" fill="#22c55e" opacity="0.2"/>
-        <rect x="10" y="4" width="88" height="20" rx="4" fill="none" stroke="#22c55e" stroke-width="1.5"/>
-        <text x="54" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#22c55e">PRIME</text>
-        <text x="54" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">5:00 AM</text><rect x="102" y="4" width="88" height="20" rx="4" fill="#3b82f6" opacity="0.2"/>
-        <rect x="102" y="4" width="88" height="20" rx="4" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
-        <text x="146" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#3b82f6">GOOD</text>
-        <text x="146" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">7:00 AM</text><rect x="194" y="4" width="88" height="20" rx="4" fill="#eab308" opacity="0.2"/>
-        <rect x="194" y="4" width="88" height="20" rx="4" fill="none" stroke="#eab308" stroke-width="1.5"/>
-        <text x="238" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#eab308">FAIR</text>
-        <text x="238" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">10:00 AM</text><rect x="286" y="4" width="88" height="20" rx="4" fill="#3b82f6" opacity="0.2"/>
-        <rect x="286" y="4" width="88" height="20" rx="4" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
-        <text x="330" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#3b82f6">GOOD</text>
-        <text x="330" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">2:00 PM</text><rect x="378" y="4" width="88" height="20" rx="4" fill="#22c55e" opacity="0.2"/>
-        <rect x="378" y="4" width="88" height="20" rx="4" fill="none" stroke="#22c55e" stroke-width="1.5"/>
-        <text x="422" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#22c55e">PRIME</text>
-        <text x="422" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">5:00 PM</text><text x="470" y="38" text-anchor="end" font-size="8" class="svg-time" fill="#64748b">8:00 PM</text>
-    </svg>
-          <div class="tw-details"><div class="tw-tip"><span class="tw-dot" style="background:#22c55e"></span><strong>5:00 AM – 7:00 AM</strong>: Strong current building before tide at 6:32 AM + low light</div><div class="tw-tip"><span class="tw-dot" style="background:#3b82f6"></span><strong>7:00 AM – 10:00 AM</strong>: Good light, fish still feeding</div><div class="tw-tip"><span class="tw-dot" style="background:#eab308"></span><strong>10:00 AM – 2:00 PM</strong>: Sun high, fish go deeper</div><div class="tw-tip"><span class="tw-dot" style="background:#3b82f6"></span><strong>2:00 PM – 5:00 PM</strong>: Current building before tide at 6:00 PM</div><div class="tw-tip"><span class="tw-dot" style="background:#22c55e"></span><strong>5:00 PM – 8:00 PM</strong>: Current building before tide at 6:00 PM + low light = prime</div></div>
-          <div class="time-summary">
-            <span class="ts-best">✅ Best: 1-2 hrs before tide changes — peak current flow (start by 5:02 AM, 4:30 PM)</span>
-            <span class="ts-worst">❌ Avoid: Slack water at tide changes (6:32 AM, 6:00 PM) — current stalls</span>
+            <span class="ts-best">✅ Best: 1-2 hrs before tide changes — peak current flow (start by 8:35 AM, 9:22 PM)</span>
+            <span class="ts-worst">❌ Avoid: Afternoon (storms likely)</span>
           </div>
         </div>
 
@@ -1183,9 +550,9 @@ Sat 5/02: IN 5 · OFF 6✅ · 20mph · 0.0ft
               <div class="rec-species">Redfish</div>
             </div>
             <div class="detail-row-data">
-              <div class="datum"><span class="datum-label">Water Temp</span><span class="datum-value">75.7°F</span></div>
-              <div class="datum"><span class="datum-label">Pressure</span><span class="datum-value">1010.3 mb (stable)</span></div>
-              <div class="datum"><span class="datum-label">Cloud / Rain</span><span class="datum-value">75% / 0%</span></div>
+              <div class="datum"><span class="datum-label">Water Temp</span><span class="datum-value">75.6°F</span></div>
+              <div class="datum"><span class="datum-label">Pressure</span><span class="datum-value">1013.0 mb (stable)</span></div>
+              <div class="datum"><span class="datum-label">Cloud / Rain</span><span class="datum-value">75% / 60%</span></div>
             </div>
           </div>
 
@@ -1195,9 +562,9 @@ Sat 5/02: IN 5 · OFF 6✅ · 20mph · 0.0ft
               <svg width="90" height="90" viewBox="0 0 90 90">
       <path d="M 68.3 68.3 A 33 33 0 1 1 68.3 21.7"
             class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="10" stroke-linecap="round"/>
-      <path d="M 68.3 68.3 A 33 33 0 1 1 25.6 18.3"
+      <path d="M 68.3 68.3 A 33 33 0 0 1 15.6 30.0"
             fill="none" stroke="#eab308" stroke-width="10" stroke-linecap="round"/>
-      <text x="45" y="43" text-anchor="middle" font-size="28" font-weight="bold" fill="#eab308">7</text>
+      <text x="45" y="43" text-anchor="middle" font-size="28" font-weight="bold" fill="#eab308">6</text>
       <text x="45" y="61" text-anchor="middle" font-size="11" fill="#6b7280" class="svg-muted">/10</text>
       <text x="45" y="83" text-anchor="middle" font-size="11" font-weight="600" fill="#374151" class="svg-text">GO</text>
     </svg>
@@ -1210,14 +577,20 @@ Sat 5/02: IN 5 · OFF 6✅ · 20mph · 0.0ft
         <text x="65" y="42" text-anchor="middle" font-size="8" fill="#94a3b8">2'</text><line x1="100" y1="2" x2="100" y2="30" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
         <text x="100" y="42" text-anchor="middle" font-size="8" fill="#94a3b8">4'</text><line x1="135" y1="2" x2="135" y2="30" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
         <text x="135" y="42" text-anchor="middle" font-size="8" fill="#94a3b8">6'</text>
-      <rect x="30" y="4" width="2" height="24" rx="4" fill="#22c55e" opacity="0.85"/>
-      <text x="2" y="18" font-size="12" font-weight="bold" fill="#22c55e">0.0'</text>
+      <rect x="30" y="4" width="46" height="24" rx="4" fill="#eab308" opacity="0.85"/>
+      <text x="2" y="18" font-size="12" font-weight="bold" fill="#eab308">2.6'</text>
     </svg>
-              <div class="wave-detail">0.0 ft @ 0s period</div>
+              <div class="wave-detail">2.6 ft @ 8s period</div>
             </div>
             <div class="detail-row-data">
-              <div class="datum"><span class="datum-label">Seas</span><span class="datum-value">Calm — go fish!</span></div>
-              <div class="datum"><span class="datum-label">Water Temp</span><span class="datum-value">75.7°F</span></div>
+              <div class="datum"><span class="datum-label">Swell</span><span class="datum-value">1.6 ft</span></div>
+              <div class="datum"><span class="datum-label">Wind Waves</span><span class="datum-value">0.0 ft</span></div>
+              <div class="datum"><span class="datum-label">Wave Spread</span><span class="datum-value" style="color:#94a3b8">N/A</span></div>
+            </div>
+            <div class="detail-row-data" style="margin-top:4px;">
+              <div class="datum"><span class="datum-label">Seas</span><span class="datum-value">Moderate — experienced only</span></div>
+              <div class="datum"><span class="datum-label">Water Temp</span><span class="datum-value">75.6°F</span></div>
+              <div class="datum"><span class="datum-label">Wave Dir</span><span class="datum-value">153°</span></div>
             </div>
           </div>
         </div>
@@ -1253,20 +626,21 @@ Sat 5/02: IN 5 · OFF 6✅ · 20mph · 0.0ft
         <stop offset="0%" stop-color="#0ea5e9" stop-opacity="0.3"/>
         <stop offset="100%" stop-color="#0ea5e9" stop-opacity="0.05"/>
       </linearGradient></defs>
-      <polygon points="36.0,96 36.0,48.6 54.8,53.2 73.6,57.4 92.3,61.8 111.1,66.7 129.9,71.1 148.7,73.9 167.5,73.9 186.3,71.3 205.0,66.7 223.8,61.6 242.6,56.3 261.4,51.2 280.2,45.7 299.0,40.2 317.7,35.3 336.5,32.0 355.3,30.5 374.1,30.1 392.9,30.3 411.7,31.8 430.4,34.7 449.2,39.3 468.0,45.1 468.0,96" fill="url(#tideGrad)"/>
-      <polyline points="36.0,48.6 54.8,53.2 73.6,57.4 92.3,61.8 111.1,66.7 129.9,71.1 148.7,73.9 167.5,73.9 186.3,71.3 205.0,66.7 223.8,61.6 242.6,56.3 261.4,51.2 280.2,45.7 299.0,40.2 317.7,35.3 336.5,32.0 355.3,30.5 374.1,30.1 392.9,30.3 411.7,31.8 430.4,34.7 449.2,39.3 468.0,45.1" fill="none" stroke="#0ea5e9" stroke-width="2.5" stroke-linejoin="round"/>
-      <circle cx="374.1" cy="30.1" r="4" fill="#ef4444" stroke="white" stroke-width="1.5"/>
-            <text x="374.1" y="22.1" text-anchor="middle" font-size="9" font-weight="600" fill="#ef4444">H 0.6' @ 6PM</text>
+      <polygon points="36.0,96 36.0,26.6 54.8,30.2 73.6,34.7 92.3,40.6 111.1,47.6 129.9,55.7 148.7,63.4 167.5,70.1 186.3,75.0 205.0,78.0 223.8,79.2 242.6,78.4 261.4,75.2 280.2,69.8 299.0,63.3 317.7,56.7 336.5,51.0 355.3,46.1 374.1,41.6 392.9,36.9 411.7,32.2 430.4,28.0 449.2,25.5 468.0,24.8 468.0,96" fill="url(#tideGrad)"/>
+      <polyline points="36.0,26.6 54.8,30.2 73.6,34.7 92.3,40.6 111.1,47.6 129.9,55.7 148.7,63.4 167.5,70.1 186.3,75.0 205.0,78.0 223.8,79.2 242.6,78.4 261.4,75.2 280.2,69.8 299.0,63.3 317.7,56.7 336.5,51.0 355.3,46.1 374.1,41.6 392.9,36.9 411.7,32.2 430.4,28.0 449.2,25.5 468.0,24.8" fill="none" stroke="#0ea5e9" stroke-width="2.5" stroke-linejoin="round"/>
       
+      <line x1="363.6" y1="8" x2="363.6" y2="96" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.7"/>
+        <circle cx="363.6" cy="44.1" r="5" fill="#f59e0b" stroke="white" stroke-width="2"/>
+        <text x="363.6" y="7.0" text-anchor="middle" font-size="9" font-weight="700" fill="#f59e0b">Now</text>
       <text x="36.0" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">12 AM</text><text x="148.7" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">6 AM</text><text x="261.4" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">12 PM</text><text x="374.1" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">6 PM</text>
-      <text x="32" y="99.0" text-anchor="end" font-size="9" fill="#94a3b8">0.3</text><text x="32" y="55.0" text-anchor="end" font-size="9" fill="#94a3b8">0.5</text><text x="32" y="11.0" text-anchor="end" font-size="9" fill="#94a3b8">0.7</text>
+      <text x="32" y="99.0" text-anchor="end" font-size="9" fill="#94a3b8">0.2</text><text x="32" y="55.0" text-anchor="end" font-size="9" fill="#94a3b8">0.4</text><text x="32" y="11.0" text-anchor="end" font-size="9" fill="#94a3b8">0.7</text>
     </svg>
             <div class="tide-summary">
-              Range: 0.61 ft &middot;
-              Highs: 6:00 PM &middot;
-              Lows: 6:32 AM
+              Range: 0.60 ft &middot;
+              Highs: 10:52 PM &middot;
+              Lows: 10:05 AM
             </div>
-            <div class="water-level-row"><span class="wl-badge" style="color:#0ea5e9;border-color:#0ea5e9">↑ Water Level: +0.5' above normal</span></div>
+            <div class="water-level-row"><span class="wl-badge" style="color:#0ea5e9;border-color:#0ea5e9">↑ Water Level: +0.2' above normal</span></div>
           </div>
         </div>
 
@@ -1274,21 +648,21 @@ Sat 5/02: IN 5 · OFF 6✅ · 20mph · 0.0ft
       </div>
     </div>
     <div class="day-section ">
-      <div class="day-header" data-day="day-2026-05-01">
+      <div class="day-header" data-day="day-2026-05-08">
         <div>
-          <h2>Friday, 5/01 </h2>
-          <span class="day-factor">wind 20 mph + rain likely + water +0.5' above normal</span>
-          <div class="print-summary">🐟 Redfish &middot; 📍 ICW & Protected Shorelines &middot; ⏰ 1-2 hrs before tide changes — peak current flow (start by 5:17 AM, 4:57 PM) &middot; 💨 20mph SE &middot; 🌊 0.0ft</div>
+          <h2>Friday, 5/08  <span class="badge badge-inshore">★ Best Inshore</span></h2>
+          <span class="day-factor">light wind + rain likely + water +0.2' above normal</span>
+          <div class="print-summary">🐟 Redfish &middot; 📍 Open Bay Flats & Reefs &middot; ⏰ All day — light wind, prime 1-2 hrs before tide changes (start by 9:02 AM, 9:54 PM) &middot; 💨 10mph E &middot; 🌊 2.6ft</div>
         </div>
         <div class="day-scores-mini">
-          <span class="score-pill" style="background:#f97316">IN 5</span>
-          <span class="score-pill" style="background:#eab308">NR 6</span>
-          <span class="score-pill" style="background:#eab308">OFF 6</span>
-          <span class="chevron" id="chev-2026-05-01">▼</span>
+          <span class="score-pill" style="background:#eab308">IN 7</span>
+          <span class="score-pill" style="background:#22c55e">NR 8</span>
+          <span class="score-pill" style="background:#eab308">OFF 7</span>
+          <span class="chevron" id="chev-2026-05-08">▼</span>
         </div>
       </div>
 
-      <div class="day-body" id="day-2026-05-01" style="display:none">
+      <div class="day-body" id="day-2026-05-08" style="display:none">
         <div class="alert-box"><div class="alert-item">⚠️ Rain/storms likely</div></div>
 
         <div class="section-label">🕐 Fishing Windows</div>
@@ -1297,12 +671,12 @@ Sat 5/02: IN 5 · OFF 6✅ · 20mph · 0.0ft
       <rect x="10" y="4" width="88" height="20" rx="4" fill="#22c55e" opacity="0.2"/>
         <rect x="10" y="4" width="88" height="20" rx="4" fill="none" stroke="#22c55e" stroke-width="1.5"/>
         <text x="54" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#22c55e">PRIME</text>
-        <text x="54" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">5:00 AM</text><rect x="102" y="4" width="88" height="20" rx="4" fill="#eab308" opacity="0.2"/>
-        <rect x="102" y="4" width="88" height="20" rx="4" fill="none" stroke="#eab308" stroke-width="1.5"/>
-        <text x="146" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#eab308">FAIR</text>
-        <text x="146" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">7:00 AM</text><rect x="194" y="4" width="88" height="20" rx="4" fill="#eab308" opacity="0.2"/>
-        <rect x="194" y="4" width="88" height="20" rx="4" fill="none" stroke="#eab308" stroke-width="1.5"/>
-        <text x="238" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#eab308">FAIR</text>
+        <text x="54" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">5:00 AM</text><rect x="102" y="4" width="88" height="20" rx="4" fill="#22c55e" opacity="0.2"/>
+        <rect x="102" y="4" width="88" height="20" rx="4" fill="none" stroke="#22c55e" stroke-width="1.5"/>
+        <text x="146" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#22c55e">PRIME</text>
+        <text x="146" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">7:00 AM</text><rect x="194" y="4" width="88" height="20" rx="4" fill="#3b82f6" opacity="0.2"/>
+        <rect x="194" y="4" width="88" height="20" rx="4" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+        <text x="238" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#3b82f6">GOOD</text>
         <text x="238" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">10:00 AM</text><rect x="286" y="4" width="88" height="20" rx="4" fill="#ef4444" opacity="0.2"/>
         <rect x="286" y="4" width="88" height="20" rx="4" fill="none" stroke="#ef4444" stroke-width="1.5"/>
         <text x="330" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#ef4444">POOR</text>
@@ -1311,10 +685,10 @@ Sat 5/02: IN 5 · OFF 6✅ · 20mph · 0.0ft
         <text x="422" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#eab308">FAIR</text>
         <text x="422" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">5:00 PM</text><text x="470" y="38" text-anchor="end" font-size="8" class="svg-time" fill="#64748b">8:00 PM</text>
     </svg>
-          <div class="tw-details"><div class="tw-tip"><span class="tw-dot" style="background:#22c55e"></span><strong>5:00 AM – 7:00 AM</strong>: Strong current building before tide at 6:47 AM + low light</div><div class="tw-tip"><span class="tw-dot" style="background:#eab308"></span><strong>7:00 AM – 10:00 AM</strong>: Good light, fish still feeding (wind 20 mph)</div><div class="tw-tip"><span class="tw-dot" style="background:#eab308"></span><strong>10:00 AM – 2:00 PM</strong>: Sun high, fish go deeper</div><div class="tw-tip"><span class="tw-dot" style="background:#ef4444"></span><strong>2:00 PM – 5:00 PM</strong>: Storm risk — safety concern</div><div class="tw-tip"><span class="tw-dot" style="background:#eab308"></span><strong>5:00 PM – 8:00 PM</strong>: Possible lingering storms</div></div>
+          <div class="tw-details"><div class="tw-tip"><span class="tw-dot" style="background:#22c55e"></span><strong>5:00 AM – 7:00 AM</strong>: Calm water, low light, active fish</div><div class="tw-tip"><span class="tw-dot" style="background:#22c55e"></span><strong>7:00 AM – 10:00 AM</strong>: Peak current 1-2 hrs before tide at 10:32 AM — fish feeding hard</div><div class="tw-tip"><span class="tw-dot" style="background:#3b82f6"></span><strong>10:00 AM – 2:00 PM</strong>: Current building before tide at 10:32 AM keeps fish active</div><div class="tw-tip"><span class="tw-dot" style="background:#ef4444"></span><strong>2:00 PM – 5:00 PM</strong>: Storm risk — safety concern</div><div class="tw-tip"><span class="tw-dot" style="background:#eab308"></span><strong>5:00 PM – 8:00 PM</strong>: Possible lingering storms</div></div>
           <div class="time-summary">
-            <span class="ts-best">✅ Best: 1-2 hrs before tide changes — peak current flow (start by 5:17 AM, 4:57 PM)</span>
-            <span class="ts-worst">❌ Avoid: All day — wind too strong</span>
+            <span class="ts-best">✅ Best: All day — light wind, prime 1-2 hrs before tide changes (start by 9:02 AM, 9:54 PM)</span>
+            <span class="ts-worst">❌ Avoid: Afternoon (storms likely)</span>
           </div>
         </div>
 
@@ -1325,25 +699,25 @@ Sat 5/02: IN 5 · OFF 6✅ · 20mph · 0.0ft
               <svg width="90" height="90" viewBox="0 0 90 90">
       <path d="M 68.3 68.3 A 33 33 0 1 1 68.3 21.7"
             class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="10" stroke-linecap="round"/>
-      <path d="M 68.3 68.3 A 33 33 0 0 1 12.0 45.0"
-            fill="none" stroke="#f97316" stroke-width="10" stroke-linecap="round"/>
-      <text x="45" y="43" text-anchor="middle" font-size="28" font-weight="bold" fill="#f97316">5</text>
+      <path d="M 68.3 68.3 A 33 33 0 1 1 25.6 18.3"
+            fill="none" stroke="#eab308" stroke-width="10" stroke-linecap="round"/>
+      <text x="45" y="43" text-anchor="middle" font-size="28" font-weight="bold" fill="#eab308">7</text>
       <text x="45" y="61" text-anchor="middle" font-size="11" fill="#6b7280" class="svg-muted">/10</text>
       <text x="45" y="83" text-anchor="middle" font-size="11" font-weight="600" fill="#374151" class="svg-text">Score</text>
     </svg>
             </div>
             <div class="rec-box">
               <div class="rec-label">📍 Where to Fish</div>
-              <div class="rec-location">🛤️ ICW & Protected Shorelines</div>
-              <div class="rec-reason">Wind 20 mph makes open bay dangerous. Fish the ICW, dredge spoil edges, and wind-protected shorelines.</div>
+              <div class="rec-location">🌊 Open Bay Flats & Reefs</div>
+              <div class="rec-reason">Ideal conditions — 76°F water, 10 mph wind. Wade or drift the open bay flats, shell reefs, and grass edges. Water is +0.2' above normal — back-lake marshes and shallow flats are flooded, fish spread onto shoreline grass that's normally dry.</div>
             </div>
             <div class="rec-box">
               <div class="rec-label">🐟 Target Species</div>
               <div class="rec-species">Redfish</div>
             </div>
             <div class="detail-row-data">
-              <div class="datum"><span class="datum-label">Water Temp</span><span class="datum-value">75.7°F</span></div>
-              <div class="datum"><span class="datum-label">Pressure</span><span class="datum-value">1010.3 mb (stable)</span></div>
+              <div class="datum"><span class="datum-label">Water Temp</span><span class="datum-value">75.6°F</span></div>
+              <div class="datum"><span class="datum-label">Pressure</span><span class="datum-value">1013.0 mb (stable)</span></div>
               <div class="datum"><span class="datum-label">Cloud / Rain</span><span class="datum-value">0% / 60%</span></div>
             </div>
           </div>
@@ -1354,9 +728,9 @@ Sat 5/02: IN 5 · OFF 6✅ · 20mph · 0.0ft
               <svg width="90" height="90" viewBox="0 0 90 90">
       <path d="M 68.3 68.3 A 33 33 0 1 1 68.3 21.7"
             class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="10" stroke-linecap="round"/>
-      <path d="M 68.3 68.3 A 33 33 0 0 1 15.6 30.0"
+      <path d="M 68.3 68.3 A 33 33 0 1 1 25.6 18.3"
             fill="none" stroke="#eab308" stroke-width="10" stroke-linecap="round"/>
-      <text x="45" y="43" text-anchor="middle" font-size="28" font-weight="bold" fill="#eab308">6</text>
+      <text x="45" y="43" text-anchor="middle" font-size="28" font-weight="bold" fill="#eab308">7</text>
       <text x="45" y="61" text-anchor="middle" font-size="11" fill="#6b7280" class="svg-muted">/10</text>
       <text x="45" y="83" text-anchor="middle" font-size="11" font-weight="600" fill="#374151" class="svg-text">GO</text>
     </svg>
@@ -1369,14 +743,348 @@ Sat 5/02: IN 5 · OFF 6✅ · 20mph · 0.0ft
         <text x="65" y="42" text-anchor="middle" font-size="8" fill="#94a3b8">2'</text><line x1="100" y1="2" x2="100" y2="30" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
         <text x="100" y="42" text-anchor="middle" font-size="8" fill="#94a3b8">4'</text><line x1="135" y1="2" x2="135" y2="30" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
         <text x="135" y="42" text-anchor="middle" font-size="8" fill="#94a3b8">6'</text>
-      <rect x="30" y="4" width="2" height="24" rx="4" fill="#22c55e" opacity="0.85"/>
-      <text x="2" y="18" font-size="12" font-weight="bold" fill="#22c55e">0.0'</text>
+      <rect x="30" y="4" width="46" height="24" rx="4" fill="#eab308" opacity="0.85"/>
+      <text x="2" y="18" font-size="12" font-weight="bold" fill="#eab308">2.6'</text>
     </svg>
-              <div class="wave-detail">0.0 ft @ 0s period</div>
+              <div class="wave-detail">2.6 ft @ 8s period</div>
             </div>
             <div class="detail-row-data">
-              <div class="datum"><span class="datum-label">Seas</span><span class="datum-value">Calm — go fish!</span></div>
-              <div class="datum"><span class="datum-label">Water Temp</span><span class="datum-value">75.7°F</span></div>
+              <div class="datum"><span class="datum-label">Swell</span><span class="datum-value">1.6 ft</span></div>
+              <div class="datum"><span class="datum-label">Wind Waves</span><span class="datum-value">0.0 ft</span></div>
+              <div class="datum"><span class="datum-label">Wave Spread</span><span class="datum-value" style="color:#94a3b8">N/A</span></div>
+            </div>
+            <div class="detail-row-data" style="margin-top:4px;">
+              <div class="datum"><span class="datum-label">Seas</span><span class="datum-value">Moderate — experienced only</span></div>
+              <div class="datum"><span class="datum-label">Water Temp</span><span class="datum-value">75.6°F</span></div>
+              <div class="datum"><span class="datum-label">Wave Dir</span><span class="datum-value">153°</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="col-card">
+            <div class="wind-row">
+              <div>
+                <div class="section-label" style="margin:0 0 4px 0">💨 Wind</div>
+                <svg width="80" height="80" viewBox="0 0 80 80">
+      <circle cx="40" cy="40" r="26" class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="1.5"/>
+      <text x="40" y="8" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">N</text><text x="75" y="43" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">E</text><text x="40" y="78" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">S</text><text x="5" y="43" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">W</text>
+      <g transform="rotate(90 40 40)">
+        <line x1="40" y1="52" x2="40" y2="20" stroke="#22c55e" stroke-width="3" stroke-linecap="round"/>
+        <polygon points="40,16 35,26 45,26" fill="#22c55e"/>
+      </g>
+      <circle cx="40" cy="40" r="10" class="svg-center" fill="white" stroke="#22c55e" stroke-width="2"/>
+      <text x="40" y="44" text-anchor="middle" font-size="9" font-weight="bold" fill="#22c55e">10</text>
+    </svg>
+              </div>
+              <div class="wind-details">
+                <div class="wind-speed">10 <span class="wind-unit">mph</span></div>
+                <div class="wind-dir">from E</div>
+                <div class="wind-assessment">🟢 Calm — great for all</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-card">
+            <div class="section-label" style="margin:0 0 4px 0">🌊 Tides</div>
+            <svg width="100%" viewBox="0 0 480 120" preserveAspectRatio="xMidYMid meet">
+      <defs><linearGradient id="tideGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#0ea5e9" stop-opacity="0.3"/>
+        <stop offset="100%" stop-color="#0ea5e9" stop-opacity="0.05"/>
+      </linearGradient></defs>
+      <polygon points="36.0,96 36.0,25.3 54.8,27.7 73.6,31.6 92.3,36.9 111.1,43.9 129.9,51.8 148.7,59.8 167.5,66.9 186.3,72.4 205.0,76.4 223.8,78.7 242.6,78.7 261.4,76.3 280.2,71.4 299.0,65.0 317.7,58.4 336.5,52.7 355.3,48.0 374.1,43.7 392.9,39.4 411.7,34.7 430.4,30.5 449.2,27.6 468.0,26.2 468.0,96" fill="url(#tideGrad)"/>
+      <polyline points="36.0,25.3 54.8,27.7 73.6,31.6 92.3,36.9 111.1,43.9 129.9,51.8 148.7,59.8 167.5,66.9 186.3,72.4 205.0,76.4 223.8,78.7 242.6,78.7 261.4,76.3 280.2,71.4 299.0,65.0 317.7,58.4 336.5,52.7 355.3,48.0 374.1,43.7 392.9,39.4 411.7,34.7 430.4,30.5 449.2,27.6 468.0,26.2" fill="none" stroke="#0ea5e9" stroke-width="2.5" stroke-linejoin="round"/>
+      
+      
+      <text x="36.0" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">12 AM</text><text x="148.7" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">6 AM</text><text x="261.4" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">12 PM</text><text x="374.1" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">6 PM</text>
+      <text x="32" y="99.0" text-anchor="end" font-size="9" fill="#94a3b8">0.2</text><text x="32" y="55.0" text-anchor="end" font-size="9" fill="#94a3b8">0.4</text><text x="32" y="11.0" text-anchor="end" font-size="9" fill="#94a3b8">0.7</text>
+    </svg>
+            <div class="tide-summary">
+              Range: 0.59 ft &middot;
+              Highs: 11:24 PM &middot;
+              Lows: 10:32 AM
+            </div>
+            <div class="water-level-row"><span class="wl-badge" style="color:#0ea5e9;border-color:#0ea5e9">↑ Water Level: +0.2' above normal</span></div>
+          </div>
+        </div>
+
+        
+      </div>
+    </div>
+    <div class="day-section ">
+      <div class="day-header" data-day="day-2026-05-09">
+        <div>
+          <h2>Saturday, 5/09 </h2>
+          <span class="day-factor">light wind + rain likely + water +0.2' above normal</span>
+          <div class="print-summary">🐟 Redfish &middot; 📍 Open Bay Flats & Reefs &middot; ⏰ All day — light wind, prime 1-2 hrs before tide changes (start by 9:21 AM, 10:19 PM) &middot; 💨 10mph E &middot; 🌊 2.6ft</div>
+        </div>
+        <div class="day-scores-mini">
+          <span class="score-pill" style="background:#eab308">IN 7</span>
+          <span class="score-pill" style="background:#22c55e">NR 8</span>
+          <span class="score-pill" style="background:#eab308">OFF 7</span>
+          <span class="chevron" id="chev-2026-05-09">▼</span>
+        </div>
+      </div>
+
+      <div class="day-body" id="day-2026-05-09" style="display:none">
+        <div class="alert-box"><div class="alert-item">⚠️ Rain/storms likely</div></div>
+
+        <div class="section-label">🕐 Fishing Windows</div>
+        <div class="timeline-container">
+          <svg width="100%" viewBox="0 0 480 50" preserveAspectRatio="xMidYMid meet">
+      <rect x="10" y="4" width="88" height="20" rx="4" fill="#22c55e" opacity="0.2"/>
+        <rect x="10" y="4" width="88" height="20" rx="4" fill="none" stroke="#22c55e" stroke-width="1.5"/>
+        <text x="54" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#22c55e">PRIME</text>
+        <text x="54" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">5:00 AM</text><rect x="102" y="4" width="88" height="20" rx="4" fill="#22c55e" opacity="0.2"/>
+        <rect x="102" y="4" width="88" height="20" rx="4" fill="none" stroke="#22c55e" stroke-width="1.5"/>
+        <text x="146" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#22c55e">PRIME</text>
+        <text x="146" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">7:00 AM</text><rect x="194" y="4" width="88" height="20" rx="4" fill="#3b82f6" opacity="0.2"/>
+        <rect x="194" y="4" width="88" height="20" rx="4" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+        <text x="238" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#3b82f6">GOOD</text>
+        <text x="238" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">10:00 AM</text><rect x="286" y="4" width="88" height="20" rx="4" fill="#ef4444" opacity="0.2"/>
+        <rect x="286" y="4" width="88" height="20" rx="4" fill="none" stroke="#ef4444" stroke-width="1.5"/>
+        <text x="330" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#ef4444">POOR</text>
+        <text x="330" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">2:00 PM</text><rect x="378" y="4" width="88" height="20" rx="4" fill="#eab308" opacity="0.2"/>
+        <rect x="378" y="4" width="88" height="20" rx="4" fill="none" stroke="#eab308" stroke-width="1.5"/>
+        <text x="422" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#eab308">FAIR</text>
+        <text x="422" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">5:00 PM</text><text x="470" y="38" text-anchor="end" font-size="8" class="svg-time" fill="#64748b">8:00 PM</text>
+    </svg>
+          <div class="tw-details"><div class="tw-tip"><span class="tw-dot" style="background:#22c55e"></span><strong>5:00 AM – 7:00 AM</strong>: Calm water, low light, active fish</div><div class="tw-tip"><span class="tw-dot" style="background:#22c55e"></span><strong>7:00 AM – 10:00 AM</strong>: Peak current 1-2 hrs before tide at 10:51 AM — fish feeding hard</div><div class="tw-tip"><span class="tw-dot" style="background:#3b82f6"></span><strong>10:00 AM – 2:00 PM</strong>: Current building before tide at 10:51 AM keeps fish active</div><div class="tw-tip"><span class="tw-dot" style="background:#ef4444"></span><strong>2:00 PM – 5:00 PM</strong>: Storm risk — safety concern</div><div class="tw-tip"><span class="tw-dot" style="background:#eab308"></span><strong>5:00 PM – 8:00 PM</strong>: Possible lingering storms</div></div>
+          <div class="time-summary">
+            <span class="ts-best">✅ Best: All day — light wind, prime 1-2 hrs before tide changes (start by 9:21 AM, 10:19 PM)</span>
+            <span class="ts-worst">❌ Avoid: Afternoon (storms likely)</span>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="col-card inshore-card">
+            <div class="col-header">
+              <h3>🏖️ Inshore</h3>
+              <svg width="90" height="90" viewBox="0 0 90 90">
+      <path d="M 68.3 68.3 A 33 33 0 1 1 68.3 21.7"
+            class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="10" stroke-linecap="round"/>
+      <path d="M 68.3 68.3 A 33 33 0 1 1 25.6 18.3"
+            fill="none" stroke="#eab308" stroke-width="10" stroke-linecap="round"/>
+      <text x="45" y="43" text-anchor="middle" font-size="28" font-weight="bold" fill="#eab308">7</text>
+      <text x="45" y="61" text-anchor="middle" font-size="11" fill="#6b7280" class="svg-muted">/10</text>
+      <text x="45" y="83" text-anchor="middle" font-size="11" font-weight="600" fill="#374151" class="svg-text">Score</text>
+    </svg>
+            </div>
+            <div class="rec-box">
+              <div class="rec-label">📍 Where to Fish</div>
+              <div class="rec-location">🌊 Open Bay Flats & Reefs</div>
+              <div class="rec-reason">Ideal conditions — 76°F water, 10 mph wind. Wade or drift the open bay flats, shell reefs, and grass edges. Water is +0.2' above normal — back-lake marshes and shallow flats are flooded, fish spread onto shoreline grass that's normally dry.</div>
+            </div>
+            <div class="rec-box">
+              <div class="rec-label">🐟 Target Species</div>
+              <div class="rec-species">Redfish</div>
+            </div>
+            <div class="detail-row-data">
+              <div class="datum"><span class="datum-label">Water Temp</span><span class="datum-value">75.6°F</span></div>
+              <div class="datum"><span class="datum-label">Pressure</span><span class="datum-value">1013.0 mb (stable)</span></div>
+              <div class="datum"><span class="datum-label">Cloud / Rain</span><span class="datum-value">0% / 60%</span></div>
+            </div>
+          </div>
+
+          <div class="col-card offshore-card">
+            <div class="col-header">
+              <h3>🚤 Offshore</h3>
+              <svg width="90" height="90" viewBox="0 0 90 90">
+      <path d="M 68.3 68.3 A 33 33 0 1 1 68.3 21.7"
+            class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="10" stroke-linecap="round"/>
+      <path d="M 68.3 68.3 A 33 33 0 1 1 25.6 18.3"
+            fill="none" stroke="#eab308" stroke-width="10" stroke-linecap="round"/>
+      <text x="45" y="43" text-anchor="middle" font-size="28" font-weight="bold" fill="#eab308">7</text>
+      <text x="45" y="61" text-anchor="middle" font-size="11" fill="#6b7280" class="svg-muted">/10</text>
+      <text x="45" y="83" text-anchor="middle" font-size="11" font-weight="600" fill="#374151" class="svg-text">GO</text>
+    </svg>
+            </div>
+            <div class="wave-section">
+              <div class="rec-label">🌊 Wave Height</div>
+              <svg width="200" height="46" viewBox="0 0 200 46">
+      <rect x="30" y="4" width="140" height="24" rx="4" class="svg-bg" fill="#f1f5f9"/>
+      <line x1="65" y1="2" x2="65" y2="30" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
+        <text x="65" y="42" text-anchor="middle" font-size="8" fill="#94a3b8">2'</text><line x1="100" y1="2" x2="100" y2="30" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
+        <text x="100" y="42" text-anchor="middle" font-size="8" fill="#94a3b8">4'</text><line x1="135" y1="2" x2="135" y2="30" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
+        <text x="135" y="42" text-anchor="middle" font-size="8" fill="#94a3b8">6'</text>
+      <rect x="30" y="4" width="46" height="24" rx="4" fill="#eab308" opacity="0.85"/>
+      <text x="2" y="18" font-size="12" font-weight="bold" fill="#eab308">2.6'</text>
+    </svg>
+              <div class="wave-detail">2.6 ft @ 8s period</div>
+            </div>
+            <div class="detail-row-data">
+              <div class="datum"><span class="datum-label">Swell</span><span class="datum-value">1.6 ft</span></div>
+              <div class="datum"><span class="datum-label">Wind Waves</span><span class="datum-value">0.0 ft</span></div>
+              <div class="datum"><span class="datum-label">Wave Spread</span><span class="datum-value" style="color:#94a3b8">N/A</span></div>
+            </div>
+            <div class="detail-row-data" style="margin-top:4px;">
+              <div class="datum"><span class="datum-label">Seas</span><span class="datum-value">Moderate — experienced only</span></div>
+              <div class="datum"><span class="datum-label">Water Temp</span><span class="datum-value">75.6°F</span></div>
+              <div class="datum"><span class="datum-label">Wave Dir</span><span class="datum-value">153°</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="col-card">
+            <div class="wind-row">
+              <div>
+                <div class="section-label" style="margin:0 0 4px 0">💨 Wind</div>
+                <svg width="80" height="80" viewBox="0 0 80 80">
+      <circle cx="40" cy="40" r="26" class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="1.5"/>
+      <text x="40" y="8" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">N</text><text x="75" y="43" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">E</text><text x="40" y="78" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">S</text><text x="5" y="43" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">W</text>
+      <g transform="rotate(90 40 40)">
+        <line x1="40" y1="52" x2="40" y2="20" stroke="#22c55e" stroke-width="3" stroke-linecap="round"/>
+        <polygon points="40,16 35,26 45,26" fill="#22c55e"/>
+      </g>
+      <circle cx="40" cy="40" r="10" class="svg-center" fill="white" stroke="#22c55e" stroke-width="2"/>
+      <text x="40" y="44" text-anchor="middle" font-size="9" font-weight="bold" fill="#22c55e">10</text>
+    </svg>
+              </div>
+              <div class="wind-details">
+                <div class="wind-speed">10 <span class="wind-unit">mph</span></div>
+                <div class="wind-dir">from E</div>
+                <div class="wind-assessment">🟢 Calm — great for all</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-card">
+            <div class="section-label" style="margin:0 0 4px 0">🌊 Tides</div>
+            <svg width="100%" viewBox="0 0 480 120" preserveAspectRatio="xMidYMid meet">
+      <defs><linearGradient id="tideGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#0ea5e9" stop-opacity="0.3"/>
+        <stop offset="100%" stop-color="#0ea5e9" stop-opacity="0.05"/>
+      </linearGradient></defs>
+      <polygon points="36.0,96 36.0,26.3 54.8,27.7 73.6,30.5 92.3,35.2 111.1,41.4 129.9,49.1 148.7,56.9 167.5,63.9 186.3,69.7 205.0,74.1 223.8,76.8 242.6,77.7 261.4,75.9 280.2,71.5 299.0,65.5 317.7,58.9 336.5,53.3 355.3,48.9 374.1,45.1 392.9,41.2 411.7,37.2 430.4,33.6 449.2,30.8 468.0,29.4 468.0,96" fill="url(#tideGrad)"/>
+      <polyline points="36.0,26.3 54.8,27.7 73.6,30.5 92.3,35.2 111.1,41.4 129.9,49.1 148.7,56.9 167.5,63.9 186.3,69.7 205.0,74.1 223.8,76.8 242.6,77.7 261.4,75.9 280.2,71.5 299.0,65.5 317.7,58.9 336.5,53.3 355.3,48.9 374.1,45.1 392.9,41.2 411.7,37.2 430.4,33.6 449.2,30.8 468.0,29.4" fill="none" stroke="#0ea5e9" stroke-width="2.5" stroke-linejoin="round"/>
+      
+      
+      <text x="36.0" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">12 AM</text><text x="148.7" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">6 AM</text><text x="261.4" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">12 PM</text><text x="374.1" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">6 PM</text>
+      <text x="32" y="99.0" text-anchor="end" font-size="9" fill="#94a3b8">0.2</text><text x="32" y="55.0" text-anchor="end" font-size="9" fill="#94a3b8">0.4</text><text x="32" y="11.0" text-anchor="end" font-size="9" fill="#94a3b8">0.7</text>
+    </svg>
+            <div class="tide-summary">
+              Range: 0.57 ft &middot;
+              Highs: 11:49 PM &middot;
+              Lows: 10:51 AM
+            </div>
+            <div class="water-level-row"><span class="wl-badge" style="color:#0ea5e9;border-color:#0ea5e9">↑ Water Level: +0.2' above normal</span></div>
+          </div>
+        </div>
+
+        
+      </div>
+    </div>
+    <div class="day-section ">
+      <div class="day-header" data-day="day-2026-05-10">
+        <div>
+          <h2>Sunday, 5/10  <span class="badge badge-offshore">★ Best Offshore</span></h2>
+          <span class="day-factor">light wind + water +0.2' above normal</span>
+          <div class="print-summary">🐟 Redfish &middot; 📍 Open Bay Flats & Reefs &middot; ⏰ All day — light wind, prime 1-2 hrs before tide changes (start by 9:33 AM, 10:22 PM) &middot; 💨 10mph SE &middot; 🌊 2.6ft</div>
+        </div>
+        <div class="day-scores-mini">
+          <span class="score-pill" style="background:#eab308">IN 7</span>
+          <span class="score-pill" style="background:#22c55e">NR 8</span>
+          <span class="score-pill" style="background:#22c55e">OFF 8</span>
+          <span class="chevron" id="chev-2026-05-10">▼</span>
+        </div>
+      </div>
+
+      <div class="day-body" id="day-2026-05-10" style="display:none">
+        
+
+        <div class="section-label">🕐 Fishing Windows</div>
+        <div class="timeline-container">
+          <svg width="100%" viewBox="0 0 480 50" preserveAspectRatio="xMidYMid meet">
+      <rect x="10" y="4" width="88" height="20" rx="4" fill="#22c55e" opacity="0.2"/>
+        <rect x="10" y="4" width="88" height="20" rx="4" fill="none" stroke="#22c55e" stroke-width="1.5"/>
+        <text x="54" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#22c55e">PRIME</text>
+        <text x="54" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">5:00 AM</text><rect x="102" y="4" width="88" height="20" rx="4" fill="#22c55e" opacity="0.2"/>
+        <rect x="102" y="4" width="88" height="20" rx="4" fill="none" stroke="#22c55e" stroke-width="1.5"/>
+        <text x="146" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#22c55e">PRIME</text>
+        <text x="146" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">7:00 AM</text><rect x="194" y="4" width="88" height="20" rx="4" fill="#3b82f6" opacity="0.2"/>
+        <rect x="194" y="4" width="88" height="20" rx="4" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+        <text x="238" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#3b82f6">GOOD</text>
+        <text x="238" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">10:00 AM</text><rect x="286" y="4" width="88" height="20" rx="4" fill="#eab308" opacity="0.2"/>
+        <rect x="286" y="4" width="88" height="20" rx="4" fill="none" stroke="#eab308" stroke-width="1.5"/>
+        <text x="330" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#eab308">FAIR</text>
+        <text x="330" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">2:00 PM</text><rect x="378" y="4" width="88" height="20" rx="4" fill="#3b82f6" opacity="0.2"/>
+        <rect x="378" y="4" width="88" height="20" rx="4" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+        <text x="422" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#3b82f6">GOOD</text>
+        <text x="422" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">5:00 PM</text><text x="470" y="38" text-anchor="end" font-size="8" class="svg-time" fill="#64748b">8:00 PM</text>
+    </svg>
+          <div class="tw-details"><div class="tw-tip"><span class="tw-dot" style="background:#22c55e"></span><strong>5:00 AM – 7:00 AM</strong>: Calm water, low light, active fish</div><div class="tw-tip"><span class="tw-dot" style="background:#22c55e"></span><strong>7:00 AM – 10:00 AM</strong>: Peak current 1-2 hrs before tide at 11:03 AM — fish feeding hard</div><div class="tw-tip"><span class="tw-dot" style="background:#3b82f6"></span><strong>10:00 AM – 2:00 PM</strong>: Current building before tide at 11:03 AM keeps fish active</div><div class="tw-tip"><span class="tw-dot" style="background:#eab308"></span><strong>2:00 PM – 5:00 PM</strong>: Afternoon sea breeze typical</div><div class="tw-tip"><span class="tw-dot" style="background:#3b82f6"></span><strong>5:00 PM – 8:00 PM</strong>: Wind dies, low light, evening feed</div></div>
+          <div class="time-summary">
+            <span class="ts-best">✅ Best: All day — light wind, prime 1-2 hrs before tide changes (start by 9:33 AM, 10:22 PM)</span>
+            <span class="ts-worst">❌ Avoid: Slack water at tide changes (11:03 AM, 11:52 PM) — current stalls</span>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="col-card inshore-card">
+            <div class="col-header">
+              <h3>🏖️ Inshore</h3>
+              <svg width="90" height="90" viewBox="0 0 90 90">
+      <path d="M 68.3 68.3 A 33 33 0 1 1 68.3 21.7"
+            class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="10" stroke-linecap="round"/>
+      <path d="M 68.3 68.3 A 33 33 0 1 1 25.6 18.3"
+            fill="none" stroke="#eab308" stroke-width="10" stroke-linecap="round"/>
+      <text x="45" y="43" text-anchor="middle" font-size="28" font-weight="bold" fill="#eab308">7</text>
+      <text x="45" y="61" text-anchor="middle" font-size="11" fill="#6b7280" class="svg-muted">/10</text>
+      <text x="45" y="83" text-anchor="middle" font-size="11" font-weight="600" fill="#374151" class="svg-text">Score</text>
+    </svg>
+            </div>
+            <div class="rec-box">
+              <div class="rec-label">📍 Where to Fish</div>
+              <div class="rec-location">🌊 Open Bay Flats & Reefs</div>
+              <div class="rec-reason">Ideal conditions — 76°F water, 10 mph wind. Wade or drift the open bay flats, shell reefs, and grass edges. Water is +0.2' above normal — back-lake marshes and shallow flats are flooded, fish spread onto shoreline grass that's normally dry.</div>
+            </div>
+            <div class="rec-box">
+              <div class="rec-label">🐟 Target Species</div>
+              <div class="rec-species">Redfish</div>
+            </div>
+            <div class="detail-row-data">
+              <div class="datum"><span class="datum-label">Water Temp</span><span class="datum-value">75.6°F</span></div>
+              <div class="datum"><span class="datum-label">Pressure</span><span class="datum-value">1013.0 mb (stable)</span></div>
+              <div class="datum"><span class="datum-label">Cloud / Rain</span><span class="datum-value">10% / 0%</span></div>
+            </div>
+          </div>
+
+          <div class="col-card offshore-card">
+            <div class="col-header">
+              <h3>🚤 Offshore</h3>
+              <svg width="90" height="90" viewBox="0 0 90 90">
+      <path d="M 68.3 68.3 A 33 33 0 1 1 68.3 21.7"
+            class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="10" stroke-linecap="round"/>
+      <path d="M 68.3 68.3 A 33 33 0 1 1 39.8 12.4"
+            fill="none" stroke="#22c55e" stroke-width="10" stroke-linecap="round"/>
+      <text x="45" y="43" text-anchor="middle" font-size="28" font-weight="bold" fill="#22c55e">8</text>
+      <text x="45" y="61" text-anchor="middle" font-size="11" fill="#6b7280" class="svg-muted">/10</text>
+      <text x="45" y="83" text-anchor="middle" font-size="11" font-weight="600" fill="#374151" class="svg-text">GO</text>
+    </svg>
+            </div>
+            <div class="wave-section">
+              <div class="rec-label">🌊 Wave Height</div>
+              <svg width="200" height="46" viewBox="0 0 200 46">
+      <rect x="30" y="4" width="140" height="24" rx="4" class="svg-bg" fill="#f1f5f9"/>
+      <line x1="65" y1="2" x2="65" y2="30" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
+        <text x="65" y="42" text-anchor="middle" font-size="8" fill="#94a3b8">2'</text><line x1="100" y1="2" x2="100" y2="30" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
+        <text x="100" y="42" text-anchor="middle" font-size="8" fill="#94a3b8">4'</text><line x1="135" y1="2" x2="135" y2="30" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
+        <text x="135" y="42" text-anchor="middle" font-size="8" fill="#94a3b8">6'</text>
+      <rect x="30" y="4" width="46" height="24" rx="4" fill="#eab308" opacity="0.85"/>
+      <text x="2" y="18" font-size="12" font-weight="bold" fill="#eab308">2.6'</text>
+    </svg>
+              <div class="wave-detail">2.6 ft @ 8s period</div>
+            </div>
+            <div class="detail-row-data">
+              <div class="datum"><span class="datum-label">Swell</span><span class="datum-value">1.6 ft</span></div>
+              <div class="datum"><span class="datum-label">Wind Waves</span><span class="datum-value">0.0 ft</span></div>
+              <div class="datum"><span class="datum-label">Wave Spread</span><span class="datum-value" style="color:#94a3b8">N/A</span></div>
+            </div>
+            <div class="detail-row-data" style="margin-top:4px;">
+              <div class="datum"><span class="datum-label">Seas</span><span class="datum-value">Moderate — experienced only</span></div>
+              <div class="datum"><span class="datum-label">Water Temp</span><span class="datum-value">75.6°F</span></div>
+              <div class="datum"><span class="datum-label">Wave Dir</span><span class="datum-value">153°</span></div>
             </div>
           </div>
         </div>
@@ -1390,17 +1098,17 @@ Sat 5/02: IN 5 · OFF 6✅ · 20mph · 0.0ft
       <circle cx="40" cy="40" r="26" class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="1.5"/>
       <text x="40" y="8" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">N</text><text x="75" y="43" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">E</text><text x="40" y="78" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">S</text><text x="5" y="43" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">W</text>
       <g transform="rotate(135 40 40)">
-        <line x1="40" y1="52" x2="40" y2="20" stroke="#f97316" stroke-width="3" stroke-linecap="round"/>
-        <polygon points="40,16 35,26 45,26" fill="#f97316"/>
+        <line x1="40" y1="52" x2="40" y2="20" stroke="#22c55e" stroke-width="3" stroke-linecap="round"/>
+        <polygon points="40,16 35,26 45,26" fill="#22c55e"/>
       </g>
-      <circle cx="40" cy="40" r="10" class="svg-center" fill="white" stroke="#f97316" stroke-width="2"/>
-      <text x="40" y="44" text-anchor="middle" font-size="9" font-weight="bold" fill="#f97316">20</text>
+      <circle cx="40" cy="40" r="10" class="svg-center" fill="white" stroke="#22c55e" stroke-width="2"/>
+      <text x="40" y="44" text-anchor="middle" font-size="9" font-weight="bold" fill="#22c55e">10</text>
     </svg>
               </div>
               <div class="wind-details">
-                <div class="wind-speed">20 <span class="wind-unit">mph</span></div>
+                <div class="wind-speed">10 <span class="wind-unit">mph</span></div>
                 <div class="wind-dir">from SE</div>
-                <div class="wind-assessment">🟠 Windy — protected water only</div>
+                <div class="wind-assessment">🟢 Calm — great for all</div>
               </div>
             </div>
           </div>
@@ -1412,19 +1120,19 @@ Sat 5/02: IN 5 · OFF 6✅ · 20mph · 0.0ft
         <stop offset="0%" stop-color="#0ea5e9" stop-opacity="0.3"/>
         <stop offset="100%" stop-color="#0ea5e9" stop-opacity="0.05"/>
       </linearGradient></defs>
-      <polygon points="36.0,96 36.0,47.1 54.8,52.1 73.6,56.7 92.3,61.4 111.1,66.6 129.9,71.6 148.7,75.1 167.5,75.9 186.3,73.8 205.0,69.6 223.8,64.4 242.6,58.5 261.4,52.5 280.2,46.1 299.0,39.8 317.7,34.6 336.5,31.0 355.3,28.9 374.1,28.1 392.9,28.1 411.7,29.3 430.4,32.0 449.2,36.4 468.0,42.0 468.0,96" fill="url(#tideGrad)"/>
-      <polyline points="36.0,47.1 54.8,52.1 73.6,56.7 92.3,61.4 111.1,66.6 129.9,71.6 148.7,75.1 167.5,75.9 186.3,73.8 205.0,69.6 223.8,64.4 242.6,58.5 261.4,52.5 280.2,46.1 299.0,39.8 317.7,34.6 336.5,31.0 355.3,28.9 374.1,28.1 392.9,28.1 411.7,29.3 430.4,32.0 449.2,36.4 468.0,42.0" fill="none" stroke="#0ea5e9" stroke-width="2.5" stroke-linejoin="round"/>
+      <polygon points="36.0,96 36.0,28.4 54.8,29.2 73.6,31.3 92.3,35.2 111.1,40.9 129.9,48.0 148.7,55.2 167.5,61.7 186.3,67.2 205.0,71.3 223.8,74.4 242.6,75.6 261.4,74.4 280.2,70.3 299.0,64.4 317.7,57.8 336.5,52.3 355.3,48.2 374.1,45.0 392.9,41.9 411.7,38.8 430.4,36.2 449.2,34.1 468.0,33.3 468.0,96" fill="url(#tideGrad)"/>
+      <polyline points="36.0,28.4 54.8,29.2 73.6,31.3 92.3,35.2 111.1,40.9 129.9,48.0 148.7,55.2 167.5,61.7 186.3,67.2 205.0,71.3 223.8,74.4 242.6,75.6 261.4,74.4 280.2,70.3 299.0,64.4 317.7,57.8 336.5,52.3 355.3,48.2 374.1,45.0 392.9,41.9 411.7,38.8 430.4,36.2 449.2,34.1 468.0,33.3" fill="none" stroke="#0ea5e9" stroke-width="2.5" stroke-linejoin="round"/>
       
       
       <text x="36.0" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">12 AM</text><text x="148.7" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">6 AM</text><text x="261.4" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">12 PM</text><text x="374.1" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">6 PM</text>
-      <text x="32" y="99.0" text-anchor="end" font-size="9" fill="#94a3b8">0.3</text><text x="32" y="55.0" text-anchor="end" font-size="9" fill="#94a3b8">0.5</text><text x="32" y="11.0" text-anchor="end" font-size="9" fill="#94a3b8">0.7</text>
+      <text x="32" y="99.0" text-anchor="end" font-size="9" fill="#94a3b8">0.2</text><text x="32" y="55.0" text-anchor="end" font-size="9" fill="#94a3b8">0.5</text><text x="32" y="11.0" text-anchor="end" font-size="9" fill="#94a3b8">0.7</text>
     </svg>
             <div class="tide-summary">
-              Range: 0.61 ft &middot;
-              Highs: 6:27 PM &middot;
-              Lows: 6:47 AM
+              Range: 0.55 ft &middot;
+              Highs: 11:52 PM &middot;
+              Lows: 11:03 AM
             </div>
-            <div class="water-level-row"><span class="wl-badge" style="color:#0ea5e9;border-color:#0ea5e9">↑ Water Level: +0.5' above normal</span></div>
+            <div class="water-level-row"><span class="wl-badge" style="color:#0ea5e9;border-color:#0ea5e9">↑ Water Level: +0.2' above normal</span></div>
           </div>
         </div>
 
@@ -1432,22 +1140,22 @@ Sat 5/02: IN 5 · OFF 6✅ · 20mph · 0.0ft
       </div>
     </div>
     <div class="day-section ">
-      <div class="day-header" data-day="day-2026-05-02">
+      <div class="day-header" data-day="day-2026-05-11">
         <div>
-          <h2>Saturday, 5/02 </h2>
-          <span class="day-factor">wind 20 mph + rain likely + water +0.5' above normal</span>
-          <div class="print-summary">🐟 Redfish &middot; 📍 ICW & Protected Shorelines &middot; ⏰ 1-2 hrs before tide changes — peak current flow (start by 5:39 AM, 5:48 PM) &middot; 💨 20mph NE &middot; 🌊 0.0ft</div>
+          <h2>Monday, 5/11 </h2>
+          <span class="day-factor">light wind + water +0.2' above normal</span>
+          <div class="print-summary">🐟 Redfish &middot; 📍 Open Bay Flats & Reefs &middot; ⏰ All day — light wind, prime 1-2 hrs before tide changes (start by 9:31 AM, 8:27 PM) &middot; 💨 10mph NE &middot; 🌊 2.6ft</div>
         </div>
         <div class="day-scores-mini">
-          <span class="score-pill" style="background:#f97316">IN 5</span>
-          <span class="score-pill" style="background:#eab308">NR 6</span>
-          <span class="score-pill" style="background:#eab308">OFF 6</span>
-          <span class="chevron" id="chev-2026-05-02">▼</span>
+          <span class="score-pill" style="background:#eab308">IN 7</span>
+          <span class="score-pill" style="background:#22c55e">NR 8</span>
+          <span class="score-pill" style="background:#22c55e">OFF 8</span>
+          <span class="chevron" id="chev-2026-05-11">▼</span>
         </div>
       </div>
 
-      <div class="day-body" id="day-2026-05-02" style="display:none">
-        <div class="alert-box"><div class="alert-item">⚠️ Rain/storms likely</div></div>
+      <div class="day-body" id="day-2026-05-11" style="display:none">
+        
 
         <div class="section-label">🕐 Fishing Windows</div>
         <div class="timeline-container">
@@ -1455,24 +1163,24 @@ Sat 5/02: IN 5 · OFF 6✅ · 20mph · 0.0ft
       <rect x="10" y="4" width="88" height="20" rx="4" fill="#22c55e" opacity="0.2"/>
         <rect x="10" y="4" width="88" height="20" rx="4" fill="none" stroke="#22c55e" stroke-width="1.5"/>
         <text x="54" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#22c55e">PRIME</text>
-        <text x="54" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">5:00 AM</text><rect x="102" y="4" width="88" height="20" rx="4" fill="#eab308" opacity="0.2"/>
-        <rect x="102" y="4" width="88" height="20" rx="4" fill="none" stroke="#eab308" stroke-width="1.5"/>
-        <text x="146" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#eab308">FAIR</text>
-        <text x="146" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">7:00 AM</text><rect x="194" y="4" width="88" height="20" rx="4" fill="#eab308" opacity="0.2"/>
-        <rect x="194" y="4" width="88" height="20" rx="4" fill="none" stroke="#eab308" stroke-width="1.5"/>
-        <text x="238" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#eab308">FAIR</text>
-        <text x="238" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">10:00 AM</text><rect x="286" y="4" width="88" height="20" rx="4" fill="#ef4444" opacity="0.2"/>
-        <rect x="286" y="4" width="88" height="20" rx="4" fill="none" stroke="#ef4444" stroke-width="1.5"/>
-        <text x="330" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#ef4444">POOR</text>
-        <text x="330" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">2:00 PM</text><rect x="378" y="4" width="88" height="20" rx="4" fill="#eab308" opacity="0.2"/>
-        <rect x="378" y="4" width="88" height="20" rx="4" fill="none" stroke="#eab308" stroke-width="1.5"/>
-        <text x="422" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#eab308">FAIR</text>
+        <text x="54" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">5:00 AM</text><rect x="102" y="4" width="88" height="20" rx="4" fill="#22c55e" opacity="0.2"/>
+        <rect x="102" y="4" width="88" height="20" rx="4" fill="none" stroke="#22c55e" stroke-width="1.5"/>
+        <text x="146" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#22c55e">PRIME</text>
+        <text x="146" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">7:00 AM</text><rect x="194" y="4" width="88" height="20" rx="4" fill="#3b82f6" opacity="0.2"/>
+        <rect x="194" y="4" width="88" height="20" rx="4" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+        <text x="238" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#3b82f6">GOOD</text>
+        <text x="238" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">10:00 AM</text><rect x="286" y="4" width="88" height="20" rx="4" fill="#eab308" opacity="0.2"/>
+        <rect x="286" y="4" width="88" height="20" rx="4" fill="none" stroke="#eab308" stroke-width="1.5"/>
+        <text x="330" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#eab308">FAIR</text>
+        <text x="330" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">2:00 PM</text><rect x="378" y="4" width="88" height="20" rx="4" fill="#3b82f6" opacity="0.2"/>
+        <rect x="378" y="4" width="88" height="20" rx="4" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+        <text x="422" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#3b82f6">GOOD</text>
         <text x="422" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">5:00 PM</text><text x="470" y="38" text-anchor="end" font-size="8" class="svg-time" fill="#64748b">8:00 PM</text>
     </svg>
-          <div class="tw-details"><div class="tw-tip"><span class="tw-dot" style="background:#22c55e"></span><strong>5:00 AM – 7:00 AM</strong>: Strong current building before tide at 7:09 AM + low light</div><div class="tw-tip"><span class="tw-dot" style="background:#eab308"></span><strong>7:00 AM – 10:00 AM</strong>: Good light, fish still feeding (slack water at 7:09 AM — slower bite) (wind 20 mph)</div><div class="tw-tip"><span class="tw-dot" style="background:#eab308"></span><strong>10:00 AM – 2:00 PM</strong>: Sun high, fish go deeper</div><div class="tw-tip"><span class="tw-dot" style="background:#ef4444"></span><strong>2:00 PM – 5:00 PM</strong>: Storm risk — safety concern</div><div class="tw-tip"><span class="tw-dot" style="background:#eab308"></span><strong>5:00 PM – 8:00 PM</strong>: Possible lingering storms</div></div>
+          <div class="tw-details"><div class="tw-tip"><span class="tw-dot" style="background:#22c55e"></span><strong>5:00 AM – 7:00 AM</strong>: Calm water, low light, active fish</div><div class="tw-tip"><span class="tw-dot" style="background:#22c55e"></span><strong>7:00 AM – 10:00 AM</strong>: Peak current 1-2 hrs before tide at 11:01 AM — fish feeding hard</div><div class="tw-tip"><span class="tw-dot" style="background:#3b82f6"></span><strong>10:00 AM – 2:00 PM</strong>: Current building before tide at 11:01 AM keeps fish active</div><div class="tw-tip"><span class="tw-dot" style="background:#eab308"></span><strong>2:00 PM – 5:00 PM</strong>: Afternoon sea breeze typical</div><div class="tw-tip"><span class="tw-dot" style="background:#3b82f6"></span><strong>5:00 PM – 8:00 PM</strong>: Wind dies, low light, evening feed</div></div>
           <div class="time-summary">
-            <span class="ts-best">✅ Best: 1-2 hrs before tide changes — peak current flow (start by 5:39 AM, 5:48 PM)</span>
-            <span class="ts-worst">❌ Avoid: All day — wind too strong</span>
+            <span class="ts-best">✅ Best: All day — light wind, prime 1-2 hrs before tide changes (start by 9:31 AM, 8:27 PM)</span>
+            <span class="ts-worst">❌ Avoid: Slack water at tide changes (11:01 AM, 9:57 PM) — current stalls</span>
           </div>
         </div>
 
@@ -1483,26 +1191,26 @@ Sat 5/02: IN 5 · OFF 6✅ · 20mph · 0.0ft
               <svg width="90" height="90" viewBox="0 0 90 90">
       <path d="M 68.3 68.3 A 33 33 0 1 1 68.3 21.7"
             class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="10" stroke-linecap="round"/>
-      <path d="M 68.3 68.3 A 33 33 0 0 1 12.0 45.0"
-            fill="none" stroke="#f97316" stroke-width="10" stroke-linecap="round"/>
-      <text x="45" y="43" text-anchor="middle" font-size="28" font-weight="bold" fill="#f97316">5</text>
+      <path d="M 68.3 68.3 A 33 33 0 1 1 25.6 18.3"
+            fill="none" stroke="#eab308" stroke-width="10" stroke-linecap="round"/>
+      <text x="45" y="43" text-anchor="middle" font-size="28" font-weight="bold" fill="#eab308">7</text>
       <text x="45" y="61" text-anchor="middle" font-size="11" fill="#6b7280" class="svg-muted">/10</text>
       <text x="45" y="83" text-anchor="middle" font-size="11" font-weight="600" fill="#374151" class="svg-text">Score</text>
     </svg>
             </div>
             <div class="rec-box">
               <div class="rec-label">📍 Where to Fish</div>
-              <div class="rec-location">🛤️ ICW & Protected Shorelines</div>
-              <div class="rec-reason">Wind 20 mph makes open bay dangerous. Fish the ICW, dredge spoil edges, and wind-protected shorelines.</div>
+              <div class="rec-location">🌊 Open Bay Flats & Reefs</div>
+              <div class="rec-reason">Ideal conditions — 76°F water, 10 mph wind. Wade or drift the open bay flats, shell reefs, and grass edges. Water is +0.2' above normal — back-lake marshes and shallow flats are flooded, fish spread onto shoreline grass that's normally dry.</div>
             </div>
             <div class="rec-box">
               <div class="rec-label">🐟 Target Species</div>
               <div class="rec-species">Redfish</div>
             </div>
             <div class="detail-row-data">
-              <div class="datum"><span class="datum-label">Water Temp</span><span class="datum-value">75.7°F</span></div>
-              <div class="datum"><span class="datum-label">Pressure</span><span class="datum-value">1010.3 mb (stable)</span></div>
-              <div class="datum"><span class="datum-label">Cloud / Rain</span><span class="datum-value">0% / 60%</span></div>
+              <div class="datum"><span class="datum-label">Water Temp</span><span class="datum-value">75.6°F</span></div>
+              <div class="datum"><span class="datum-label">Pressure</span><span class="datum-value">1013.0 mb (stable)</span></div>
+              <div class="datum"><span class="datum-label">Cloud / Rain</span><span class="datum-value">10% / 0%</span></div>
             </div>
           </div>
 
@@ -1512,9 +1220,9 @@ Sat 5/02: IN 5 · OFF 6✅ · 20mph · 0.0ft
               <svg width="90" height="90" viewBox="0 0 90 90">
       <path d="M 68.3 68.3 A 33 33 0 1 1 68.3 21.7"
             class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="10" stroke-linecap="round"/>
-      <path d="M 68.3 68.3 A 33 33 0 0 1 15.6 30.0"
-            fill="none" stroke="#eab308" stroke-width="10" stroke-linecap="round"/>
-      <text x="45" y="43" text-anchor="middle" font-size="28" font-weight="bold" fill="#eab308">6</text>
+      <path d="M 68.3 68.3 A 33 33 0 1 1 39.8 12.4"
+            fill="none" stroke="#22c55e" stroke-width="10" stroke-linecap="round"/>
+      <text x="45" y="43" text-anchor="middle" font-size="28" font-weight="bold" fill="#22c55e">8</text>
       <text x="45" y="61" text-anchor="middle" font-size="11" fill="#6b7280" class="svg-muted">/10</text>
       <text x="45" y="83" text-anchor="middle" font-size="11" font-weight="600" fill="#374151" class="svg-text">GO</text>
     </svg>
@@ -1527,14 +1235,20 @@ Sat 5/02: IN 5 · OFF 6✅ · 20mph · 0.0ft
         <text x="65" y="42" text-anchor="middle" font-size="8" fill="#94a3b8">2'</text><line x1="100" y1="2" x2="100" y2="30" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
         <text x="100" y="42" text-anchor="middle" font-size="8" fill="#94a3b8">4'</text><line x1="135" y1="2" x2="135" y2="30" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
         <text x="135" y="42" text-anchor="middle" font-size="8" fill="#94a3b8">6'</text>
-      <rect x="30" y="4" width="2" height="24" rx="4" fill="#22c55e" opacity="0.85"/>
-      <text x="2" y="18" font-size="12" font-weight="bold" fill="#22c55e">0.0'</text>
+      <rect x="30" y="4" width="46" height="24" rx="4" fill="#eab308" opacity="0.85"/>
+      <text x="2" y="18" font-size="12" font-weight="bold" fill="#eab308">2.6'</text>
     </svg>
-              <div class="wave-detail">0.0 ft @ 0s period</div>
+              <div class="wave-detail">2.6 ft @ 8s period</div>
             </div>
             <div class="detail-row-data">
-              <div class="datum"><span class="datum-label">Seas</span><span class="datum-value">Calm — go fish!</span></div>
-              <div class="datum"><span class="datum-label">Water Temp</span><span class="datum-value">75.7°F</span></div>
+              <div class="datum"><span class="datum-label">Swell</span><span class="datum-value">1.6 ft</span></div>
+              <div class="datum"><span class="datum-label">Wind Waves</span><span class="datum-value">0.0 ft</span></div>
+              <div class="datum"><span class="datum-label">Wave Spread</span><span class="datum-value" style="color:#94a3b8">N/A</span></div>
+            </div>
+            <div class="detail-row-data" style="margin-top:4px;">
+              <div class="datum"><span class="datum-label">Seas</span><span class="datum-value">Moderate — experienced only</span></div>
+              <div class="datum"><span class="datum-label">Water Temp</span><span class="datum-value">75.6°F</span></div>
+              <div class="datum"><span class="datum-label">Wave Dir</span><span class="datum-value">153°</span></div>
             </div>
           </div>
         </div>
@@ -1548,17 +1262,17 @@ Sat 5/02: IN 5 · OFF 6✅ · 20mph · 0.0ft
       <circle cx="40" cy="40" r="26" class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="1.5"/>
       <text x="40" y="8" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">N</text><text x="75" y="43" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">E</text><text x="40" y="78" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">S</text><text x="5" y="43" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">W</text>
       <g transform="rotate(45 40 40)">
-        <line x1="40" y1="52" x2="40" y2="20" stroke="#f97316" stroke-width="3" stroke-linecap="round"/>
-        <polygon points="40,16 35,26 45,26" fill="#f97316"/>
+        <line x1="40" y1="52" x2="40" y2="20" stroke="#22c55e" stroke-width="3" stroke-linecap="round"/>
+        <polygon points="40,16 35,26 45,26" fill="#22c55e"/>
       </g>
-      <circle cx="40" cy="40" r="10" class="svg-center" fill="white" stroke="#f97316" stroke-width="2"/>
-      <text x="40" y="44" text-anchor="middle" font-size="9" font-weight="bold" fill="#f97316">20</text>
+      <circle cx="40" cy="40" r="10" class="svg-center" fill="white" stroke="#22c55e" stroke-width="2"/>
+      <text x="40" y="44" text-anchor="middle" font-size="9" font-weight="bold" fill="#22c55e">10</text>
     </svg>
               </div>
               <div class="wind-details">
-                <div class="wind-speed">20 <span class="wind-unit">mph</span></div>
+                <div class="wind-speed">10 <span class="wind-unit">mph</span></div>
                 <div class="wind-dir">from NE</div>
-                <div class="wind-assessment">🟠 Windy — protected water only</div>
+                <div class="wind-assessment">🟢 Calm — great for all</div>
               </div>
             </div>
           </div>
@@ -1570,19 +1284,347 @@ Sat 5/02: IN 5 · OFF 6✅ · 20mph · 0.0ft
         <stop offset="0%" stop-color="#0ea5e9" stop-opacity="0.3"/>
         <stop offset="100%" stop-color="#0ea5e9" stop-opacity="0.05"/>
       </linearGradient></defs>
-      <polygon points="36.0,96 36.0,45.1 54.8,50.2 73.6,55.1 92.3,60.0 111.1,65.5 129.9,71.0 148.7,75.2 167.5,77.1 186.3,76.1 205.0,72.7 223.8,68.0 242.6,62.3 261.4,55.9 280.2,49.1 299.0,42.3 317.7,36.4 336.5,32.0 355.3,29.4 374.1,27.7 392.9,26.9 411.7,27.3 430.4,29.2 449.2,33.0 468.0,38.3 468.0,96" fill="url(#tideGrad)"/>
-      <polyline points="36.0,45.1 54.8,50.2 73.6,55.1 92.3,60.0 111.1,65.5 129.9,71.0 148.7,75.2 167.5,77.1 186.3,76.1 205.0,72.7 223.8,68.0 242.6,62.3 261.4,55.9 280.2,49.1 299.0,42.3 317.7,36.4 336.5,32.0 355.3,29.4 374.1,27.7 392.9,26.9 411.7,27.3 430.4,29.2 449.2,33.0 468.0,38.3" fill="none" stroke="#0ea5e9" stroke-width="2.5" stroke-linejoin="round"/>
+      <polygon points="36.0,96 36.0,32.2 54.8,32.7 73.6,34.4 92.3,37.6 111.1,42.7 129.9,49.2 148.7,55.5 167.5,61.1 186.3,65.2 205.0,68.4 223.8,70.8 242.6,71.8 261.4,70.3 280.2,66.4 299.0,60.1 317.7,53.6 336.5,48.2 355.3,44.6 374.1,42.2 392.9,40.5 411.7,39.0 430.4,37.8 449.2,37.6 468.0,37.8 468.0,96" fill="url(#tideGrad)"/>
+      <polyline points="36.0,32.2 54.8,32.7 73.6,34.4 92.3,37.6 111.1,42.7 129.9,49.2 148.7,55.5 167.5,61.1 186.3,65.2 205.0,68.4 223.8,70.8 242.6,71.8 261.4,70.3 280.2,66.4 299.0,60.1 317.7,53.6 336.5,48.2 355.3,44.6 374.1,42.2 392.9,40.5 411.7,39.0 430.4,37.8 449.2,37.6 468.0,37.8" fill="none" stroke="#0ea5e9" stroke-width="2.5" stroke-linejoin="round"/>
       
       
       <text x="36.0" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">12 AM</text><text x="148.7" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">6 AM</text><text x="261.4" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">12 PM</text><text x="374.1" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">6 PM</text>
-      <text x="32" y="99.0" text-anchor="end" font-size="9" fill="#94a3b8">0.2</text><text x="32" y="55.0" text-anchor="end" font-size="9" fill="#94a3b8">0.5</text><text x="32" y="11.0" text-anchor="end" font-size="9" fill="#94a3b8">0.7</text>
+      <text x="32" y="99.0" text-anchor="end" font-size="9" fill="#94a3b8">0.3</text><text x="32" y="55.0" text-anchor="end" font-size="9" fill="#94a3b8">0.5</text><text x="32" y="11.0" text-anchor="end" font-size="9" fill="#94a3b8">0.7</text>
     </svg>
             <div class="tide-summary">
-              Range: 0.61 ft &middot;
-              Highs: 7:18 PM &middot;
-              Lows: 7:09 AM
+              Range: 0.53 ft &middot;
+              Highs: 9:57 PM &middot;
+              Lows: 11:01 AM
             </div>
-            <div class="water-level-row"><span class="wl-badge" style="color:#0ea5e9;border-color:#0ea5e9">↑ Water Level: +0.5' above normal</span></div>
+            <div class="water-level-row"><span class="wl-badge" style="color:#0ea5e9;border-color:#0ea5e9">↑ Water Level: +0.2' above normal</span></div>
+          </div>
+        </div>
+
+        
+      </div>
+    </div>
+    <div class="day-section ">
+      <div class="day-header" data-day="day-2026-05-12">
+        <div>
+          <h2>Tuesday, 5/12 </h2>
+          <span class="day-factor">light wind + water +0.2' above normal</span>
+          <div class="print-summary">🐟 Redfish &middot; 📍 Open Bay Flats & Reefs &middot; ⏰ All day — light wind, prime 1-2 hrs before tide changes (start by 8:28 AM, 4:39 PM) &middot; 💨 10mph E &middot; 🌊 2.6ft</div>
+        </div>
+        <div class="day-scores-mini">
+          <span class="score-pill" style="background:#eab308">IN 7</span>
+          <span class="score-pill" style="background:#22c55e">NR 8</span>
+          <span class="score-pill" style="background:#22c55e">OFF 8</span>
+          <span class="chevron" id="chev-2026-05-12">▼</span>
+        </div>
+      </div>
+
+      <div class="day-body" id="day-2026-05-12" style="display:none">
+        
+
+        <div class="section-label">🕐 Fishing Windows</div>
+        <div class="timeline-container">
+          <svg width="100%" viewBox="0 0 480 50" preserveAspectRatio="xMidYMid meet">
+      <rect x="10" y="4" width="88" height="20" rx="4" fill="#22c55e" opacity="0.2"/>
+        <rect x="10" y="4" width="88" height="20" rx="4" fill="none" stroke="#22c55e" stroke-width="1.5"/>
+        <text x="54" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#22c55e">PRIME</text>
+        <text x="54" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">5:00 AM</text><rect x="102" y="4" width="88" height="20" rx="4" fill="#22c55e" opacity="0.2"/>
+        <rect x="102" y="4" width="88" height="20" rx="4" fill="none" stroke="#22c55e" stroke-width="1.5"/>
+        <text x="146" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#22c55e">PRIME</text>
+        <text x="146" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">7:00 AM</text><rect x="194" y="4" width="88" height="20" rx="4" fill="#eab308" opacity="0.2"/>
+        <rect x="194" y="4" width="88" height="20" rx="4" fill="none" stroke="#eab308" stroke-width="1.5"/>
+        <text x="238" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#eab308">FAIR</text>
+        <text x="238" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">10:00 AM</text><rect x="286" y="4" width="88" height="20" rx="4" fill="#3b82f6" opacity="0.2"/>
+        <rect x="286" y="4" width="88" height="20" rx="4" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+        <text x="330" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#3b82f6">GOOD</text>
+        <text x="330" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">2:00 PM</text><rect x="378" y="4" width="88" height="20" rx="4" fill="#22c55e" opacity="0.2"/>
+        <rect x="378" y="4" width="88" height="20" rx="4" fill="none" stroke="#22c55e" stroke-width="1.5"/>
+        <text x="422" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#22c55e">PRIME</text>
+        <text x="422" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">5:00 PM</text><text x="470" y="38" text-anchor="end" font-size="8" class="svg-time" fill="#64748b">8:00 PM</text>
+    </svg>
+          <div class="tw-details"><div class="tw-tip"><span class="tw-dot" style="background:#22c55e"></span><strong>5:00 AM – 7:00 AM</strong>: Calm water, low light, active fish</div><div class="tw-tip"><span class="tw-dot" style="background:#22c55e"></span><strong>7:00 AM – 10:00 AM</strong>: Peak current 1-2 hrs before tide at 9:58 AM — fish feeding hard</div><div class="tw-tip"><span class="tw-dot" style="background:#eab308"></span><strong>10:00 AM – 2:00 PM</strong>: Sun high, fish go deeper</div><div class="tw-tip"><span class="tw-dot" style="background:#3b82f6"></span><strong>2:00 PM – 5:00 PM</strong>: Current building before tide at 6:09 PM</div><div class="tw-tip"><span class="tw-dot" style="background:#22c55e"></span><strong>5:00 PM – 8:00 PM</strong>: Current building before tide at 6:09 PM + low light = prime</div></div>
+          <div class="time-summary">
+            <span class="ts-best">✅ Best: All day — light wind, prime 1-2 hrs before tide changes (start by 8:28 AM, 4:39 PM)</span>
+            <span class="ts-worst">❌ Avoid: Slack water at tide changes (9:58 AM, 6:09 PM) — current stalls</span>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="col-card inshore-card">
+            <div class="col-header">
+              <h3>🏖️ Inshore</h3>
+              <svg width="90" height="90" viewBox="0 0 90 90">
+      <path d="M 68.3 68.3 A 33 33 0 1 1 68.3 21.7"
+            class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="10" stroke-linecap="round"/>
+      <path d="M 68.3 68.3 A 33 33 0 1 1 25.6 18.3"
+            fill="none" stroke="#eab308" stroke-width="10" stroke-linecap="round"/>
+      <text x="45" y="43" text-anchor="middle" font-size="28" font-weight="bold" fill="#eab308">7</text>
+      <text x="45" y="61" text-anchor="middle" font-size="11" fill="#6b7280" class="svg-muted">/10</text>
+      <text x="45" y="83" text-anchor="middle" font-size="11" font-weight="600" fill="#374151" class="svg-text">Score</text>
+    </svg>
+            </div>
+            <div class="rec-box">
+              <div class="rec-label">📍 Where to Fish</div>
+              <div class="rec-location">🌊 Open Bay Flats & Reefs</div>
+              <div class="rec-reason">Ideal conditions — 76°F water, 10 mph wind. Wade or drift the open bay flats, shell reefs, and grass edges. Water is +0.2' above normal — back-lake marshes and shallow flats are flooded, fish spread onto shoreline grass that's normally dry.</div>
+            </div>
+            <div class="rec-box">
+              <div class="rec-label">🐟 Target Species</div>
+              <div class="rec-species">Redfish</div>
+            </div>
+            <div class="detail-row-data">
+              <div class="datum"><span class="datum-label">Water Temp</span><span class="datum-value">75.6°F</span></div>
+              <div class="datum"><span class="datum-label">Pressure</span><span class="datum-value">1013.0 mb (stable)</span></div>
+              <div class="datum"><span class="datum-label">Cloud / Rain</span><span class="datum-value">10% / 0%</span></div>
+            </div>
+          </div>
+
+          <div class="col-card offshore-card">
+            <div class="col-header">
+              <h3>🚤 Offshore</h3>
+              <svg width="90" height="90" viewBox="0 0 90 90">
+      <path d="M 68.3 68.3 A 33 33 0 1 1 68.3 21.7"
+            class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="10" stroke-linecap="round"/>
+      <path d="M 68.3 68.3 A 33 33 0 1 1 39.8 12.4"
+            fill="none" stroke="#22c55e" stroke-width="10" stroke-linecap="round"/>
+      <text x="45" y="43" text-anchor="middle" font-size="28" font-weight="bold" fill="#22c55e">8</text>
+      <text x="45" y="61" text-anchor="middle" font-size="11" fill="#6b7280" class="svg-muted">/10</text>
+      <text x="45" y="83" text-anchor="middle" font-size="11" font-weight="600" fill="#374151" class="svg-text">GO</text>
+    </svg>
+            </div>
+            <div class="wave-section">
+              <div class="rec-label">🌊 Wave Height</div>
+              <svg width="200" height="46" viewBox="0 0 200 46">
+      <rect x="30" y="4" width="140" height="24" rx="4" class="svg-bg" fill="#f1f5f9"/>
+      <line x1="65" y1="2" x2="65" y2="30" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
+        <text x="65" y="42" text-anchor="middle" font-size="8" fill="#94a3b8">2'</text><line x1="100" y1="2" x2="100" y2="30" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
+        <text x="100" y="42" text-anchor="middle" font-size="8" fill="#94a3b8">4'</text><line x1="135" y1="2" x2="135" y2="30" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
+        <text x="135" y="42" text-anchor="middle" font-size="8" fill="#94a3b8">6'</text>
+      <rect x="30" y="4" width="46" height="24" rx="4" fill="#eab308" opacity="0.85"/>
+      <text x="2" y="18" font-size="12" font-weight="bold" fill="#eab308">2.6'</text>
+    </svg>
+              <div class="wave-detail">2.6 ft @ 8s period</div>
+            </div>
+            <div class="detail-row-data">
+              <div class="datum"><span class="datum-label">Swell</span><span class="datum-value">1.6 ft</span></div>
+              <div class="datum"><span class="datum-label">Wind Waves</span><span class="datum-value">0.0 ft</span></div>
+              <div class="datum"><span class="datum-label">Wave Spread</span><span class="datum-value" style="color:#94a3b8">N/A</span></div>
+            </div>
+            <div class="detail-row-data" style="margin-top:4px;">
+              <div class="datum"><span class="datum-label">Seas</span><span class="datum-value">Moderate — experienced only</span></div>
+              <div class="datum"><span class="datum-label">Water Temp</span><span class="datum-value">75.6°F</span></div>
+              <div class="datum"><span class="datum-label">Wave Dir</span><span class="datum-value">153°</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="col-card">
+            <div class="wind-row">
+              <div>
+                <div class="section-label" style="margin:0 0 4px 0">💨 Wind</div>
+                <svg width="80" height="80" viewBox="0 0 80 80">
+      <circle cx="40" cy="40" r="26" class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="1.5"/>
+      <text x="40" y="8" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">N</text><text x="75" y="43" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">E</text><text x="40" y="78" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">S</text><text x="5" y="43" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">W</text>
+      <g transform="rotate(90 40 40)">
+        <line x1="40" y1="52" x2="40" y2="20" stroke="#22c55e" stroke-width="3" stroke-linecap="round"/>
+        <polygon points="40,16 35,26 45,26" fill="#22c55e"/>
+      </g>
+      <circle cx="40" cy="40" r="10" class="svg-center" fill="white" stroke="#22c55e" stroke-width="2"/>
+      <text x="40" y="44" text-anchor="middle" font-size="9" font-weight="bold" fill="#22c55e">10</text>
+    </svg>
+              </div>
+              <div class="wind-details">
+                <div class="wind-speed">10 <span class="wind-unit">mph</span></div>
+                <div class="wind-dir">from E</div>
+                <div class="wind-assessment">🟢 Calm — great for all</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-card">
+            <div class="section-label" style="margin:0 0 4px 0">🌊 Tides</div>
+            <svg width="100%" viewBox="0 0 480 120" preserveAspectRatio="xMidYMid meet">
+      <defs><linearGradient id="tideGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#0ea5e9" stop-opacity="0.3"/>
+        <stop offset="100%" stop-color="#0ea5e9" stop-opacity="0.05"/>
+      </linearGradient></defs>
+      <polygon points="36.0,96 36.0,41.4 54.8,42.3 73.6,43.4 92.3,46.3 111.1,50.7 129.9,56.2 148.7,61.1 167.5,64.6 186.3,66.1 205.0,66.7 223.8,67.0 242.6,66.4 261.4,64.1 280.2,59.4 299.0,52.7 317.7,45.8 336.5,40.8 355.3,37.9 374.1,37.0 392.9,37.3 411.7,38.2 430.4,39.9 449.2,42.3 468.0,45.2 468.0,96" fill="url(#tideGrad)"/>
+      <polyline points="36.0,41.4 54.8,42.3 73.6,43.4 92.3,46.3 111.1,50.7 129.9,56.2 148.7,61.1 167.5,64.6 186.3,66.1 205.0,66.7 223.8,67.0 242.6,66.4 261.4,64.1 280.2,59.4 299.0,52.7 317.7,45.8 336.5,40.8 355.3,37.9 374.1,37.0 392.9,37.3 411.7,38.2 430.4,39.9 449.2,42.3 468.0,45.2" fill="none" stroke="#0ea5e9" stroke-width="2.5" stroke-linejoin="round"/>
+      
+      
+      <text x="36.0" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">12 AM</text><text x="148.7" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">6 AM</text><text x="261.4" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">12 PM</text><text x="374.1" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">6 PM</text>
+      <text x="32" y="99.0" text-anchor="end" font-size="9" fill="#94a3b8">0.3</text><text x="32" y="55.0" text-anchor="end" font-size="9" fill="#94a3b8">0.5</text><text x="32" y="11.0" text-anchor="end" font-size="9" fill="#94a3b8">0.6</text>
+    </svg>
+            <div class="tide-summary">
+              Range: 0.54 ft &middot;
+              Highs: 6:09 PM &middot;
+              Lows: 9:58 AM
+            </div>
+            <div class="water-level-row"><span class="wl-badge" style="color:#0ea5e9;border-color:#0ea5e9">↑ Water Level: +0.2' above normal</span></div>
+          </div>
+        </div>
+
+        
+      </div>
+    </div>
+    <div class="day-section ">
+      <div class="day-header" data-day="day-2026-05-13">
+        <div>
+          <h2>Wednesday, 5/13 </h2>
+          <span class="day-factor">light wind + water +0.2' above normal</span>
+          <div class="print-summary">🐟 Redfish &middot; 📍 Open Bay Flats & Reefs &middot; ⏰ All day — light wind, prime 1-2 hrs before tide changes (start by 5:11 AM, 3:38 PM) &middot; 💨 10mph SE &middot; 🌊 2.6ft</div>
+        </div>
+        <div class="day-scores-mini">
+          <span class="score-pill" style="background:#eab308">IN 7</span>
+          <span class="score-pill" style="background:#22c55e">NR 8</span>
+          <span class="score-pill" style="background:#22c55e">OFF 8</span>
+          <span class="chevron" id="chev-2026-05-13">▼</span>
+        </div>
+      </div>
+
+      <div class="day-body" id="day-2026-05-13" style="display:none">
+        
+
+        <div class="section-label">🕐 Fishing Windows</div>
+        <div class="timeline-container">
+          <svg width="100%" viewBox="0 0 480 50" preserveAspectRatio="xMidYMid meet">
+      <rect x="10" y="4" width="88" height="20" rx="4" fill="#22c55e" opacity="0.2"/>
+        <rect x="10" y="4" width="88" height="20" rx="4" fill="none" stroke="#22c55e" stroke-width="1.5"/>
+        <text x="54" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#22c55e">PRIME</text>
+        <text x="54" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">5:00 AM</text><rect x="102" y="4" width="88" height="20" rx="4" fill="#3b82f6" opacity="0.2"/>
+        <rect x="102" y="4" width="88" height="20" rx="4" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+        <text x="146" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#3b82f6">GOOD</text>
+        <text x="146" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">7:00 AM</text><rect x="194" y="4" width="88" height="20" rx="4" fill="#eab308" opacity="0.2"/>
+        <rect x="194" y="4" width="88" height="20" rx="4" fill="none" stroke="#eab308" stroke-width="1.5"/>
+        <text x="238" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#eab308">FAIR</text>
+        <text x="238" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">10:00 AM</text><rect x="286" y="4" width="88" height="20" rx="4" fill="#3b82f6" opacity="0.2"/>
+        <rect x="286" y="4" width="88" height="20" rx="4" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+        <text x="330" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#3b82f6">GOOD</text>
+        <text x="330" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">2:00 PM</text><rect x="378" y="4" width="88" height="20" rx="4" fill="#3b82f6" opacity="0.2"/>
+        <rect x="378" y="4" width="88" height="20" rx="4" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+        <text x="422" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#3b82f6">GOOD</text>
+        <text x="422" y="38" text-anchor="middle" font-size="8" class="svg-time" fill="#64748b">5:00 PM</text><text x="470" y="38" text-anchor="end" font-size="8" class="svg-time" fill="#64748b">8:00 PM</text>
+    </svg>
+          <div class="tw-details"><div class="tw-tip"><span class="tw-dot" style="background:#22c55e"></span><strong>5:00 AM – 7:00 AM</strong>: Strong current building before tide at 6:41 AM + low light</div><div class="tw-tip"><span class="tw-dot" style="background:#3b82f6"></span><strong>7:00 AM – 10:00 AM</strong>: Good light, fish still feeding</div><div class="tw-tip"><span class="tw-dot" style="background:#eab308"></span><strong>10:00 AM – 2:00 PM</strong>: Sun high, fish go deeper</div><div class="tw-tip"><span class="tw-dot" style="background:#3b82f6"></span><strong>2:00 PM – 5:00 PM</strong>: Current building before tide at 5:08 PM</div><div class="tw-tip"><span class="tw-dot" style="background:#3b82f6"></span><strong>5:00 PM – 8:00 PM</strong>: Wind dies, low light, evening feed (slack at 5:08 PM — focus on structure)</div></div>
+          <div class="time-summary">
+            <span class="ts-best">✅ Best: All day — light wind, prime 1-2 hrs before tide changes (start by 5:11 AM, 3:38 PM)</span>
+            <span class="ts-worst">❌ Avoid: Slack water at tide changes (6:41 AM, 5:08 PM) — current stalls</span>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="col-card inshore-card">
+            <div class="col-header">
+              <h3>🏖️ Inshore</h3>
+              <svg width="90" height="90" viewBox="0 0 90 90">
+      <path d="M 68.3 68.3 A 33 33 0 1 1 68.3 21.7"
+            class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="10" stroke-linecap="round"/>
+      <path d="M 68.3 68.3 A 33 33 0 1 1 25.6 18.3"
+            fill="none" stroke="#eab308" stroke-width="10" stroke-linecap="round"/>
+      <text x="45" y="43" text-anchor="middle" font-size="28" font-weight="bold" fill="#eab308">7</text>
+      <text x="45" y="61" text-anchor="middle" font-size="11" fill="#6b7280" class="svg-muted">/10</text>
+      <text x="45" y="83" text-anchor="middle" font-size="11" font-weight="600" fill="#374151" class="svg-text">Score</text>
+    </svg>
+            </div>
+            <div class="rec-box">
+              <div class="rec-label">📍 Where to Fish</div>
+              <div class="rec-location">🌊 Open Bay Flats & Reefs</div>
+              <div class="rec-reason">Ideal conditions — 76°F water, 10 mph wind. Wade or drift the open bay flats, shell reefs, and grass edges. Water is +0.2' above normal — back-lake marshes and shallow flats are flooded, fish spread onto shoreline grass that's normally dry.</div>
+            </div>
+            <div class="rec-box">
+              <div class="rec-label">🐟 Target Species</div>
+              <div class="rec-species">Redfish</div>
+            </div>
+            <div class="detail-row-data">
+              <div class="datum"><span class="datum-label">Water Temp</span><span class="datum-value">75.6°F</span></div>
+              <div class="datum"><span class="datum-label">Pressure</span><span class="datum-value">1013.0 mb (stable)</span></div>
+              <div class="datum"><span class="datum-label">Cloud / Rain</span><span class="datum-value">40% / 0%</span></div>
+            </div>
+          </div>
+
+          <div class="col-card offshore-card">
+            <div class="col-header">
+              <h3>🚤 Offshore</h3>
+              <svg width="90" height="90" viewBox="0 0 90 90">
+      <path d="M 68.3 68.3 A 33 33 0 1 1 68.3 21.7"
+            class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="10" stroke-linecap="round"/>
+      <path d="M 68.3 68.3 A 33 33 0 1 1 39.8 12.4"
+            fill="none" stroke="#22c55e" stroke-width="10" stroke-linecap="round"/>
+      <text x="45" y="43" text-anchor="middle" font-size="28" font-weight="bold" fill="#22c55e">8</text>
+      <text x="45" y="61" text-anchor="middle" font-size="11" fill="#6b7280" class="svg-muted">/10</text>
+      <text x="45" y="83" text-anchor="middle" font-size="11" font-weight="600" fill="#374151" class="svg-text">GO</text>
+    </svg>
+            </div>
+            <div class="wave-section">
+              <div class="rec-label">🌊 Wave Height</div>
+              <svg width="200" height="46" viewBox="0 0 200 46">
+      <rect x="30" y="4" width="140" height="24" rx="4" class="svg-bg" fill="#f1f5f9"/>
+      <line x1="65" y1="2" x2="65" y2="30" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
+        <text x="65" y="42" text-anchor="middle" font-size="8" fill="#94a3b8">2'</text><line x1="100" y1="2" x2="100" y2="30" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
+        <text x="100" y="42" text-anchor="middle" font-size="8" fill="#94a3b8">4'</text><line x1="135" y1="2" x2="135" y2="30" class="svg-track" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="2"/>
+        <text x="135" y="42" text-anchor="middle" font-size="8" fill="#94a3b8">6'</text>
+      <rect x="30" y="4" width="46" height="24" rx="4" fill="#eab308" opacity="0.85"/>
+      <text x="2" y="18" font-size="12" font-weight="bold" fill="#eab308">2.6'</text>
+    </svg>
+              <div class="wave-detail">2.6 ft @ 8s period</div>
+            </div>
+            <div class="detail-row-data">
+              <div class="datum"><span class="datum-label">Swell</span><span class="datum-value">1.6 ft</span></div>
+              <div class="datum"><span class="datum-label">Wind Waves</span><span class="datum-value">0.0 ft</span></div>
+              <div class="datum"><span class="datum-label">Wave Spread</span><span class="datum-value" style="color:#94a3b8">N/A</span></div>
+            </div>
+            <div class="detail-row-data" style="margin-top:4px;">
+              <div class="datum"><span class="datum-label">Seas</span><span class="datum-value">Moderate — experienced only</span></div>
+              <div class="datum"><span class="datum-label">Water Temp</span><span class="datum-value">75.6°F</span></div>
+              <div class="datum"><span class="datum-label">Wave Dir</span><span class="datum-value">153°</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="col-card">
+            <div class="wind-row">
+              <div>
+                <div class="section-label" style="margin:0 0 4px 0">💨 Wind</div>
+                <svg width="80" height="80" viewBox="0 0 80 80">
+      <circle cx="40" cy="40" r="26" class="svg-track" fill="none" stroke="#e5e7eb" stroke-width="1.5"/>
+      <text x="40" y="8" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">N</text><text x="75" y="43" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">E</text><text x="40" y="78" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">S</text><text x="5" y="43" text-anchor="middle" font-size="8" fill="#94a3b8" font-weight="600">W</text>
+      <g transform="rotate(135 40 40)">
+        <line x1="40" y1="52" x2="40" y2="20" stroke="#22c55e" stroke-width="3" stroke-linecap="round"/>
+        <polygon points="40,16 35,26 45,26" fill="#22c55e"/>
+      </g>
+      <circle cx="40" cy="40" r="10" class="svg-center" fill="white" stroke="#22c55e" stroke-width="2"/>
+      <text x="40" y="44" text-anchor="middle" font-size="9" font-weight="bold" fill="#22c55e">10</text>
+    </svg>
+              </div>
+              <div class="wind-details">
+                <div class="wind-speed">10 <span class="wind-unit">mph</span></div>
+                <div class="wind-dir">from SE</div>
+                <div class="wind-assessment">🟢 Calm — great for all</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-card">
+            <div class="section-label" style="margin:0 0 4px 0">🌊 Tides</div>
+            <svg width="100%" viewBox="0 0 480 120" preserveAspectRatio="xMidYMid meet">
+      <defs><linearGradient id="tideGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#0ea5e9" stop-opacity="0.3"/>
+        <stop offset="100%" stop-color="#0ea5e9" stop-opacity="0.05"/>
+      </linearGradient></defs>
+      <polygon points="36.0,96 36.0,55.0 54.8,56.8 73.6,58.4 92.3,60.7 111.1,63.8 129.9,67.2 148.7,69.5 167.5,70.0 186.3,68.5 205.0,65.9 223.8,63.0 242.6,60.2 261.4,56.3 280.2,51.1 299.0,44.9 317.7,39.2 336.5,35.3 355.3,34.0 374.1,34.5 392.9,36.6 411.7,39.7 430.4,43.6 449.2,48.5 468.0,53.7 468.0,96" fill="url(#tideGrad)"/>
+      <polyline points="36.0,55.0 54.8,56.8 73.6,58.4 92.3,60.7 111.1,63.8 129.9,67.2 148.7,69.5 167.5,70.0 186.3,68.5 205.0,65.9 223.8,63.0 242.6,60.2 261.4,56.3 280.2,51.1 299.0,44.9 317.7,39.2 336.5,35.3 355.3,34.0 374.1,34.5 392.9,36.6 411.7,39.7 430.4,43.6 449.2,48.5 468.0,53.7" fill="none" stroke="#0ea5e9" stroke-width="2.5" stroke-linejoin="round"/>
+      
+      
+      <text x="36.0" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">12 AM</text><text x="148.7" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">6 AM</text><text x="261.4" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">12 PM</text><text x="374.1" y="118" text-anchor="middle" font-size="9" fill="#94a3b8">6 PM</text>
+      <text x="32" y="99.0" text-anchor="end" font-size="9" fill="#94a3b8">0.3</text><text x="32" y="55.0" text-anchor="end" font-size="9" fill="#94a3b8">0.5</text><text x="32" y="11.0" text-anchor="end" font-size="9" fill="#94a3b8">0.7</text>
+    </svg>
+            <div class="tide-summary">
+              Range: 0.58 ft &middot;
+              Highs: 5:08 PM &middot;
+              Lows: 6:41 AM
+            </div>
+            <div class="water-level-row"><span class="wl-badge" style="color:#0ea5e9;border-color:#0ea5e9">↑ Water Level: +0.2' above normal</span></div>
           </div>
         </div>
 
@@ -1637,7 +1679,125 @@ Sat 5/02: IN 5 · OFF 6✅ · 20mph · 0.0ft
     </div>
   </div>
 
-  <div class="footer">Grant's Fishing Forecast v1.5.2 &middot; Matagorda / Sargent, TX &middot; NOAA / NDBC / NWS &middot; 4/26/2026 2:37 PM</div>
+  <!-- Offshore Fishing Regulations -->
+  <div class="day-section">
+    <div class="day-header" data-day="offshore-regs">
+      <h2>📋 Offshore Fishing Regulations</h2>
+      <span class="day-factor">Texas Gulf Coast — State &amp; Federal Waters</span>
+      <div class="day-scores-mini">
+        <span class="chevron" id="chev-offshore-regs">▼</span>
+      </div>
+    </div>
+    <div class="day-body" id="offshore-regs" style="display:none;">
+      <div class="rec-box" style="border-left:3px solid #f97316; border-color:#fed7aa;">
+        <div class="rec-label">⚠️ Requirements</div>
+        <div class="rec-reason" style="line-height:1.6;">
+          <strong>TX Saltwater License</strong> + <strong>Saltwater Stamp</strong> required<br>
+          <strong>Federal Gulf Reef Fish Angler</strong> — free registration for reef fish in federal waters (9–200 nm): <a href="https://www.countmyfish.noaa.gov/" target="_blank" rel="noopener" style="color:#0ea5e9;">countmyfish.noaa.gov</a><br>
+          <strong>HMS Permit</strong> — required for tuna, swordfish, sharks in federal waters<br>
+          <strong>Descending device</strong> required on board for reef fish in Gulf federal waters<br>
+          <strong>Circle hooks</strong> required when using natural bait for reef fish
+        </div>
+      </div>
+      <table class="week-table" style="margin-bottom:0; margin-top:10px;">
+        <thead>
+          <tr>
+            <th>Species</th>
+            <th>Min Size</th>
+            <th>Bag Limit</th>
+            <th>Season / Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:600;">Red Snapper</td>
+            <td>16" TL</td>
+            <td>2/day</td>
+            <td class="reg-note" style="font-size:12px; color:#64748b;">TX season ~Jun 1–Aug (check annually). Report via iSnapper within 24 hrs</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Gray (Mangrove) Snapper</td>
+            <td>10" TL (fed)</td>
+            <td>10/day (aggregate)</td>
+            <td class="reg-note" style="font-size:12px; color:#64748b;">Open year-round</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Vermilion Snapper</td>
+            <td>10" TL</td>
+            <td>10/day (aggregate)</td>
+            <td class="reg-note" style="font-size:12px; color:#64748b;">Open year-round</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Lane Snapper</td>
+            <td>8" TL</td>
+            <td>10/day (aggregate)</td>
+            <td class="reg-note" style="font-size:12px; color:#64748b;">Open year-round</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Greater Amberjack</td>
+            <td>34" FL</td>
+            <td>1/day</td>
+            <td class="reg-note" style="font-size:12px; color:#64748b;">Seasonal closures — check TPWD &amp; Gulf Council</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Cobia</td>
+            <td>37" FL (state) / 33" FL (fed)</td>
+            <td>1/day (state) / 2/day (fed)</td>
+            <td class="reg-note" style="font-size:12px; color:#64748b;">Open year-round</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">King Mackerel</td>
+            <td>24" FL</td>
+            <td>3/day</td>
+            <td class="reg-note" style="font-size:12px; color:#64748b;">Open year-round</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Dolphinfish (Mahi)</td>
+            <td>No min</td>
+            <td>10/day</td>
+            <td class="reg-note" style="font-size:12px; color:#64748b;">Open year-round</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Yellowfin Tuna</td>
+            <td>27" CFL</td>
+            <td>3/day</td>
+            <td class="reg-note" style="font-size:12px; color:#64748b;">Federal waters only. Open year-round</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Blackfin Tuna</td>
+            <td>No min</td>
+            <td>No limit</td>
+            <td class="reg-note" style="font-size:12px; color:#64748b;">Open year-round</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Wahoo</td>
+            <td>No min</td>
+            <td>No limit</td>
+            <td class="reg-note" style="font-size:12px; color:#64748b;">Open year-round</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Sharks</td>
+            <td>Varies</td>
+            <td>1/vessel/trip</td>
+            <td class="reg-note" style="font-size:12px; color:#64748b;">HMS permit required in federal waters. Species-specific rules</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Gray Triggerfish</td>
+            <td>15" TL (fed)</td>
+            <td>1/day</td>
+            <td class="reg-note" style="font-size:12px; color:#64748b;">Seasonal closures in federal waters</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="reg-disclaimer" style="font-size:11px; color:#94a3b8; padding:8px 12px;">
+        TL = Total Length · FL = Fork Length · CFL = Curved Fork Length<br>
+        Reef fish must be landed head &amp; tail intact. State waters: 0–9 nm · Federal waters: 9–200 nm<br>
+        Verify at <a href="https://tpwd.texas.gov/regulations/outdoor-annual/" target="_blank" rel="noopener" style="color:#0ea5e9;">TPWD Outdoor Annual</a> &amp; <a href="https://gulfcouncil.org/" target="_blank" rel="noopener" style="color:#0ea5e9;">Gulf Council</a> — regulations change and may be subject to emergency closures.
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">Grant's Fishing Forecast v1.5.4 &middot; Matagorda / Sargent, TX &middot; NOAA / NDBC / NWS &middot; 5/07/2026 6:12 PM</div>
 </div>
 
 <script>
@@ -1684,6 +1844,9 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('expandBtn').addEventListener('click', expandAll);
   document.getElementById('collapseBtn').addEventListener('click', collapseAll);
   darkBtn.addEventListener('click', toggleDark);
+  document.getElementById('popoutBtn').addEventListener('click', () => {
+    window.open(window.location.href, '_blank');
+  });
 
   // Refresh — trigger server-side forecast regeneration
   var refreshBtn = document.getElementById('refreshBtn');

@@ -30,6 +30,11 @@ class BuoyData:
     wave_period_sec: float = 0.0
     water_temp_f: float = 0.0
     pressure_mb: float = 0.0
+    swell_height_ft: float = 0.0
+    wind_wave_height_ft: float = 0.0
+    wave_direction_deg: float = 0.0
+    swell_direction_deg: float = 0.0
+    wave_spread_deg: float = 0.0
 
 
 @dataclass

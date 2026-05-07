@@ -462,8 +462,14 @@ def generate_html_string(forecast) -> str:
               <div class="wave-detail">{d.conditions.buoy.wave_height_ft:.1f} ft @ {d.conditions.buoy.wave_period_sec:.0f}s period</div>
             </div>
             <div class="detail-row-data">
+              <div class="datum"><span class="datum-label">Swell</span><span class="datum-value">{d.conditions.buoy.swell_height_ft:.1f} ft{f' from {d.conditions.buoy.swell_direction_deg:.0f}°' if d.conditions.buoy.swell_direction_deg else ''}</span></div>
+              <div class="datum"><span class="datum-label">Wind Waves</span><span class="datum-value">{d.conditions.buoy.wind_wave_height_ft:.1f} ft</span></div>
+              <div class="datum"><span class="datum-label">Wave Spread</span><span class="datum-value" style="color:{('#22c55e' if d.conditions.buoy.wave_spread_deg < 30 else '#eab308' if d.conditions.buoy.wave_spread_deg < 60 else '#f97316' if d.conditions.buoy.wave_spread_deg < 90 else '#ef4444') if d.conditions.buoy.wave_spread_deg else '#94a3b8'}">{f'{d.conditions.buoy.wave_spread_deg:.0f}°' if d.conditions.buoy.wave_spread_deg else 'N/A'}{' — organized' if d.conditions.buoy.wave_spread_deg and d.conditions.buoy.wave_spread_deg < 30 else ' — moderate' if d.conditions.buoy.wave_spread_deg and d.conditions.buoy.wave_spread_deg < 60 else ' — choppy' if d.conditions.buoy.wave_spread_deg and d.conditions.buoy.wave_spread_deg < 90 else ' — confused' if d.conditions.buoy.wave_spread_deg else ''}</span></div>
+            </div>
+            <div class="detail-row-data" style="margin-top:4px;">
               <div class="datum"><span class="datum-label">Seas</span><span class="datum-value">{'Calm — go fish!' if d.conditions.buoy.wave_height_ft <= 2 else 'Moderate — experienced only' if d.conditions.buoy.wave_height_ft <= 4 else 'Rough — stay inshore' if d.conditions.buoy.wave_height_ft <= 6 else 'Dangerous — do not go'}</span></div>
               <div class="datum"><span class="datum-label">Water Temp</span><span class="datum-value">{d.conditions.buoy.water_temp_f:.1f}°F</span></div>
+              <div class="datum"><span class="datum-label">Wave Dir</span><span class="datum-value">{f'{d.conditions.buoy.wave_direction_deg:.0f}°' if d.conditions.buoy.wave_direction_deg else 'N/A'}</span></div>
             </div>
           </div>
         </div>
@@ -817,6 +823,124 @@ def generate_html_string(forecast) -> str:
         </tbody>
       </table>
       <div class="reg-disclaimer" style="font-size:11px; color:#94a3b8; padding:8px 12px;">Regulations per TPWD. Always verify current rules at <a href="https://tpwd.texas.gov" target="_blank" rel="noopener" style="color:#0ea5e9;">tpwd.texas.gov</a> before your trip.</div>
+    </div>
+  </div>
+
+  <!-- Offshore Fishing Regulations -->
+  <div class="day-section">
+    <div class="day-header" data-day="offshore-regs">
+      <h2>📋 Offshore Fishing Regulations</h2>
+      <span class="day-factor">Texas Gulf Coast — State &amp; Federal Waters</span>
+      <div class="day-scores-mini">
+        <span class="chevron" id="chev-offshore-regs">▼</span>
+      </div>
+    </div>
+    <div class="day-body" id="offshore-regs" style="display:none;">
+      <div class="rec-box" style="border-left:3px solid #f97316; border-color:#fed7aa;">
+        <div class="rec-label">⚠️ Requirements</div>
+        <div class="rec-reason" style="line-height:1.6;">
+          <strong>TX Saltwater License</strong> + <strong>Saltwater Stamp</strong> required<br>
+          <strong>Federal Gulf Reef Fish Angler</strong> — free registration for reef fish in federal waters (9–200 nm): <a href="https://www.countmyfish.noaa.gov/" target="_blank" rel="noopener" style="color:#0ea5e9;">countmyfish.noaa.gov</a><br>
+          <strong>HMS Permit</strong> — required for tuna, swordfish, sharks in federal waters<br>
+          <strong>Descending device</strong> required on board for reef fish in Gulf federal waters<br>
+          <strong>Circle hooks</strong> required when using natural bait for reef fish
+        </div>
+      </div>
+      <table class="week-table" style="margin-bottom:0; margin-top:10px;">
+        <thead>
+          <tr>
+            <th>Species</th>
+            <th>Min Size</th>
+            <th>Bag Limit</th>
+            <th>Season / Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:600;">Red Snapper</td>
+            <td>16" TL</td>
+            <td>2/day</td>
+            <td class="reg-note" style="font-size:12px; color:#64748b;">TX season ~Jun 1–Aug (check annually). Report via iSnapper within 24 hrs</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Gray (Mangrove) Snapper</td>
+            <td>10" TL (fed)</td>
+            <td>10/day (aggregate)</td>
+            <td class="reg-note" style="font-size:12px; color:#64748b;">Open year-round</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Vermilion Snapper</td>
+            <td>10" TL</td>
+            <td>10/day (aggregate)</td>
+            <td class="reg-note" style="font-size:12px; color:#64748b;">Open year-round</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Lane Snapper</td>
+            <td>8" TL</td>
+            <td>10/day (aggregate)</td>
+            <td class="reg-note" style="font-size:12px; color:#64748b;">Open year-round</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Greater Amberjack</td>
+            <td>34" FL</td>
+            <td>1/day</td>
+            <td class="reg-note" style="font-size:12px; color:#64748b;">Seasonal closures — check TPWD &amp; Gulf Council</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Cobia</td>
+            <td>37" FL (state) / 33" FL (fed)</td>
+            <td>1/day (state) / 2/day (fed)</td>
+            <td class="reg-note" style="font-size:12px; color:#64748b;">Open year-round</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">King Mackerel</td>
+            <td>24" FL</td>
+            <td>3/day</td>
+            <td class="reg-note" style="font-size:12px; color:#64748b;">Open year-round</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Dolphinfish (Mahi)</td>
+            <td>No min</td>
+            <td>10/day</td>
+            <td class="reg-note" style="font-size:12px; color:#64748b;">Open year-round</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Yellowfin Tuna</td>
+            <td>27" CFL</td>
+            <td>3/day</td>
+            <td class="reg-note" style="font-size:12px; color:#64748b;">Federal waters only. Open year-round</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Blackfin Tuna</td>
+            <td>No min</td>
+            <td>No limit</td>
+            <td class="reg-note" style="font-size:12px; color:#64748b;">Open year-round</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Wahoo</td>
+            <td>No min</td>
+            <td>No limit</td>
+            <td class="reg-note" style="font-size:12px; color:#64748b;">Open year-round</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Sharks</td>
+            <td>Varies</td>
+            <td>1/vessel/trip</td>
+            <td class="reg-note" style="font-size:12px; color:#64748b;">HMS permit required in federal waters. Species-specific rules</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Gray Triggerfish</td>
+            <td>15" TL (fed)</td>
+            <td>1/day</td>
+            <td class="reg-note" style="font-size:12px; color:#64748b;">Seasonal closures in federal waters</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="reg-disclaimer" style="font-size:11px; color:#94a3b8; padding:8px 12px;">
+        TL = Total Length · FL = Fork Length · CFL = Curved Fork Length<br>
+        Reef fish must be landed head &amp; tail intact. State waters: 0–9 nm · Federal waters: 9–200 nm<br>
+        Verify at <a href="https://tpwd.texas.gov/regulations/outdoor-annual/" target="_blank" rel="noopener" style="color:#0ea5e9;">TPWD Outdoor Annual</a> &amp; <a href="https://gulfcouncil.org/" target="_blank" rel="noopener" style="color:#0ea5e9;">Gulf Council</a> — regulations change and may be subject to emergency closures.
+      </div>
     </div>
   </div>
 

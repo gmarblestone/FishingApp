@@ -19,6 +19,7 @@ try:
     from fishing_forecast.config import (
         AREAS,
         NDBC_OBSERVATION_URL,
+        NDBC_SPEC_URL,
         NOAA_TIDES_API,
         NWS_API_BASE,
     )
@@ -35,6 +36,7 @@ except ImportError:
     from config import (
         AREAS,
         NDBC_OBSERVATION_URL,
+        NDBC_SPEC_URL,
         NOAA_TIDES_API,
         NWS_API_BASE,
     )
@@ -227,7 +229,8 @@ def fetch_water_level_deviation(station_id: str) -> WaterLevelData:
 
 
 def fetch_buoy(station_id: str) -> BuoyData:
-    """Fetch latest NDBC buoy observation. Scans recent rows for non-MM values."""
+    """Fetch latest NDBC buoy observation. Scans recent rows for non-MM values.
+    Also fetches spectral data for swell/wind-wave breakdown and wave spread."""
     try:
         url = NDBC_OBSERVATION_URL.format(station=station_id)
         resp = SESSION.get(url, timeout=REQUEST_TIMEOUT)
@@ -241,6 +244,7 @@ def fetch_buoy(station_id: str) -> BuoyData:
         wave_period = 0.0
         water_c = 0.0
         pressure = 0.0
+        mwd = 0.0
 
         # Scan up to 24 recent observations to find non-MM values
         for line in lines[2:26]:
@@ -255,18 +259,66 @@ def fetch_buoy(station_id: str) -> BuoyData:
                 wave_m = safe_float("WVHT")
                 if wave_m:
                     wave_period = safe_float("DPD")
+                    if not mwd:
+                        mwd = safe_float("MWD")
+            if not mwd:
+                mwd = safe_float("MWD")
             if not water_c:
                 water_c = safe_float("WTMP")
             if not pressure:
                 pressure = safe_float("PRES")
-            if wave_m and water_c and pressure:
+            if wave_m and water_c and pressure and mwd:
                 break
+
+        # Fetch spectral data for swell/wind-wave breakdown
+        swell_m = 0.0
+        swell_dir = 0.0
+        ww_m = 0.0
+        ww_dir = 0.0
+        try:
+            spec_url = NDBC_SPEC_URL.format(station=station_id)
+            spec_resp = SESSION.get(spec_url, timeout=REQUEST_TIMEOUT)
+            spec_resp.raise_for_status()
+            spec_lines = spec_resp.text.strip().split("\n")
+            if len(spec_lines) >= 3:
+                spec_headers = spec_lines[0].split()
+                for spec_line in spec_lines[2:10]:
+                    spec_values = spec_line.split()
+                    spec_map = dict(zip(spec_headers, spec_values))
+
+                    def spec_float(key: str) -> float:
+                        val = spec_map.get(key, "MM")
+                        return float(val) if val != "MM" else 0.0
+
+                    if not swell_m:
+                        swell_m = spec_float("SwH")
+                    if not swell_dir:
+                        swell_dir = spec_float("SwD")
+                    if not ww_m:
+                        ww_m = spec_float("WWH")
+                    if not ww_dir:
+                        ww_dir = spec_float("WWD")
+                    if swell_m and swell_dir and ww_m and ww_dir:
+                        break
+        except Exception:
+            logger.debug("No spectral data for buoy %s", station_id)
+
+        # Calculate wave spread (angular difference between swell and wind waves)
+        wave_spread = 0.0
+        if swell_dir and ww_dir:
+            diff = abs(swell_dir - ww_dir)
+            wave_spread = min(diff, 360.0 - diff)
 
         return BuoyData(
             wave_height_ft=round(wave_m * 3.28084, 1),
             wave_period_sec=wave_period,
             water_temp_f=round(water_c * 9 / 5 + 32, 1) if water_c else 0.0,
             pressure_mb=pressure,
+            swell_height_ft=round(swell_m * 3.28084, 1),
+            wind_wave_height_ft=round(ww_m * 3.28084, 1),
+            wave_direction_deg=mwd,
+            swell_direction_deg=swell_dir,
+            wave_spread_deg=round(wave_spread, 0),
         )
     except Exception:
         logger.exception("Failed to fetch buoy %s", station_id)
@@ -354,6 +406,37 @@ def fetch_nws_marine(zone_id: str) -> str:
         return ""
 
 
+def fetch_nws_marine_waves(marine_gridpoint: str, num_days: int = 7) -> dict[str, float]:
+    """Fetch wave height forecast from NWS marine gridpoint data.
+
+    Returns {date_iso: max_wave_height_ft} for each day.
+    This provides area-specific wave forecasts vs distant buoy observations.
+    """
+    results: dict[str, float] = {}
+    if not marine_gridpoint:
+        return results
+    try:
+        url = f"{NWS_API_BASE}/gridpoints/{marine_gridpoint}"
+        resp = SESSION.get(url, timeout=REQUEST_TIMEOUT)
+        resp.raise_for_status()
+        wave_data = resp.json().get("properties", {}).get("waveHeight", {})
+        for entry in wave_data.get("values", []):
+            val_m = entry.get("value", 0)
+            if not val_m:
+                continue
+            val_ft = round(val_m * 3.28084, 1)
+            # Parse ISO time to get the date
+            time_str = entry.get("validTime", "")
+            day_str = time_str[:10]  # "2026-05-07"
+            # Keep the max wave height per day
+            if day_str not in results or val_ft > results[day_str]:
+                results[day_str] = val_ft
+        logger.info("NWS marine waves: %d days from %s", len(results), marine_gridpoint)
+    except Exception:
+        logger.debug("No NWS marine wave data from %s", marine_gridpoint)
+    return results
+
+
 def _parse_wind_from_nws(period: dict) -> WindData:
     """Extract wind info from an NWS forecast period."""
     speed_str = period.get("windSpeed", "0 mph")
@@ -411,6 +494,10 @@ def fetch_all_conditions(
     # NWS 7-day forecast
     nws_periods = fetch_nws_forecast(area["nws_gridpoint"], num_days)
 
+    # NWS marine wave forecast — area-specific wave heights per day
+    marine_gp = area.get("nws_marine_gridpoint", "")
+    marine_waves = fetch_nws_marine_waves(marine_gp, num_days)
+
     # Build per-day conditions
     conditions_list: list[DayConditions] = []
     for i in range(num_days):
@@ -427,6 +514,7 @@ def fetch_all_conditions(
         air_high = 0.0
         air_low = 0.0
         has_weather = False
+        night_period = None
         for p in nws_periods:
             p_start = p.get("startTime", "")
             if day_str in p_start:
@@ -445,6 +533,23 @@ def fetch_all_conditions(
                         rain_chance = 60
                 else:
                     air_low = float(p.get("temperature", 0))
+                    if not night_period:
+                        night_period = p
+
+        # Fall back to night period if no daytime data (e.g., late in the day)
+        if not has_weather and night_period:
+            has_weather = True
+            wind = _parse_wind_from_nws(night_period)
+            air_high = air_low or float(night_period.get("temperature", 0))
+            short = night_period.get("shortForecast", "").lower()
+            if "cloud" in short or "overcast" in short:
+                cloud_cover = 75
+            elif "partly" in short:
+                cloud_cover = 40
+            elif "sunny" in short or "clear" in short:
+                cloud_cover = 10
+            if "rain" in short or "shower" in short or "thunder" in short:
+                rain_chance = 60
 
         # Pressure trend from buoy (simplified — single snapshot)
         pressure_trend = "stable"
@@ -454,12 +559,20 @@ def fetch_all_conditions(
             elif buoy.pressure_mb > 1016:
                 pressure_trend = "rising"
 
+        # Use NWS marine wave forecast if available (area-specific, per-day)
+        # Falls back to buoy observation if no marine data for this day
+        day_buoy = buoy
+        nws_wave_ft = marine_waves.get(day_str)
+        if nws_wave_ft is not None:
+            from dataclasses import replace as dc_replace
+            day_buoy = dc_replace(buoy, wave_height_ft=nws_wave_ft)
+
         conditions_list.append(
             DayConditions(
                 date=d,
                 tide=tide,
                 wind=wind,
-                buoy=buoy,
+                buoy=day_buoy,
                 solunar=SolunarData(),  # filled by scorer if solunar API available
                 pressure_trend=pressure_trend,
                 cloud_cover_pct=cloud_cover,

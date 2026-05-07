@@ -182,6 +182,75 @@ Each day is scored 1–10 for three categories using weighted factors:
 
 Offshore uses stricter wind thresholds (max 12 mph vs 15 mph inshore), so it will score lower most days — that's expected.
 
+### Offshore Wave Height & Spread
+
+The offshore report includes detailed wave data pulled from NDBC buoys:
+
+| Metric | Source | Description |
+|--------|--------|-------------|
+| **Wave Height** | NDBC `WVHT` | Significant wave height (average of highest ⅓ of waves) in feet |
+| **Wave Period** | NDBC `DPD` | Dominant wave period in seconds — longer periods = smoother ride |
+| **Wave Spread** | NDBC `MWD` + `SwD` | Directional spread between wind waves and swell — narrow spread means organized seas, wide spread means confused/choppy |
+| **Swell Height** | NDBC `SwH` | Swell component only (excludes wind chop) |
+| **Wind Waves** | NDBC `WWH` | Wind-driven wave component |
+
+**How wave spread affects the score:**
+
+| Spread | Seas | Score Impact |
+|--------|------|-------------|
+| < 30° | Organized, long-period rollers | +1.0 bonus |
+| 30–60° | Moderate, manageable for most boats | No adjustment |
+| 60–90° | Choppy, cross-seas developing | −1.0 penalty |
+| > 90° | Confused seas, dangerous for small boats | −2.0 penalty, triggers MARGINAL/NO-GO |
+
+**GO / MARGINAL / NO-GO thresholds:**
+
+| Status | Conditions |
+|--------|------------|
+| **GO** | Waves < 3 ft, wind < 12 mph, spread < 60° |
+| **MARGINAL** | Waves 3–5 ft, or wind 12–18 mph, or spread 60–90° |
+| **NO-GO** | Waves > 5 ft, or wind > 18 mph, or spread > 90° |
+
+## Offshore Fishing Regulations (Texas Gulf)
+
+All offshore anglers must comply with Texas Parks & Wildlife and federal (NOAA Fisheries / Gulf Council) regulations. Regulations change frequently — always verify at [TPWD Outdoor Annual](https://tpwd.texas.gov/regulations/outdoor-annual/) and [Gulf Council](https://gulfcouncil.org/) before your trip.
+
+### Licenses & Requirements
+
+- **Texas Saltwater Fishing License** with **Saltwater Stamp** required
+- **Federal Gulf Reef Fish Angler** — free registration required for red snapper and other reef fish in federal waters (9–200 nm): [register here](https://www.countmyfish.noaa.gov/)
+- **HMS Permit** — required if targeting highly migratory species (tuna, swordfish, sharks) in federal waters
+
+### Key Species Regulations
+
+| Species | State Waters (0–9 nm) | Federal Waters (9–200 nm) | Min Size | Bag Limit |
+|---------|----------------------|--------------------------|----------|----------|
+| **Red Snapper** | TX season ~Jun 1–Aug 3 (check annually) | Federal season announced yearly | 16" TL | 2/person/day |
+| **Gray (Mangrove) Snapper** | Open year-round | Open year-round | 10" TL (federal) | 10/person/day (aggregate) |
+| **Vermilion Snapper** | Open year-round | Open year-round | 10" TL | 10/person/day (aggregate) |
+| **Lane Snapper** | Open year-round | Open year-round | 8" TL | 10/person/day (aggregate) |
+| **Greater Amberjack** | Check TPWD | Seasonal closures apply | 34" FL | 1/person/day |
+| **Cobia** | Open year-round | Open year-round | 37" FL (state), 33" FL (federal) | 1/person/day (state), 2/person/day (federal) |
+| **King Mackerel** | Open year-round | Open year-round | 24" FL | 3/person/day |
+| **Dolphinfish (Mahi)** | Open year-round | Open year-round | No minimum | 10/person/day |
+| **Yellowfin Tuna** | N/A (federal only) | Open year-round | 27" CFL | 3/person/day |
+| **Blackfin Tuna** | Open year-round | Open year-round | No minimum | No bag limit |
+| **Wahoo** | Open year-round | Open year-round | No minimum | No bag limit |
+| **Sharks** | Varies by species | HMS permit required, varies | Species-dependent | 1 shark/vessel/trip (most species) |
+| **Triggerfish (Gray)** | Open year-round | Seasonal closures | 15" TL (federal) | 1/person/day |
+
+**TL** = Total Length, **FL** = Fork Length, **CFL** = Curved Fork Length
+
+### Important Notes
+
+- **Descending devices** are required on board when fishing for reef fish in Gulf federal waters (to release fish with barotrauma)
+- **Red snapper** season dates change every year — check before every trip
+- **Reef fish** (snappers, groupers, amberjack, triggerfish) must be landed with head and tail intact
+- **iSnapper / TPWD app** — Texas requires reporting red snapper catches within 24 hours via the app
+- State vs federal boundaries matter — some species have different rules in state (0–9 nm) vs federal (9–200 nm) waters
+- **Circle hooks** are required when fishing with natural bait for reef fish in the Gulf
+- Regulations are subject to emergency closures — check [TPWD alerts](https://tpwd.texas.gov/) and [NOAA Fisheries bulletins](https://www.fisheries.noaa.gov/region/southeast) before heading out
+
 ## Location Recommendations
 
 The inshore panel recommends where to fish based on conditions:
@@ -239,5 +308,6 @@ set HA_TOKEN=<token> && python run_forecast.py push  # Push sensors via HA REST 
 ```
 
 See `integrations/ha_server.py` and `integrations/ha_webhook.py`. These files are kept for reference but are **not needed** with the add-on deployment.
-#   F i s h i n g A p p  
+#   F i s h i n g A p p 
+ 
  

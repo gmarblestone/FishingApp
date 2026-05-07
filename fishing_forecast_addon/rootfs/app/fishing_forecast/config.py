@@ -12,9 +12,10 @@ AREAS = {
         "inshore_stations": ["AWRT2", "MBET2"],
         "nws_office": "HGX",
         "nws_gridpoint": "HGX/53,51",
+        "nws_marine_gridpoint": "HGX/54,30",
         "lat": 28.77,
         "lon": -95.62,
-        "marine_zones": ["GMZ330", "GMZ335"],
+        "marine_zones": ["GMZ350", "GMZ370"],
     },
     "galveston": {
         "name": "Galveston, TX",
@@ -22,9 +23,10 @@ AREAS = {
         "buoy_ids": ["42035"],
         "nws_office": "HGX",
         "nws_gridpoint": "HGX/85,75",
+        "nws_marine_gridpoint": "HGX/89,57",
         "lat": 29.31,
         "lon": -94.79,
-        "marine_zones": ["GMZ335", "GMZ355"],
+        "marine_zones": ["GMZ355", "GMZ375"],
     },
     "freeport": {
         "name": "Freeport / Surfside, TX",
@@ -32,9 +34,10 @@ AREAS = {
         "buoy_ids": ["42035"],
         "nws_office": "HGX",
         "nws_gridpoint": "HGX/73,65",
+        "nws_marine_gridpoint": "HGX/73,44",
         "lat": 29.08,
         "lon": -95.11,
-        "marine_zones": ["GMZ335", "GMZ355"],
+        "marine_zones": ["GMZ350", "GMZ370"],
     },
     "port_oconnor": {
         "name": "Port O'Connor / Espiritu Santo Bay, TX",
@@ -43,9 +46,10 @@ AREAS = {
         "inshore_stations": ["AWRT2"],
         "nws_office": "CRP",
         "nws_gridpoint": "CRP/149,62",
+        "nws_marine_gridpoint": "CRP/149,43",
         "lat": 28.44,
         "lon": -96.40,
-        "marine_zones": ["GMZ330", "GMZ335"],
+        "marine_zones": ["GMZ255", "GMZ275"],
     },
     "port_aransas": {
         "name": "Port Aransas / Mustang Island, TX",
@@ -53,9 +57,10 @@ AREAS = {
         "buoy_ids": ["42020"],
         "nws_office": "CRP",
         "nws_gridpoint": "CRP/124,35",
+        "nws_marine_gridpoint": "CRP/129,16",
         "lat": 27.83,
         "lon": -97.05,
-        "marine_zones": ["GMZ250", "GMZ255"],
+        "marine_zones": ["GMZ250", "GMZ270"],
     },
     "corpus_christi": {
         "name": "Corpus Christi / Upper Laguna Madre, TX",
@@ -63,9 +68,10 @@ AREAS = {
         "buoy_ids": ["42020"],
         "nws_office": "CRP",
         "nws_gridpoint": "CRP/113,26",
+        "nws_marine_gridpoint": "BRO/94,62",
         "lat": 27.64,
         "lon": -97.24,
-        "marine_zones": ["GMZ250", "GMZ255"],
+        "marine_zones": ["GMZ250", "GMZ270"],
     },
     "south_padre": {
         "name": "South Padre Island / Lower Laguna Madre, TX",
@@ -75,7 +81,7 @@ AREAS = {
         "nws_gridpoint": "BRO/91,12",
         "lat": 26.07,
         "lon": -97.17,
-        "marine_zones": ["GMZ130", "GMZ155"],
+        "marine_zones": ["GMZ150", "GMZ170"],
     },
     "rockport": {
         "name": "Rockport / Aransas Bay, TX",
@@ -83,9 +89,10 @@ AREAS = {
         "buoy_ids": ["42020"],
         "nws_office": "CRP",
         "nws_gridpoint": "CRP/136,44",
+        "nws_marine_gridpoint": "CRP/125,25",
         "lat": 28.02,
         "lon": -96.99,
-        "marine_zones": ["GMZ250", "GMZ255"],
+        "marine_zones": ["GMZ250", "GMZ270"],
     },
 }
 
@@ -94,6 +101,7 @@ DEFAULT_AREA = "matagorda"
 # ── NOAA API endpoints ───────────────────────────────────────────────────────
 NOAA_TIDES_API = "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter"
 NDBC_OBSERVATION_URL = "https://www.ndbc.noaa.gov/data/realtime2/{station}.txt"
+NDBC_SPEC_URL = "https://www.ndbc.noaa.gov/data/realtime2/{station}.spec"
 NWS_API_BASE = "https://api.weather.gov"
 
 # ── Scoring weights (must sum to 1.0 per category) ──────────────────────────
@@ -116,9 +124,10 @@ NEARSHORE_WEIGHTS = {
 }
 
 OFFSHORE_WEIGHTS = {
-    "swell": 0.35,
-    "wind": 0.30,
-    "pressure": 0.15,
+    "swell": 0.30,
+    "wind": 0.25,
+    "wave_spread": 0.15,
+    "pressure": 0.10,
     "weather_window": 0.10,
     "solunar": 0.05,
     "water_temp": 0.05,

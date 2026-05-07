@@ -66,6 +66,11 @@ def push_sensors(forecast: dict, ha_api: str, ha_token: str):
             "status": off_status,
             "wave_height": buoy.get("wave_height_ft", 0),
             "wave_period": buoy.get("wave_period_sec", 0),
+            "swell_height": buoy.get("swell_height_ft", 0),
+            "wind_wave_height": buoy.get("wind_wave_height_ft", 0),
+            "wave_direction": buoy.get("wave_direction_deg", 0),
+            "swell_direction": buoy.get("swell_direction_deg", 0),
+            "wave_spread": buoy.get("wave_spread_deg", 0),
         }),
         ("sensor.fishing_water_temp", round(buoy.get("water_temp_f", 0), 1), {
             "friendly_name": "Fishing — Water Temp",

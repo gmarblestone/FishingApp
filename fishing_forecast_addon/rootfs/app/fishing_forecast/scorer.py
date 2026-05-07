@@ -123,6 +123,20 @@ def _score_swell(wave_ft: float, ideal: float, max_ft: float) -> float:
     return 10.0 - ((wave_ft - ideal) / (max_ft - ideal)) * 9
 
 
+def _score_wave_spread(spread_deg: float) -> float:
+    """Score directional wave spread for offshore.
+    Narrow spread = organized seas. Wide spread = confused/dangerous."""
+    if spread_deg == 0:
+        return 5.0  # no data, neutral
+    if spread_deg < 30:
+        return 10.0
+    if spread_deg < 60:
+        return 7.0
+    if spread_deg < 90:
+        return 4.0
+    return 2.0
+
+
 def _score_water_temp(temp_f: float) -> float:
     """General water temp score — moderate temps are best."""
     if temp_f == 0:
@@ -464,6 +478,7 @@ def score_day(conditions: DayConditions) -> DayForecast:
         "wind": _score_wind(
             conditions.wind.speed_mph, WIND_IDEAL_MPH, WIND_OFFSHORE_MAX_MPH
         ),
+        "wave_spread": _score_wave_spread(conditions.buoy.wave_spread_deg),
     }
 
     warnings = []
@@ -473,6 +488,8 @@ def score_day(conditions: DayConditions) -> DayForecast:
         warnings.append("Rain/storms likely")
     if conditions.buoy.wave_height_ft > WAVE_OFFSHORE_MAX_FT:
         warnings.append(f"Rough seas: {conditions.buoy.wave_height_ft} ft")
+    if conditions.buoy.wave_spread_deg > 90:
+        warnings.append(f"Confused seas: {conditions.buoy.wave_spread_deg:.0f}° wave spread")
 
     data_gaps = []
     if not conditions.has_weather:
