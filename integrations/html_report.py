@@ -944,7 +944,19 @@ def generate_html_string(forecast) -> str:
     </div>
   </div>
 
-  <div class="footer">Grant's Fishing Forecast v1.5.4 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
+  <div style="background:#f8fafc; border-radius:12px; padding:16px 20px; margin-top:20px; border:1px solid #e2e8f0;">
+    <div style="font-size:12px; font-weight:600; color:#475569; margin-bottom:8px;">&#128279; Data Sources</div>
+    <div style="font-size:11px; color:#64748b; line-height:1.8;">
+      <a href="https://tidesandcurrents.noaa.gov/" target="_blank" rel="noopener" style="color:#0284c7; text-decoration:none;">NOAA Tides &amp; Currents</a> &mdash; Tide predictions, water levels, water temperature<br>
+      <a href="https://www.ndbc.noaa.gov/" target="_blank" rel="noopener" style="color:#0284c7; text-decoration:none;">NDBC Buoy Data</a> &mdash; Wave height, period, spectral data, sea surface temperature, pressure<br>
+      <a href="https://www.weather.gov/documentation/services-web-api" target="_blank" rel="noopener" style="color:#0284c7; text-decoration:none;">NWS Weather API</a> &mdash; 7-day forecast, wind speed/direction, cloud cover, precipitation<br>
+      <a href="https://www.weather.gov/marine/" target="_blank" rel="noopener" style="color:#0284c7; text-decoration:none;">NWS Marine Forecasts</a> &mdash; Offshore wave height forecasts, marine zone alerts<br>
+      <a href="https://tpwd.texas.gov/regulations/outdoor-annual/" target="_blank" rel="noopener" style="color:#0284c7; text-decoration:none;">TPWD Outdoor Annual</a> &mdash; Texas fishing regulations, seasons, bag/size limits<br>
+      <a href="https://gulfcouncil.org/" target="_blank" rel="noopener" style="color:#0284c7; text-decoration:none;">Gulf of Mexico Fishery Management Council</a> &mdash; Federal offshore regulations
+    </div>
+  </div>
+
+  <div class="footer">Grant's Fishing Forecast v1.6.0 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
 </div>
 
 <script>
