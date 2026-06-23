@@ -6,8 +6,8 @@ Edit AREAS to add new locations. Edit WEIGHTS to tune scoring.
 # ── Areas ────────────────────────────────────────────────────────────────────
 AREAS = {
     "matagorda": {
-        "name": "Matagorda / Sargent, TX",
-        "tide_stations": ["8773037", "8772985"],
+        "name": "Sargent / Caney Creek, TX",
+        "tide_stations": ["8772985", "8772471"],
         "buoy_ids": ["42035"],
         "inshore_stations": ["AWRT2", "MBET2"],
         "nws_office": "HGX",
@@ -15,6 +15,30 @@ AREAS = {
         "nws_marine_gridpoint": "HGX/54,30",
         "lat": 28.77,
         "lon": -95.62,
+        "marine_zones": ["GMZ350", "GMZ370"],
+    },
+    "sargent": {
+        "name": "Sargent / Caney Creek, TX",
+        "tide_stations": ["8772985", "8772471"],
+        "buoy_ids": ["42035"],
+        "inshore_stations": ["AWRT2", "MBET2"],
+        "nws_office": "HGX",
+        "nws_gridpoint": "HGX/53,51",
+        "nws_marine_gridpoint": "HGX/54,30",
+        "lat": 28.77,
+        "lon": -95.62,
+        "marine_zones": ["GMZ350", "GMZ370"],
+    },
+    "matagorda_bay": {
+        "name": "Matagorda Bay / Matagorda City, TX",
+        "tide_stations": ["8773146", "8773767"],
+        "buoy_ids": ["42035"],
+        "inshore_stations": ["AWRT2", "MBET2"],
+        "nws_office": "HGX",
+        "nws_gridpoint": "HGX/53,51",
+        "nws_marine_gridpoint": "HGX/54,30",
+        "lat": 28.71,
+        "lon": -95.91,
         "marine_zones": ["GMZ350", "GMZ370"],
     },
     "galveston": {

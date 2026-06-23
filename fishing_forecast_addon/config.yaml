@@ -1,5 +1,5 @@
 name: Fishing Forecast
-version: "1.6.1"
+version: "1.6.2"
 slug: fishing_forecast
 description: >-
   Scores upcoming fishing days 1-10 for inshore, nearshore, and offshore
@@ -32,6 +32,6 @@ options:
   report_path: /config/www/fishing_forecast.html
 
 schema:
-  area: list(matagorda|galveston|freeport|port_oconnor|port_aransas|corpus_christi|south_padre|rockport)
+  area: list(matagorda|sargent|matagorda_bay|galveston|freeport|port_oconnor|port_aransas|corpus_christi|south_padre|rockport)
   refresh_hours: str
   report_path: str
