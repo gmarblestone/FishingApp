@@ -755,7 +755,7 @@ def generate_html_string(forecast, area_key: str = DEFAULT_AREA) -> str:
       <button class="btn btn-outline" id="expandBtn" style="margin-left:4px">Expand All</button>
       <button class="btn btn-outline" id="collapseBtn" style="margin-left:4px">Collapse All</button>
       <button class="btn btn-outline" id="darkBtn" style="margin-left:4px">🌙 Dark</button>
-      <button class="btn btn-outline" id="popoutBtn" style="margin-left:4px">↗️ Pop Out</button>
+      <button class="btn btn-outline" id="saveBtn" style="margin-left:4px">💾 Save HTML</button>
     </div>
     <div class="hint-text" style="font-size:12px;color:#64748b">Click any day to expand</div>
   </div>
@@ -973,7 +973,7 @@ def generate_html_string(forecast, area_key: str = DEFAULT_AREA) -> str:
     </div>
   </div>
 
-  <div class="footer">Grant's Fishing Forecast v1.6.6 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
+  <div class="footer">Grant's Fishing Forecast v1.6.7 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
 </div>
 
 <script>
@@ -1004,15 +1004,8 @@ function getReportStyles() {{
   const styleTag = document.querySelector('style');
   return styleTag ? `<style>${{styleTag.innerHTML}}</style>` : '';
 }}
-function openPrintWindow(title, bodyHtml) {{
-  const printWindow = window.open('', '_blank', 'noopener,noreferrer,width=1100,height=900');
-  if (!printWindow) {{
-    alert('Popup blocked. Allow popups for this page to print selected sections.');
-    return;
-  }}
-
-  printWindow.document.open();
-  printWindow.document.write(`<!DOCTYPE html>
+function buildPrintDocument(title, bodyHtml) {{
+  return `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -1029,10 +1022,53 @@ ${{getReportStyles()}}
 </head>
 <body>
 <div class="container">${{bodyHtml}}</div>
-<script>window.onload = function(){{ setTimeout(function(){{ window.print(); }}, 150); }};<\\/script>
 </body>
-</html>`);
-  printWindow.document.close();
+</html>`;
+}}
+function downloadPrintableReport(filename, title, bodyHtml) {{
+  const blob = new Blob([buildPrintDocument(title, bodyHtml)], {{ type: 'text/html' }});
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}}
+function printInline(title, bodyHtml, filename) {{
+  const iframe = document.createElement('iframe');
+  iframe.style.position = 'fixed';
+  iframe.style.right = '0';
+  iframe.style.bottom = '0';
+  iframe.style.width = '0';
+  iframe.style.height = '0';
+  iframe.style.border = '0';
+  iframe.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(iframe);
+
+  const cleanup = () => setTimeout(() => iframe.remove(), 1500);
+  iframe.onload = () => {{
+    try {{
+      const frameWindow = iframe.contentWindow;
+      if (!frameWindow) throw new Error('Missing print frame');
+      frameWindow.focus();
+      setTimeout(() => {{
+        try {{
+          frameWindow.print();
+        }} catch (err) {{
+          console.error(err);
+          downloadPrintableReport(filename, title, bodyHtml);
+        }}
+        cleanup();
+      }}, 150);
+    }} catch (err) {{
+      console.error(err);
+      cleanup();
+      downloadPrintableReport(filename, title, bodyHtml);
+    }}
+  }};
+  iframe.srcdoc = buildPrintDocument(title, bodyHtml);
 }}
 function printSummary() {{
   const parts = [
@@ -1041,7 +1077,7 @@ function printSummary() {{
     document.querySelector('.best-days')?.outerHTML || '',
     document.querySelector('.week-table')?.outerHTML || ''
   ].join('');
-  openPrintWindow('Fishing Forecast Summary', parts);
+  printInline('Fishing Forecast Summary', parts, 'fishing-forecast-summary.html');
 }}
 function printExpanded() {{
   const expanded = Array.from(document.querySelectorAll('.day-section')).filter((section) => {{
@@ -1051,7 +1087,20 @@ function printExpanded() {{
   const fallback = document.querySelector('.day-section.day-today') || document.querySelector('.day-section');
   const sections = (expanded.length ? expanded : (fallback ? [fallback] : [])).map((section) => section.outerHTML).join('');
   const header = document.querySelector('.header')?.outerHTML || '';
-  openPrintWindow('Fishing Forecast Details', header + sections);
+  printInline('Fishing Forecast Details', header + sections, 'fishing-forecast-details.html');
+}}
+function saveCurrentReport() {{
+  const filename = `fishing-forecast-${{CURRENT_AREA_KEY}}.html`;
+  const html = '<!DOCTYPE html>' + document.documentElement.outerHTML;
+  const blob = new Blob([html], {{ type: 'text/html' }});
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
 }}
 async function copyGoodStuff() {{
   const text = document.getElementById('shareBtn').getAttribute('data-share-text');
@@ -1154,9 +1203,7 @@ document.addEventListener('DOMContentLoaded', () => {{
   document.getElementById('expandBtn').addEventListener('click', expandAll);
   document.getElementById('collapseBtn').addEventListener('click', collapseAll);
   darkBtn.addEventListener('click', toggleDark);
-  document.getElementById('popoutBtn').addEventListener('click', () => {{
-    window.open(window.location.href, '_blank');
-  }});
+  document.getElementById('saveBtn').addEventListener('click', saveCurrentReport);
 
   // Refresh — trigger server-side forecast regeneration
   var refreshBtn = document.getElementById('refreshBtn');
