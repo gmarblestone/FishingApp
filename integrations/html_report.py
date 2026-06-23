@@ -748,7 +748,9 @@ def generate_html_string(forecast, area_key: str = DEFAULT_AREA) -> str:
         {area_options}
       </select>
       <button class="btn" id="shareBtn" data-share-text="{share_text_escaped}">📤 Share</button>
-      <button class="btn btn-outline" id="pdfBtn" style="margin-left:4px">🖨️ Print</button>
+      <button class="btn btn-outline" id="copyBtn" style="margin-left:4px">📋 Copy Good Stuff</button>
+      <button class="btn btn-outline" id="pdfBtn" style="margin-left:4px">🖨️ Print Summary</button>
+      <button class="btn btn-outline" id="printExpandedBtn" style="margin-left:4px">🗂️ Print Expanded</button>
       <button class="btn btn-outline" id="refreshBtn" style="margin-left:4px">🔄 Refresh</button>
       <button class="btn btn-outline" id="expandBtn" style="margin-left:4px">Expand All</button>
       <button class="btn btn-outline" id="collapseBtn" style="margin-left:4px">Collapse All</button>
@@ -971,7 +973,7 @@ def generate_html_string(forecast, area_key: str = DEFAULT_AREA) -> str:
     </div>
   </div>
 
-  <div class="footer">Grant's Fishing Forecast v1.6.5 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
+  <div class="footer">Grant's Fishing Forecast v1.6.6 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
 </div>
 
 <script>
@@ -997,6 +999,77 @@ function toggleDark() {{
   html.classList.toggle('dark');
   const btn = document.getElementById('darkBtn');
   btn.textContent = html.classList.contains('dark') ? '☀️ Light' : '🌙 Dark';
+}}
+function getReportStyles() {{
+  const styleTag = document.querySelector('style');
+  return styleTag ? `<style>${{styleTag.innerHTML}}</style>` : '';
+}}
+function openPrintWindow(title, bodyHtml) {{
+  const printWindow = window.open('', '_blank', 'noopener,noreferrer,width=1100,height=900');
+  if (!printWindow) {{
+    alert('Popup blocked. Allow popups for this page to print selected sections.');
+    return;
+  }}
+
+  printWindow.document.open();
+  printWindow.document.write(`<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${{title}}</title>
+${{getReportStyles()}}
+<style>
+  body {{ background:white !important; color:#1e293b !important; }}
+  .top-bar,.footer,.chevron,.hint-text {{ display:none !important; }}
+  .container {{ max-width:1000px; margin:0 auto; padding:16px !important; }}
+  .day-body {{ display:block !important; }}
+  .day-section,.best-day-card,.callout,.week-table,.header {{ break-inside:avoid; page-break-inside:avoid; }}
+</style>
+</head>
+<body>
+<div class="container">${{bodyHtml}}</div>
+<script>window.onload = function(){{ setTimeout(function(){{ window.print(); }}, 150); }};<\\/script>
+</body>
+</html>`);
+  printWindow.document.close();
+}}
+function printSummary() {{
+  const parts = [
+    document.querySelector('.header')?.outerHTML || '',
+    document.querySelector('.callout')?.outerHTML || '',
+    document.querySelector('.best-days')?.outerHTML || '',
+    document.querySelector('.week-table')?.outerHTML || ''
+  ].join('');
+  openPrintWindow('Fishing Forecast Summary', parts);
+}}
+function printExpanded() {{
+  const expanded = Array.from(document.querySelectorAll('.day-section')).filter((section) => {{
+    const body = section.querySelector('.day-body');
+    return body && window.getComputedStyle(body).display !== 'none';
+  }});
+  const fallback = document.querySelector('.day-section.day-today') || document.querySelector('.day-section');
+  const sections = (expanded.length ? expanded : (fallback ? [fallback] : [])).map((section) => section.outerHTML).join('');
+  const header = document.querySelector('.header')?.outerHTML || '';
+  openPrintWindow('Fishing Forecast Details', header + sections);
+}}
+async function copyGoodStuff() {{
+  const text = document.getElementById('shareBtn').getAttribute('data-share-text');
+  try {{
+    await navigator.clipboard.writeText(text);
+    const b = document.getElementById('copyBtn');
+    const orig = b.textContent;
+    b.textContent = '✅ Copied';
+    setTimeout(() => b.textContent = orig, 2000);
+  }} catch (e) {{
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    alert('Summary copied to clipboard.');
+  }}
 }}
 const CURRENT_AREA_KEY = {current_area_key_json};
 function fetchAreaReport(areaKey) {{
@@ -1066,6 +1139,7 @@ document.addEventListener('DOMContentLoaded', () => {{
 
   // Toolbar buttons
   document.getElementById('shareBtn').addEventListener('click', shareForecast);
+  document.getElementById('copyBtn').addEventListener('click', copyGoodStuff);
   document.getElementById('pdfBtn').addEventListener('click', async () => {{
     // On iOS/mobile WebView, window.print() is not supported — use share sheet which has Print
     if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent) && navigator.share) {{
@@ -1073,9 +1147,10 @@ document.addEventListener('DOMContentLoaded', () => {{
         await navigator.share({{ title: '🎣 Fishing Forecast', url: window.location.href }});
       }} catch(e) {{ if (e.name !== 'AbortError') console.error(e); }}
     }} else {{
-      window.print();
+      printSummary();
     }}
   }});
+  document.getElementById('printExpandedBtn').addEventListener('click', printExpanded);
   document.getElementById('expandBtn').addEventListener('click', expandAll);
   document.getElementById('collapseBtn').addEventListener('click', collapseAll);
   darkBtn.addEventListener('click', toggleDark);
