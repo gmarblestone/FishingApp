@@ -967,7 +967,7 @@ def generate_html_string(forecast, area_key: str = DEFAULT_AREA) -> str:
     </div>
   </div>
 
-  <div class="footer">Grant's Fishing Forecast v1.6.3 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
+  <div class="footer">Grant's Fishing Forecast v1.6.4 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
 </div>
 
 <script>
@@ -1015,7 +1015,12 @@ function fetchAreaReport(areaKey) {{
     refreshBtn.style.opacity = '0.6';
   }}
 
-  fetch(`api/report?area=${{encodeURIComponent(areaKey)}}`)
+  const basePath = window.location.pathname.endsWith('/')
+    ? window.location.pathname
+    : `${{window.location.pathname}}/`;
+  const reportUrl = `${{basePath}}api/report?area=${{encodeURIComponent(areaKey)}}`;
+
+  fetch(reportUrl)
     .then((response) => {{
       if (!response.ok) throw new Error(`HTTP ${{response.status}}`);
       return response.text();
