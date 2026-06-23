@@ -557,6 +557,8 @@ def generate_html_string(forecast, area_key: str = DEFAULT_AREA) -> str:
   .btn:hover {{ background:#0c4a6e; }}
   .btn-outline {{ background:transparent; border:2px solid #0369a1; color:#0369a1; }}
   .btn-outline:hover {{ background:#0369a1; color:white; }}
+  .area-select {{ background:#ffffff; color:#0f172a; border:2px solid #0369a1; padding:5px 34px 5px 12px; border-radius:6px; cursor:pointer; font-size:12px; font-weight:600; min-width:220px; appearance:auto; }}
+  .area-select option {{ color:#0f172a; background:#ffffff; }}
   .gauge-row {{ display:flex; justify-content:center; gap:24px; margin-bottom:20px; flex-wrap:wrap; }}
   .gauge-item {{ text-align:center; background:white; border-radius:14px; padding:16px 24px; box-shadow:0 1px 3px rgba(0,0,0,0.06); }}
   .gauge-item h3 {{ font-size:13px; color:#64748b; margin-top:2px; }}
@@ -656,6 +658,8 @@ def generate_html_string(forecast, area_key: str = DEFAULT_AREA) -> str:
   .dark .btn:hover {{ background:#38bdf8; color:#0f172a; }}
   .dark .btn-outline {{ background:rgba(56,189,248,0.15); border-color:#7dd3fc; color:#e0f2fe; font-weight:600; }}
   .dark .btn-outline:hover {{ background:#38bdf8; color:#0f172a; }}
+  .dark .area-select {{ background:#0f172a; color:#e2e8f0; border-color:#7dd3fc; }}
+  .dark .area-select option {{ background:#0f172a; color:#e2e8f0; }}
   .dark .hint-text {{ color:#94a3b8; }}
   .dark .day-today {{ border-color:#0ea5e9; }}
   .dark .badge-inshore {{ background:#064e3b; color:#6ee7b7; }}
@@ -740,7 +744,7 @@ def generate_html_string(forecast, area_key: str = DEFAULT_AREA) -> str:
   <div class="top-bar no-print">
     <div>
       <label for="areaSelect" style="font-size:12px;color:#475569;font-weight:600;margin-right:6px;">Area</label>
-      <select id="areaSelect" class="btn btn-outline" style="margin-right:4px; background:white; min-width:220px;">
+      <select id="areaSelect" class="area-select" style="margin-right:4px;">
         {area_options}
       </select>
       <button class="btn" id="shareBtn" data-share-text="{share_text_escaped}">📤 Share</button>
@@ -967,7 +971,7 @@ def generate_html_string(forecast, area_key: str = DEFAULT_AREA) -> str:
     </div>
   </div>
 
-  <div class="footer">Grant's Fishing Forecast v1.6.4 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
+  <div class="footer">Grant's Fishing Forecast v1.6.5 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
 </div>
 
 <script>
