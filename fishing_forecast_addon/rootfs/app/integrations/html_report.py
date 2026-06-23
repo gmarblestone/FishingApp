@@ -10,6 +10,7 @@ Opens in browser, includes print/PDF export.
 """
 
 import base64
+import json
 import html as html_mod
 import logging
 import math
@@ -24,10 +25,10 @@ except Exception:
     CENTRAL = timezone(timedelta(hours=-5))
 
 try:
-    from fishing_forecast.config import DEFAULT_AREA
+    from fishing_forecast.config import AREAS, DEFAULT_AREA
     from fishing_forecast.scorer import generate_forecast
 except ImportError:
-    from config import DEFAULT_AREA
+    from config import AREAS, DEFAULT_AREA
     from scorer import generate_forecast
 
 logger = logging.getLogger(__name__)
@@ -318,7 +319,7 @@ def _location_badge(location: str) -> str:
 
 # ── HTML Generator ───────────────────────────────────────────────────────────
 
-def generate_html_string(forecast) -> str:
+def generate_html_string(forecast, area_key: str = DEFAULT_AREA) -> str:
     """Build the complete HTML string from a ForecastResult. No file I/O."""
     days = forecast.days
 
@@ -357,6 +358,12 @@ def generate_html_string(forecast) -> str:
     _raw = "\n".join(share_lines)
     # HTML-escape for safe embedding in a data attribute
     share_text_escaped = html_mod.escape(_raw, quote=True)
+    area_key = area_key if area_key in AREAS else DEFAULT_AREA
+    area_options = "".join(
+      f'<option value="{html_mod.escape(key, quote=True)}"{' selected' if key == area_key else ''}>{html_mod.escape(cfg["name"])}</option>'
+      for key, cfg in AREAS.items()
+    )
+    current_area_key_json = json.dumps(area_key)
 
     # ── Base64-encode logo for inline embedding ─────────────────────────────
     logo_b64 = ""
@@ -732,6 +739,10 @@ def generate_html_string(forecast) -> str:
 
   <div class="top-bar no-print">
     <div>
+      <label for="areaSelect" style="font-size:12px;color:#475569;font-weight:600;margin-right:6px;">Area</label>
+      <select id="areaSelect" class="btn btn-outline" style="margin-right:4px; background:white; min-width:220px;">
+        {area_options}
+      </select>
       <button class="btn" id="shareBtn" data-share-text="{share_text_escaped}">📤 Share</button>
       <button class="btn btn-outline" id="pdfBtn" style="margin-left:4px">🖨️ Print</button>
       <button class="btn btn-outline" id="refreshBtn" style="margin-left:4px">🔄 Refresh</button>
@@ -956,7 +967,7 @@ def generate_html_string(forecast) -> str:
     </div>
   </div>
 
-  <div class="footer">Grant's Fishing Forecast v1.6.2 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
+  <div class="footer">Grant's Fishing Forecast v1.6.3 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
 </div>
 
 <script>
@@ -983,10 +994,66 @@ function toggleDark() {{
   const btn = document.getElementById('darkBtn');
   btn.textContent = html.classList.contains('dark') ? '☀️ Light' : '🌙 Dark';
 }}
+const CURRENT_AREA_KEY = {current_area_key_json};
+function fetchAreaReport(areaKey) {{
+  if (window.location.protocol !== 'http:' && window.location.protocol !== 'https:') {{
+    alert('Area switching is only available in the hosted Home Assistant app.');
+    return;
+  }}
+
+  const url = new URL(window.location.href);
+  url.searchParams.set('area', areaKey);
+  history.replaceState(null, '', url.toString());
+  localStorage.setItem('fishingForecastArea', areaKey);
+
+  const areaSelect = document.getElementById('areaSelect');
+  const refreshBtn = document.getElementById('refreshBtn');
+  if (areaSelect) areaSelect.disabled = true;
+  if (refreshBtn) {{
+    refreshBtn.textContent = '⏳ Refreshing...';
+    refreshBtn.disabled = true;
+    refreshBtn.style.opacity = '0.6';
+  }}
+
+  fetch(`api/report?area=${{encodeURIComponent(areaKey)}}`)
+    .then((response) => {{
+      if (!response.ok) throw new Error(`HTTP ${{response.status}}`);
+      return response.text();
+    }})
+    .then((reportHtml) => {{
+      document.open();
+      document.write(reportHtml);
+      document.close();
+    }})
+    .catch((error) => {{
+      console.error(error);
+      if (areaSelect) areaSelect.disabled = false;
+      if (refreshBtn) {{
+        refreshBtn.textContent = '❌ Error';
+        refreshBtn.disabled = false;
+        refreshBtn.style.opacity = '1';
+      }}
+      alert('Failed to load the selected area.');
+    }});
+}}
 // Wire up all event listeners (no inline onclick — CSP safe)
 document.addEventListener('DOMContentLoaded', () => {{
+  const areaSelect = document.getElementById('areaSelect');
   const darkBtn = document.getElementById('darkBtn');
   if (darkBtn && document.documentElement.classList.contains('dark')) darkBtn.textContent = '☀️ Light';
+
+  const params = new URLSearchParams(window.location.search);
+  const desiredArea = params.get('area') || localStorage.getItem('fishingForecastArea');
+  if (areaSelect) {{
+    areaSelect.value = CURRENT_AREA_KEY;
+    areaSelect.addEventListener('change', (event) => fetchAreaReport(event.target.value));
+  }}
+  if (desiredArea && desiredArea !== CURRENT_AREA_KEY) {{
+    if (areaSelect) areaSelect.value = desiredArea;
+    fetchAreaReport(desiredArea);
+    return;
+  }}
+  localStorage.setItem('fishingForecastArea', CURRENT_AREA_KEY);
 
   // Toolbar buttons
   document.getElementById('shareBtn').addEventListener('click', shareForecast);
@@ -1010,23 +1077,7 @@ document.addEventListener('DOMContentLoaded', () => {{
   // Refresh — trigger server-side forecast regeneration
   var refreshBtn = document.getElementById('refreshBtn');
   refreshBtn.addEventListener('click', function() {{
-    refreshBtn.textContent = '⏳ Refreshing...';
-    refreshBtn.disabled = true;
-    refreshBtn.style.opacity = '0.6';
-    fetch('api/refresh')
-      .then(function(r) {{ return r.json(); }})
-      .then(function(data) {{
-        if (data.status === 'busy') {{
-          refreshBtn.textContent = '⏳ Already running...';
-        }} else {{
-          refreshBtn.textContent = '⏳ Fetching data...';
-        }}
-        setTimeout(function() {{ location.reload(); }}, 45000);
-      }})
-      .catch(function() {{
-        refreshBtn.textContent = '❌ Error';
-        setTimeout(function() {{ location.reload(); }}, 5000);
-      }});
+    fetchAreaReport(areaSelect ? areaSelect.value : CURRENT_AREA_KEY);
   }});
 
   // Day-header accordion — event delegation
@@ -1071,7 +1122,7 @@ async function shareForecast() {{
 def generate_html(area_key: str = DEFAULT_AREA, output_path: str = "fishing_forecast.html") -> str:
     """Generate forecast then write HTML report to disk."""
     forecast = generate_forecast(area_key)
-    html = generate_html_string(forecast)
+    html = generate_html_string(forecast, area_key)
     if not html:
         return ""
 
