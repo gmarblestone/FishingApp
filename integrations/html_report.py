@@ -973,17 +973,19 @@ def generate_html_string(forecast, area_key: str = DEFAULT_AREA) -> str:
     </div>
   </div>
 
-  <div class="footer">Grant's Fishing Forecast v1.6.9 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
+  <div class="footer">Grant's Fishing Forecast v1.6.10 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
 </div>
 
 <script>
 function toggleDay(id) {{
   const el = document.getElementById(id);
   const chev = document.getElementById('chev-' + id.replace('day-',''));
+  const hdr = document.querySelector(`.day-header[data-day="${{id}}"]`);
   if (el) {{
     const show = el.style.display === 'none';
     el.style.display = show ? 'block' : 'none';
     if (chev) chev.classList.toggle('open', show);
+    if (hdr) hdr.setAttribute('aria-expanded', show ? 'true' : 'false');
   }}
 }}
 function expandAll() {{
@@ -1169,9 +1171,36 @@ function fetchAreaReport(areaKey) {{
 }}
 
 function bindDayAccordion() {{
-  document.addEventListener('click', (e) => {{
-    const hdr = e.target.closest('.day-header[data-day]');
-    if (hdr) toggleDay(hdr.getAttribute('data-day'));
+  document.querySelectorAll('.day-header[data-day]').forEach((hdr) => {{
+    if (hdr.dataset.accordionBound === 'true') return;
+    hdr.dataset.accordionBound = 'true';
+    hdr.setAttribute('role', 'button');
+    hdr.setAttribute('tabindex', '0');
+
+    const dayId = hdr.getAttribute('data-day');
+    const body = dayId ? document.getElementById(dayId) : null;
+    if (body) hdr.setAttribute('aria-expanded', body.style.display !== 'none' ? 'true' : 'false');
+
+    let lastTouchToggleAt = 0;
+    const activate = () => dayId && toggleDay(dayId);
+
+    hdr.addEventListener('touchend', (e) => {{
+      lastTouchToggleAt = Date.now();
+      e.preventDefault();
+      activate();
+    }}, {{ passive: false }});
+
+    hdr.addEventListener('click', () => {{
+      if (Date.now() - lastTouchToggleAt < 700) return;
+      activate();
+    }});
+
+    hdr.addEventListener('keydown', (e) => {{
+      if (e.key === 'Enter' || e.key === ' ') {{
+        e.preventDefault();
+        activate();
+      }}
+    }});
   }});
 }}
 
@@ -1179,6 +1208,7 @@ bindDayAccordion();
 
 // Wire up all event listeners (no inline onclick — CSP safe)
 document.addEventListener('DOMContentLoaded', () => {{
+  bindDayAccordion();
   const areaSelect = document.getElementById('areaSelect');
   const darkBtn = document.getElementById('darkBtn');
   if (darkBtn && document.documentElement.classList.contains('dark')) darkBtn.textContent = '☀️ Light';
