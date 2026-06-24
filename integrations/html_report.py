@@ -973,7 +973,7 @@ def generate_html_string(forecast, area_key: str = DEFAULT_AREA) -> str:
     </div>
   </div>
 
-  <div class="footer">Grant's Fishing Forecast v1.6.8 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
+  <div class="footer">Grant's Fishing Forecast v1.6.9 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
 </div>
 
 <script>
