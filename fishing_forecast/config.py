@@ -148,13 +148,14 @@ NEARSHORE_WEIGHTS = {
 }
 
 OFFSHORE_WEIGHTS = {
-    "swell": 0.30,
-    "wind": 0.25,
-    "wave_spread": 0.15,
+    "swell": 0.25,
+    "wind": 0.22,
+    "wave_period": 0.15,
+    "wave_spread": 0.10,
     "pressure": 0.10,
     "weather_window": 0.10,
-    "solunar": 0.05,
-    "water_temp": 0.05,
+    "solunar": 0.04,
+    "water_temp": 0.04,
 }
 
 # ── Thresholds ───────────────────────────────────────────────────────────────

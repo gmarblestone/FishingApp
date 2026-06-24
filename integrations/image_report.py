@@ -184,7 +184,7 @@ def generate_image_string(forecast) -> Image.Image:
         ("Where", today.location_rec),
         ("Best Window", today.best_window),
         ("Wind", f"{today.conditions.wind.speed_mph:.0f} mph {today.conditions.wind.direction}"),
-        ("Waves", f"{today.conditions.buoy.wave_height_ft:.1f} ft"),
+        ("Waves", f"{today.conditions.buoy.wave_height_ft:.1f} ft @ {today.conditions.buoy.wave_period_sec:.0f}s"),
         ("Water", f"{today.conditions.buoy.water_temp_f:.1f}F"),
     ]
     dx = 60
@@ -238,7 +238,7 @@ def generate_image_string(forecast) -> Image.Image:
 
         # Wind + waves
         draw.text((760, ry + 12), f"{d.conditions.wind.speed_mph:.0f}mph", fill=MUTED, font=f_small)
-        draw.text((760, ry + 38), f"{d.conditions.buoy.wave_height_ft:.1f}ft", fill=MUTED, font=f_tiny)
+        draw.text((760, ry + 38), f"{d.conditions.buoy.wave_height_ft:.1f}ft @ {d.conditions.buoy.wave_period_sec:.0f}s", fill=MUTED, font=f_tiny)
 
         # Species
         species_short = d.best_species[:15] + "..." if len(d.best_species) > 15 else d.best_species
@@ -256,7 +256,7 @@ def generate_image_string(forecast) -> Image.Image:
 
     # ── Footer ───────────────────────────────────────────────────────────────
     footer_y = CARD_H - 50
-    draw.text((40, footer_y), f"Grant's Fishing Forecast v1.6.7 | NOAA / NDBC / NWS | {forecast.generated_at}", fill="#64748b", font=f_tiny)
+    draw.text((40, footer_y), f"Grant's Fishing Forecast v1.6.8 | NOAA / NDBC / NWS | {forecast.generated_at}", fill="#64748b", font=f_tiny)
 
     return img
 
@@ -359,7 +359,7 @@ def generate_detail_image(forecast, day_indices, title, output_path):
             y = _draw_day_detail(draw, days[idx], y, fonts, CARD_W, is_today=(idx == 0))
 
     # Footer
-    draw.text((40, y + 10), f"Grant's Fishing Forecast v1.6.7 | NOAA / NDBC / NWS | {forecast.generated_at}", fill="#64748b", font=f_tiny)
+    draw.text((40, y + 10), f"Grant's Fishing Forecast v1.6.8 | NOAA / NDBC / NWS | {forecast.generated_at}", fill="#64748b", font=f_tiny)
 
     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
     img.save(output_path, "JPEG", quality=90)

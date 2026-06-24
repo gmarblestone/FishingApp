@@ -341,14 +341,14 @@ def generate_html_string(forecast, area_key: str = DEFAULT_AREA) -> str:
         f"  🐟 {today.best_species}",
         f"  📍 {today.location_rec}",
         f"  ⏰ Best: {today.best_window}",
-        f"  💨 {today.conditions.wind.speed_mph:.0f}mph {today.conditions.wind.direction} · 🌊 {today.conditions.buoy.wave_height_ft:.1f}ft · 🌡️ {today.conditions.buoy.water_temp_f:.0f}°F",
+        f"  💨 {today.conditions.wind.speed_mph:.0f}mph {today.conditions.wind.direction} · 🌊 {today.conditions.buoy.wave_height_ft:.1f}ft @ {today.conditions.buoy.wave_period_sec:.0f}s · 🌡️ {today.conditions.buoy.water_temp_f:.0f}°F",
         f"  🌊 Bay Level: {_water_level_text(today.conditions.water_level)}",
         "",
     ]
     for d in days[1:]:
         off_tag = "✅" if d.offshore_score >= 6 else "⚠️" if d.offshore_score >= 4 else "❌"
         share_lines.append(
-            f"{d.date.strftime('%a')} {_fmtdate(d.date)}: IN {d.inshore_score} · OFF {d.offshore_score}{off_tag} · {d.conditions.wind.speed_mph:.0f}mph · {d.conditions.buoy.wave_height_ft:.1f}ft"
+            f"{d.date.strftime('%a')} {_fmtdate(d.date)}: IN {d.inshore_score} · OFF {d.offshore_score}{off_tag} · {d.conditions.wind.speed_mph:.0f}mph · {d.conditions.buoy.wave_height_ft:.1f}ft @ {d.conditions.buoy.wave_period_sec:.0f}s"
         )
     share_lines += [
         "",
@@ -413,7 +413,7 @@ def generate_html_string(forecast, area_key: str = DEFAULT_AREA) -> str:
         <div>
           <h2>{day_name} {badges}</h2>
           <span class="day-factor">{d.key_factor}</span>
-          <div class="print-summary">🐟 {d.best_species} &middot; 📍 {d.location_rec} &middot; ⏰ {d.best_window} &middot; 💨 {d.conditions.wind.speed_mph:.0f}mph {d.conditions.wind.direction} &middot; 🌊 {d.conditions.buoy.wave_height_ft:.1f}ft</div>
+          <div class="print-summary">🐟 {d.best_species} &middot; 📍 {d.location_rec} &middot; ⏰ {d.best_window} &middot; 💨 {d.conditions.wind.speed_mph:.0f}mph {d.conditions.wind.direction} &middot; 🌊 {d.conditions.buoy.wave_height_ft:.1f}ft @ {d.conditions.buoy.wave_period_sec:.0f}s</div>
         </div>
         <div class="day-scores-mini">
           <span class="score-pill" style="background:{_score_color(d.inshore_score)}">IN {d.inshore_score}</span>
@@ -471,10 +471,10 @@ def generate_html_string(forecast, area_key: str = DEFAULT_AREA) -> str:
             <div class="detail-row-data">
               <div class="datum"><span class="datum-label">Swell</span><span class="datum-value">{d.conditions.buoy.swell_height_ft:.1f} ft{f' from {d.conditions.buoy.swell_direction_deg:.0f}°' if d.conditions.buoy.swell_direction_deg else ''}</span></div>
               <div class="datum"><span class="datum-label">Wind Waves</span><span class="datum-value">{d.conditions.buoy.wind_wave_height_ft:.1f} ft</span></div>
-              <div class="datum"><span class="datum-label">Wave Spread</span><span class="datum-value" style="color:{('#22c55e' if d.conditions.buoy.wave_spread_deg < 30 else '#eab308' if d.conditions.buoy.wave_spread_deg < 60 else '#f97316' if d.conditions.buoy.wave_spread_deg < 90 else '#ef4444') if d.conditions.buoy.wave_spread_deg else '#94a3b8'}">{f'{d.conditions.buoy.wave_spread_deg:.0f}°' if d.conditions.buoy.wave_spread_deg else 'N/A'}{' — organized' if d.conditions.buoy.wave_spread_deg and d.conditions.buoy.wave_spread_deg < 30 else ' — moderate' if d.conditions.buoy.wave_spread_deg and d.conditions.buoy.wave_spread_deg < 60 else ' — choppy' if d.conditions.buoy.wave_spread_deg and d.conditions.buoy.wave_spread_deg < 90 else ' — confused' if d.conditions.buoy.wave_spread_deg else ''}</span></div>
+              <div class="datum"><span class="datum-label">Directional Spread</span><span class="datum-value" style="color:{('#22c55e' if d.conditions.buoy.wave_spread_deg < 30 else '#eab308' if d.conditions.buoy.wave_spread_deg < 60 else '#f97316' if d.conditions.buoy.wave_spread_deg < 90 else '#ef4444') if d.conditions.buoy.wave_spread_deg else '#94a3b8'}">{f'{d.conditions.buoy.wave_spread_deg:.0f}°' if d.conditions.buoy.wave_spread_deg else 'N/A'}{' — organized' if d.conditions.buoy.wave_spread_deg and d.conditions.buoy.wave_spread_deg < 30 else ' — moderate' if d.conditions.buoy.wave_spread_deg and d.conditions.buoy.wave_spread_deg < 60 else ' — choppy' if d.conditions.buoy.wave_spread_deg and d.conditions.buoy.wave_spread_deg < 90 else ' — confused' if d.conditions.buoy.wave_spread_deg else ''}</span></div>
             </div>
             <div class="detail-row-data" style="margin-top:4px;">
-              <div class="datum"><span class="datum-label">Seas</span><span class="datum-value">{'Calm — go fish!' if d.conditions.buoy.wave_height_ft <= 2 else 'Moderate — experienced only' if d.conditions.buoy.wave_height_ft <= 4 else 'Rough — stay inshore' if d.conditions.buoy.wave_height_ft <= 6 else 'Dangerous — do not go'}</span></div>
+              <div class="datum"><span class="datum-label">Seas</span><span class="datum-value">{'Calm — go fish!' if d.conditions.buoy.wave_height_ft <= 2 and d.conditions.buoy.wave_period_sec >= 7 else 'Manageable — longer period swell' if d.conditions.buoy.wave_height_ft <= 4 and d.conditions.buoy.wave_period_sec >= 7 else 'Short-period chop — caution' if d.conditions.buoy.wave_period_sec and d.conditions.buoy.wave_period_sec <= 4 else 'Moderate — experienced only' if d.conditions.buoy.wave_height_ft <= 4 else 'Rough — stay inshore' if d.conditions.buoy.wave_height_ft <= 6 else 'Dangerous — do not go'}</span></div>
               <div class="datum"><span class="datum-label">Water Temp</span><span class="datum-value">{d.conditions.buoy.water_temp_f:.1f}°F</span></div>
               <div class="datum"><span class="datum-label">Wave Dir</span><span class="datum-value">{f'{d.conditions.buoy.wave_direction_deg:.0f}°' if d.conditions.buoy.wave_direction_deg else 'N/A'}</span></div>
             </div>
@@ -772,7 +772,7 @@ def generate_html_string(forecast, area_key: str = DEFAULT_AREA) -> str:
     <div class="callout-item"><div class="label">Best Window</div><div class="value">{today.best_window}</div></div>
     <div class="callout-item"><div class="label">Water</div><div class="value">{today.conditions.buoy.water_temp_f:.1f}°F</div></div>
     <div class="callout-item"><div class="label">Wind</div><div class="value">{today.conditions.wind.speed_mph:.0f} mph {today.conditions.wind.direction}</div></div>
-    <div class="callout-item"><div class="label">Waves</div><div class="value">{today.conditions.buoy.wave_height_ft:.1f} ft</div></div>
+    <div class="callout-item"><div class="label">Waves</div><div class="value">{today.conditions.buoy.wave_height_ft:.1f} ft @ {today.conditions.buoy.wave_period_sec:.0f}s</div></div>
     <div class="callout-item"><div class="label">Bay Level</div><div class="value">{_water_level_badge(today.conditions.water_level)}</div></div>
   </div>
 
@@ -785,7 +785,7 @@ def generate_html_string(forecast, area_key: str = DEFAULT_AREA) -> str:
     <div class="best-day-card offshore">
       <h3>{"★ Best Offshore Day" if best_offshore.offshore_score >= 5 else "⚠️ Offshore — Best Available"}</h3>
       <div class="day">{best_offshore.date.strftime('%A')}, {_fmtdate(best_offshore.date)}</div>
-      <div class="meta">{best_offshore.offshore_score}/10 &middot; Waves {best_offshore.conditions.buoy.wave_height_ft:.1f} ft &middot; Wind {best_offshore.conditions.wind.speed_mph:.0f} mph {"— ✅ Fishable" if best_offshore.offshore_score >= 6 else "— ⚠️ Marginal" if best_offshore.offshore_score >= 4 else "— ❌ Rough"}</div>
+      <div class="meta">{best_offshore.offshore_score}/10 &middot; Waves {best_offshore.conditions.buoy.wave_height_ft:.1f} ft @ {best_offshore.conditions.buoy.wave_period_sec:.0f}s &middot; Wind {best_offshore.conditions.wind.speed_mph:.0f} mph {"— ✅ Fishable" if best_offshore.offshore_score >= 6 else "— ⚠️ Marginal" if best_offshore.offshore_score >= 4 else "— ❌ Rough"}</div>
     </div>
   </div>
 
@@ -973,7 +973,7 @@ def generate_html_string(forecast, area_key: str = DEFAULT_AREA) -> str:
     </div>
   </div>
 
-  <div class="footer">Grant's Fishing Forecast v1.6.7 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
+  <div class="footer">Grant's Fishing Forecast v1.6.8 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
 </div>
 
 <script>

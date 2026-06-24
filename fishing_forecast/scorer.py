@@ -137,6 +137,22 @@ def _score_wave_spread(spread_deg: float) -> float:
     return 2.0
 
 
+def _score_wave_period(period_sec: float) -> float:
+    """Score wave period for offshore.
+    Longer periods are more organized and fishable for a given wave height."""
+    if period_sec == 0:
+        return 5.0  # no data, neutral
+    if period_sec >= 9:
+        return 10.0
+    if period_sec >= 7:
+        return 8.0
+    if period_sec >= 5:
+        return 6.0
+    if period_sec >= 3:
+        return 3.0
+    return 1.0
+
+
 def _score_water_temp(temp_f: float) -> float:
     """General water temp score — moderate temps are best."""
     if temp_f == 0:
@@ -478,6 +494,7 @@ def score_day(conditions: DayConditions) -> DayForecast:
         "wind": _score_wind(
             conditions.wind.speed_mph, WIND_IDEAL_MPH, WIND_OFFSHORE_MAX_MPH
         ),
+        "wave_period": _score_wave_period(conditions.buoy.wave_period_sec),
         "wave_spread": _score_wave_spread(conditions.buoy.wave_spread_deg),
     }
 
@@ -488,6 +505,8 @@ def score_day(conditions: DayConditions) -> DayForecast:
         warnings.append("Rain/storms likely")
     if conditions.buoy.wave_height_ft > WAVE_OFFSHORE_MAX_FT:
         warnings.append(f"Rough seas: {conditions.buoy.wave_height_ft} ft")
+    if conditions.buoy.wave_period_sec and conditions.buoy.wave_period_sec <= 4:
+        warnings.append(f"Tight wave period: {conditions.buoy.wave_period_sec:.0f}s")
     if conditions.buoy.wave_spread_deg > 90:
         warnings.append(f"Confused seas: {conditions.buoy.wave_spread_deg:.0f}° wave spread")
 
