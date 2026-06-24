@@ -1167,6 +1167,16 @@ function fetchAreaReport(areaKey) {{
       alert('Failed to load the selected area.');
     }});
 }}
+
+function bindDayAccordion() {{
+  document.addEventListener('click', (e) => {{
+    const hdr = e.target.closest('.day-header[data-day]');
+    if (hdr) toggleDay(hdr.getAttribute('data-day'));
+  }});
+}}
+
+bindDayAccordion();
+
 // Wire up all event listeners (no inline onclick — CSP safe)
 document.addEventListener('DOMContentLoaded', () => {{
   const areaSelect = document.getElementById('areaSelect');
@@ -1174,7 +1184,12 @@ document.addEventListener('DOMContentLoaded', () => {{
   if (darkBtn && document.documentElement.classList.contains('dark')) darkBtn.textContent = '☀️ Light';
 
   const params = new URLSearchParams(window.location.search);
-  const desiredArea = params.get('area') || localStorage.getItem('fishingForecastArea');
+  let desiredArea = params.get('area');
+  try {{
+    desiredArea = desiredArea || localStorage.getItem('fishingForecastArea');
+  }} catch (error) {{
+    console.warn('Unable to access localStorage', error);
+  }}
   if (areaSelect) {{
     areaSelect.value = CURRENT_AREA_KEY;
     areaSelect.addEventListener('change', (event) => fetchAreaReport(event.target.value));
@@ -1184,12 +1199,25 @@ document.addEventListener('DOMContentLoaded', () => {{
     fetchAreaReport(desiredArea);
     return;
   }}
-  localStorage.setItem('fishingForecastArea', CURRENT_AREA_KEY);
+  try {{
+    localStorage.setItem('fishingForecastArea', CURRENT_AREA_KEY);
+  }} catch (error) {{
+    console.warn('Unable to persist selected area', error);
+  }}
 
   // Toolbar buttons
-  document.getElementById('shareBtn').addEventListener('click', shareForecast);
-  document.getElementById('copyBtn').addEventListener('click', copyGoodStuff);
-  document.getElementById('pdfBtn').addEventListener('click', async () => {{
+  const shareBtn = document.getElementById('shareBtn');
+  const copyBtn = document.getElementById('copyBtn');
+  const pdfBtn = document.getElementById('pdfBtn');
+  const printExpandedBtn = document.getElementById('printExpandedBtn');
+  const expandBtn = document.getElementById('expandBtn');
+  const collapseBtn = document.getElementById('collapseBtn');
+  const saveBtn = document.getElementById('saveBtn');
+  const refreshBtn = document.getElementById('refreshBtn');
+
+  shareBtn?.addEventListener('click', shareForecast);
+  copyBtn?.addEventListener('click', copyGoodStuff);
+  pdfBtn?.addEventListener('click', async () => {{
     // On iOS/mobile WebView, window.print() is not supported — use share sheet which has Print
     if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent) && navigator.share) {{
       try {{
@@ -1199,22 +1227,15 @@ document.addEventListener('DOMContentLoaded', () => {{
       printSummary();
     }}
   }});
-  document.getElementById('printExpandedBtn').addEventListener('click', printExpanded);
-  document.getElementById('expandBtn').addEventListener('click', expandAll);
-  document.getElementById('collapseBtn').addEventListener('click', collapseAll);
-  darkBtn.addEventListener('click', toggleDark);
-  document.getElementById('saveBtn').addEventListener('click', saveCurrentReport);
+  printExpandedBtn?.addEventListener('click', printExpanded);
+  expandBtn?.addEventListener('click', expandAll);
+  collapseBtn?.addEventListener('click', collapseAll);
+  darkBtn?.addEventListener('click', toggleDark);
+  saveBtn?.addEventListener('click', saveCurrentReport);
 
   // Refresh — trigger server-side forecast regeneration
-  var refreshBtn = document.getElementById('refreshBtn');
-  refreshBtn.addEventListener('click', function() {{
+  refreshBtn?.addEventListener('click', function() {{
     fetchAreaReport(areaSelect ? areaSelect.value : CURRENT_AREA_KEY);
-  }});
-
-  // Day-header accordion — event delegation
-  document.addEventListener('click', (e) => {{
-    const hdr = e.target.closest('.day-header[data-day]');
-    if (hdr) toggleDay(hdr.getAttribute('data-day'));
   }});
 }});
 async function shareForecast() {{
