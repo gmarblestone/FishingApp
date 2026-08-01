@@ -408,8 +408,8 @@ def generate_html_string(forecast, area_key: str = DEFAULT_AREA) -> str:
             tw_tooltips += f'<div class="tw-tip"><span class="tw-dot" style="background:{_quality_color(tw.quality)}"></span><strong>{tw.label}</strong>: {tw.reason}</div>'
 
         day_sections += f"""
-    <div class="day-section {'day-today' if is_today else ''}">
-      <div class="day-header" data-day="day-{d.date.isoformat()}">
+    <details class="day-section {'day-today' if is_today else ''}" open>
+      <summary class="day-header" data-day="day-{d.date.isoformat()}">
         <div>
           <h2>{day_name} {badges}</h2>
           <span class="day-factor">{d.key_factor}</span>
@@ -421,9 +421,9 @@ def generate_html_string(forecast, area_key: str = DEFAULT_AREA) -> str:
           <span class="score-pill" style="background:{off_color}">OFF {d.offshore_score}</span>
           <span class="chevron" id="chev-{d.date.isoformat()}">▼</span>
         </div>
-      </div>
+      </summary>
 
-      <div class="day-body" id="day-{d.date.isoformat()}" style="display:{'block' if is_today else 'none'}">
+      <div class="day-body" id="day-{d.date.isoformat()}">
         {warnings_html}
 
         <div class="section-label">🕐 Fishing Windows</div>
@@ -484,9 +484,7 @@ def generate_html_string(forecast, area_key: str = DEFAULT_AREA) -> str:
         <div class="two-col">
           <div class="col-card">
             <div class="wind-row">
-              <div>
-                <div class="section-label" style="margin:0 0 4px 0">💨 Wind</div>
-                {_wind_compass_svg(d.conditions.wind.direction, d.conditions.wind.speed_mph)}
+              {_wind_compass_svg(d.conditions.wind.direction, d.conditions.wind.speed_mph)}
               </div>
               <div class="wind-details">
                 <div class="wind-speed">{d.conditions.wind.speed_mph:.0f} <span class="wind-unit">mph</span></div>
@@ -510,7 +508,7 @@ def generate_html_string(forecast, area_key: str = DEFAULT_AREA) -> str:
 
         {gaps_html}
       </div>
-    </div>"""
+    </details>"""
 
     # ── Week comparison table ────────────────────────────────────────────────
     week_rows = ""
@@ -588,14 +586,18 @@ def generate_html_string(forecast, area_key: str = DEFAULT_AREA) -> str:
   .badge-extended {{ background:#e0e7ff; color:#3730a3; }}
   .day-section {{ background:white; border-radius:14px; margin-bottom:14px; box-shadow:0 1px 3px rgba(0,0,0,0.06); overflow:hidden; }}
   .day-today {{ border:2px solid #0ea5e9; }}
-  .day-header {{ display:flex; justify-content:space-between; align-items:center; padding:14px 20px; cursor:pointer; transition:background .15s; }}
+  .day-header {{ display:flex; justify-content:space-between; align-items:center; padding:14px 20px; cursor:pointer; transition:background .15s; list-style:none; }}
+  .day-header::-webkit-details-marker {{ display:none; }}
+  .day-header::marker {{ content:''; }}
   .day-header:hover {{ background:#f8fafc; }}
   .day-header h2 {{ font-size:17px; }}
   .day-factor {{ font-size:12px; color:#64748b; }}
   .day-scores-mini {{ display:flex; gap:6px; align-items:center; }}
   .chevron {{ font-size:12px; color:#94a3b8; margin-left:8px; transition:transform .2s; }}
   .chevron.open {{ transform:rotate(180deg); }}
+  .day-section[open] > .day-header .chevron {{ transform:rotate(180deg); }}
   .day-body {{ padding:0 20px 20px; }}
+  .day-section:not([open]) .day-body {{ display:none; }}
   .section-label {{ font-size:12px; font-weight:600; text-transform:uppercase; color:#64748b; letter-spacing:.5px; margin:16px 0 6px; }}
   .timeline-container {{ background:#f8fafc; border-radius:10px; padding:12px 16px; margin-bottom:14px; }}
   .tw-details {{ display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }}
@@ -844,15 +846,15 @@ def generate_html_string(forecast, area_key: str = DEFAULT_AREA) -> str:
   </div>
 
   <!-- Offshore Fishing Regulations -->
-  <div class="day-section">
-    <div class="day-header" data-day="offshore-regs">
+  <details class="day-section">
+    <summary class="day-header" data-day="offshore-regs">
       <h2>📋 Offshore Fishing Regulations</h2>
       <span class="day-factor">Texas Gulf Coast — State &amp; Federal Waters</span>
       <div class="day-scores-mini">
         <span class="chevron" id="chev-offshore-regs">▼</span>
       </div>
-    </div>
-    <div class="day-body" id="offshore-regs" style="display:none;">
+    </summary>
+    <div class="day-body" id="offshore-regs">
       <div class="rec-box" style="border-left:3px solid #f97316; border-color:#fed7aa;">
         <div class="rec-label">⚠️ Requirements</div>
         <div class="rec-reason" style="line-height:1.6;">
@@ -959,7 +961,7 @@ def generate_html_string(forecast, area_key: str = DEFAULT_AREA) -> str:
         Verify at <a href="https://tpwd.texas.gov/regulations/outdoor-annual/" target="_blank" rel="noopener" style="color:#0ea5e9;">TPWD Outdoor Annual</a> &amp; <a href="https://gulfcouncil.org/" target="_blank" rel="noopener" style="color:#0ea5e9;">Gulf Council</a> — regulations change and may be subject to emergency closures.
       </div>
     </div>
-  </div>
+  </details>
 
   <div style="background:#f8fafc; border-radius:12px; padding:16px 20px; margin-top:20px; border:1px solid #e2e8f0;">
     <div style="font-size:12px; font-weight:600; color:#475569; margin-bottom:8px;">&#128279; Data Sources</div>
@@ -973,7 +975,7 @@ def generate_html_string(forecast, area_key: str = DEFAULT_AREA) -> str:
     </div>
   </div>
 
-  <div class="footer">Grant's Fishing Forecast v1.6.10 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
+  <div class="footer">Grant's Fishing Forecast v1.6.12 &middot; {forecast.area} &middot; NOAA / NDBC / NWS &middot; {forecast.generated_at}</div>
 </div>
 
 <script>
@@ -981,19 +983,24 @@ function toggleDay(id) {{
   const el = document.getElementById(id);
   const chev = document.getElementById('chev-' + id.replace('day-',''));
   const hdr = document.querySelector(`.day-header[data-day="${{id}}"]`);
-  if (el) {{
-    const show = el.style.display === 'none';
+  const section = hdr ? hdr.closest('.day-section') : null;
+  if (section) {{
+    section.open = !section.open;
+    if (chev) chev.classList.toggle('open', section.open);
+    if (hdr) hdr.setAttribute('aria-expanded', section.open ? 'true' : 'false');
+  }} else if (el) {{
+    const show = window.getComputedStyle(el).display === 'none';
     el.style.display = show ? 'block' : 'none';
     if (chev) chev.classList.toggle('open', show);
     if (hdr) hdr.setAttribute('aria-expanded', show ? 'true' : 'false');
   }}
 }}
 function expandAll() {{
-  document.querySelectorAll('.day-body').forEach(el => el.style.display = 'block');
+  document.querySelectorAll('.day-section').forEach(section => section.open = true);
   document.querySelectorAll('.chevron').forEach(c => c.classList.add('open'));
 }}
 function collapseAll() {{
-  document.querySelectorAll('.day-body').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('.day-section').forEach(section => section.open = false);
   document.querySelectorAll('.chevron').forEach(c => c.classList.remove('open'));
 }}
 function toggleDark() {{
@@ -1172,34 +1179,21 @@ function fetchAreaReport(areaKey) {{
 
 function bindDayAccordion() {{
   document.querySelectorAll('.day-header[data-day]').forEach((hdr) => {{
-    if (hdr.dataset.accordionBound === 'true') return;
-    hdr.dataset.accordionBound = 'true';
-    hdr.setAttribute('role', 'button');
-    hdr.setAttribute('tabindex', '0');
-
     const dayId = hdr.getAttribute('data-day');
+    const section = hdr.closest('.day-section');
     const body = dayId ? document.getElementById(dayId) : null;
-    if (body) hdr.setAttribute('aria-expanded', body.style.display !== 'none' ? 'true' : 'false');
+    const isOpen = section ? section.open : !!body && window.getComputedStyle(body).display !== 'none';
+    hdr.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  }});
 
-    let lastTouchToggleAt = 0;
-    const activate = () => dayId && toggleDay(dayId);
-
-    hdr.addEventListener('touchend', (e) => {{
-      lastTouchToggleAt = Date.now();
-      e.preventDefault();
-      activate();
-    }}, {{ passive: false }});
-
-    hdr.addEventListener('click', () => {{
-      if (Date.now() - lastTouchToggleAt < 700) return;
-      activate();
-    }});
-
-    hdr.addEventListener('keydown', (e) => {{
-      if (e.key === 'Enter' || e.key === ' ') {{
-        e.preventDefault();
-        activate();
-      }}
+  document.querySelectorAll('.day-section').forEach((section) => {{
+    if (section.dataset.accordionBound === 'true') return;
+    section.dataset.accordionBound = 'true';
+    section.addEventListener('toggle', () => {{
+      const hdr = section.querySelector('.day-header[data-day]');
+      const chev = section.querySelector('.chevron');
+      if (hdr) hdr.setAttribute('aria-expanded', section.open ? 'true' : 'false');
+      if (chev) chev.classList.toggle('open', section.open);
     }});
   }});
 }}
